@@ -19,7 +19,6 @@ charset-normalizer==3.3.2
 chex==0.1.7
 click==8.1.7
 comm==0.1.2
-conda==4.3.16
 contourpy==1.1.1
 css-html-js-minify==2.5.5
 cycler==0.12.1
