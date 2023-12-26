@@ -13,7 +13,7 @@ dash.register_page(__name__, path='/',title='Project Intro and Roadmap',location
 PAGE_STYLE = {
     'background-color':'#fff',
     "position":"relative",
-    "margin":"15rem 6rem 0rem 6rem",
+    "margin":"-7.5rem -22rem 0rem 18rem",
     "color":"#000",
     "text-shadow":"#000 0 0",
     'whiteSpace': 'pre-wrap'
@@ -22,4 +22,4 @@ PAGE_STYLE = {
 layout = html.Div([
             html.Iframe(src="https://gamma.app/embed/yjmv7s7hjm5zyau",
                 style={"height": "2500px", "width": "80%"}),
-        ], className='home')
+        ], className='home', style=PAGE_STYLE)
