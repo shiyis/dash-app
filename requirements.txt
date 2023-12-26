@@ -141,7 +141,7 @@ streamlit-embedcode==0.1.2
 streamlit-extras==0.3.4
 streamlit-folium==0.15.0
 streamlit-toggle-switch==1.0.2
-streamlit-wordcloud @ file:///Users/shiyishen/repos/github/c4pe2022-tbip/app/pages/streamlit-wordcloud
+streamlit-wordcloud==0.1.0
 tenacity==8.2.3
 tensorboard==2.13.0
 tensorboard-data-server==0.7.2
