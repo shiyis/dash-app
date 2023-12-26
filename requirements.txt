@@ -21,3 +21,4 @@ pytz==2023.3.post1
 PyYAML==6.0.1
 pyzmq==25.0.0
 scipy
+gunicorn
