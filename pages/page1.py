@@ -9,7 +9,7 @@ from dash_extensions.javascript import arrow_function
 from dash_extensions.javascript import assign
 
 
-dash.register_page(__name__, title='Exploratory Data Analaysis',location='sidebar')
+dash.register_page(__name__, title='Exploratory Data Analysis',location='sidebar')
 
 
 candidates = pd.read_csv("./data/2022/processed_weball.csv")    

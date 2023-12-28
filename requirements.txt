@@ -20,5 +20,5 @@ python-dateutil==2.8.2
 pytz==2023.3.post1
 PyYAML==6.0.1
 pyzmq==25.0.0
-scipy
-gunicorn
+scipy==1.10.1
+gunicorn==21.2.0

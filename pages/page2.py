@@ -177,7 +177,7 @@ def my_callback(figure_empty):
     y = np.array([1] * len(authors))
 
     layout = go.Layout(
-        xaxis={'title': 'Author\'s Ideal Points from Moderate to Progressive',
+        xaxis={'title': 'Author\'s Ideal Point from Moderate to Progressive',
                         'visible': True,
                         'showticklabels': True},
         yaxis={'title': 'y-label',
