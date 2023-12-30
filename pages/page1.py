@@ -2,9 +2,8 @@ import dash
 import pandas as pd
 import dash_bootstrap_components as dbc
 import dash_leaflet.express as dlx 
-from dash import dcc, html, dash_table, Input, Output, State, callback
+from dash import dcc, html, Output, callback
 import dash_leaflet as dl
-from datetime import datetime
 from dash_extensions.javascript import arrow_function
 from dash_extensions.javascript import assign
 
@@ -14,7 +13,6 @@ dash.register_page(__name__, title='Exploratory Data Analysis',location='sidebar
 
 candidates = pd.read_csv("./data/2022/processed_weball.csv")    
 states = pd.read_csv("./data/states.csv")
-
 
 PAGE_STYLE = {
     # 'background-color':'#fff',
@@ -71,15 +69,13 @@ def create_choropleth(id='geojson1', info_id='info1'):
 choropleth1 = create_choropleth()
 choropleth2 = create_choropleth(id='geojson2',info_id='info2')
 
-
 map1 = dl.Map(children=[dl.TileLayer()],style={'height': '450px','margin-top':'0rem'}, center=[39, -98], zoom=4, id='candidates-stats-marker')
 map2 = dl.Map(children=[dl.TileLayer()],style={'height': '450px','margin-top':'0rem'}, center=[states[states['state']== 'DC']['latitude'].iloc[0],states[states['state']== 'DC']['longitude'].iloc[0]],zoom=7, id='candidates-individual-marker')
 
-
-layout =  html.Div([
-                    html.H5("C4PE Exploratory Data Analysis"),
+layout =  html.Div([    
+                    html.H5("C4FE Exploratory Data Analysis"),
                     html.Hr(),
-                    html.P("""In socio-politics, quantified approaches and modeling techniques are applied in supporting and facilitating political analyses. Individuals, parties, committees and other political entities` come together and try to push forward campaigns in hope to receive appropriate patrionization and support for their political agenda. """),
+                    html.P("""In socio-politics, quantified approaches and modeling techniques are applied in supporting and facilitating political analyses. Individuals, parties, committees and other political entities come together and try to push forward campaigns in hope to receive appropriate patrionization and support for their political agenda. """),
                     html.P("""The Political Action Committees (PACs or Super PACs) amass funding resources that could benefit the elections. These type of fundings could be from other individuals, or political entities. For the sole of purpose of understanding how the processes of fund raising activities like these really work, this part of the project explores the 2021-2022 PACs financial data."""),
                     html.P("""This part of the project will first present the receipts, disbursements, and other expenditures in terms of propagating political actions in visualization format grounded in states; for example, how many different political action committees there are by US states. This part of the project will also break down all the candidates of 2022 their basic information as mentioned above including their basic demographics, political party affiliation, election cycle, and incumbency."""),
                     html.P("""All info is retrievable through the Federal Election Commission's directory. This project seeks to conduct the research with full transparency and abide to relevant conduct code."""),
@@ -111,7 +107,6 @@ def update_output(value):
 
 @callback(Output('candidates-stats-marker', 'children'), Output('candidates-individual-marker','viewport'), Output('candidates-individual-marker', 'children'),
     [dash.dependencies.Input('pac-exp-filter', 'value'),dash.dependencies.Input('state-dropdown', 'value'), dash.dependencies.Input('names-dropdown','value')])
-
 def update_output(slider, state, cand):
         latLon = candidates[['Party code','Party affiliation','Affiliated Committee Name','Total receipts','Total disbursements','lat','lon']]
         latLon = [tuple(i[1:]) for i in latLon.itertuples()]
@@ -205,7 +200,6 @@ def update_output(slider, state, cand):
 @callback(Output("info1", "children"), dash.dependencies.Input("geojson1", "hoverData"))
 def info_hover(feature):
     return get_info(feature)
-
 
 @callback(Output("info2", "children"), dash.dependencies.Input("geojson2", "hoverData"))
 def info_hover(feature):
