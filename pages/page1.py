@@ -14,6 +14,9 @@ candidates = pd.read_csv("./data/2022/processed_weball.csv")
 candidates['Candidate state'] = candidates['Candidate state'].replace('00', 'N/A')
 states = pd.read_csv("./data/states.csv")
 
+
+
+
 PAGE_STYLE = {
     # 'background-color':'#fff',
     "position":"relative",
@@ -109,11 +112,11 @@ layout =  html.Div([
                     html.Hr(),
                     dbc.Row(
                         [dbc.Col(dcc.Markdown(f""" - Total Amount Raised by Party: 
-{candidates[['Party affiliation','Total receipts']].groupby('Party affiliation').agg('sum').sort_values('Total receipts')[::-1][:5].reset_index().style.set_properties(**{'text-align': 'right'})}"""),),
+{candidates[['Party affiliation','Total receipts']].groupby('Party affiliation').agg('sum').sort_values('Total receipts')[::-1][:5].reset_index()}"""),),
                          dbc.Col(dcc.Markdown(f""" - Total Committees by State and Party: 
-{candidates[['Candidate state', 'Party affiliation', 'Affiliated Committee Name']].groupby(['Candidate state','Party affiliation']).agg('count').sort_values('Affiliated Committee Name').fillna('None')[::-1][:5].reset_index().style.set_properties(**{'text-align': 'right'})}"""),),
+{candidates[['Candidate state', 'Party affiliation', 'Affiliated Committee Name']].groupby(['Candidate state','Party affiliation']).agg('count').sort_values('Affiliated Committee Name').fillna('None')[::-1][:5].reset_index()}"""),),
                          dbc.Col(dcc.Markdown(f""" - Total Money Raised by State and Party: 
-{candidates[['Candidate state','Party affiliation','Total receipts']].groupby(['Candidate state','Party affiliation']).agg('sum').sort_values('Total receipts')[::-1][:5].reset_index().style.set_properties(**{'text-align': 'right'})}"""),)])
+{candidates[['Candidate state','Party affiliation','Total receipts']].groupby(['Candidate state','Party affiliation']).agg('sum').sort_values('Total receipts')[::-1][:5].reset_index()}"""),)])
 ],className='page1',id='page1-content', style=PAGE_STYLE)
 
 @callback(
