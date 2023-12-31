@@ -9,9 +9,9 @@ from dash_extensions.javascript import assign
 
 
 dash.register_page(__name__, title='Exploratory Data Analysis',location='sidebar')
-
-
-candidates = pd.read_csv("./data/2022/processed_weball.csv")    
+pd.set_option('float_format', '{:.2f}'.format)
+candidates = pd.read_csv("./data/2022/processed_weball.csv")
+candidates['Candidate state'] = candidates['Candidate state'].replace('00', 'N/A')
 states = pd.read_csv("./data/states.csv")
 
 PAGE_STYLE = {
@@ -82,7 +82,6 @@ layout =  html.Div([
                     dbc.Row(
                         [dbc.Col(dbc.Row(dbc.Col(children=[dcc.Dropdown(pd.DataFrame(pd.read_csv("./data/states.csv"))['name'].tolist(),id='state-dropdown')],id='states-col'))),
                          dbc.Col(dbc.Row(dbc.Col(children=[dcc.Dropdown(id='names-dropdown')],id='cand-names-col'),id='cand-names-row'))]),
-                    # html.P(),
                     html.Div(html.Div(children=[html.Div(dcc.Slider(7000, 27500000, 3000000,value=3000000,id='pac-exp-filter'),style={'margin':'2rem -1.3rem 0rem -1.3rem'})],id='cand-names-col')),
                     html.P(),
                     html.Div(id='mapmessage', style={'color' : '#FFFFFF', 'fontSize' : '20px', 'marginTop' : '-25px'}),
@@ -90,7 +89,31 @@ layout =  html.Div([
                     html.Br(),
                     dbc.Row(
                         [dbc.Col(dbc.Row(dbc.Col(children=[map1])),id='map1-col'),
-                         dbc.Col(dbc.Row(dbc.Col(children=[map2])),id='map2-col')])
+                         dbc.Col(dbc.Row(dbc.Col(children=[map2])),id='map2-col')]),
+                    html.Br(),                                        
+                    html.Br(),
+                    html.H5("What's On The Maps?"),
+                    html.Hr(),
+                    html.P("""To understand this these two maps more thoroughly, a few things that are important to note are:"""),
+                    dcc.Markdown("""
+                                  1. There are three layers to the map that divide up the committees by party affiliation (on the top right corner of the map the results could be filtered through checking or unchecking each box).
+
+                                  2. The backdrop layer displays the sum amount of money raised for each state and the data could be displayed by hovering over each state boundary.
+                                  
+                                  3. The slider manipulates the committees to display by how much money they have raised and the amount is indicated by the size of the colored dot (the more the bigger).
+                                  
+                                  4. And finally since the committee is marked through their zipcode, the ones that are missing specific zipcodes will use the state default zipcode. Therefore, sometimes a few committees are stacked up against each other in the same pinned spot (the future update will try to incorporate more accurate indication of  address)."""),
+                    html.Br(),                                        
+                    html.Br(),
+                    html.H5("Some Other Important Info Stats"),
+                    html.Hr(),
+                    dbc.Row(
+                        [dbc.Col(dcc.Markdown(f""" - Total Amount Raised by Party: 
+{candidates[['Party affiliation','Total receipts']].groupby('Party affiliation').agg('sum').sort_values('Total receipts')[::-1][:5].reset_index().style.set_properties(**{'text-align': 'right'})}"""),),
+                         dbc.Col(dcc.Markdown(f""" - Total Committees by State and Party: 
+{candidates[['Candidate state', 'Party affiliation', 'Affiliated Committee Name']].groupby(['Candidate state','Party affiliation']).agg('count').sort_values('Affiliated Committee Name').fillna('None')[::-1][:5].reset_index().style.set_properties(**{'text-align': 'right'})}"""),),
+                         dbc.Col(dcc.Markdown(f""" - Total Money Raised by State and Party: 
+{candidates[['Candidate state','Party affiliation','Total receipts']].groupby(['Candidate state','Party affiliation']).agg('sum').sort_values('Total receipts')[::-1][:5].reset_index().style.set_properties(**{'text-align': 'right'})}"""),)])
 ],className='page1',id='page1-content', style=PAGE_STYLE)
 
 @callback(
@@ -102,12 +125,12 @@ def update_output(value):
         res = candidates.loc[candidates['State'] == a.iloc[0], 'Candidate name'].tolist()
     else:
         res = candidates['Candidate name'].tolist()
-    return dcc.Dropdown(res,id='names-dropdown',searchable=True)
+    return dcc.Dropdown(res,id='names-dropdown',searchable=True, multi=True)
 
 
 @callback(Output('candidates-stats-marker', 'children'), Output('candidates-individual-marker','viewport'), Output('candidates-individual-marker', 'children'),
     [dash.dependencies.Input('pac-exp-filter', 'value'),dash.dependencies.Input('state-dropdown', 'value'), dash.dependencies.Input('names-dropdown','value')])
-def update_output(slider, state, cand):
+def update_output(slider, state, cands):
         latLon = candidates[['Party code','Party affiliation','Affiliated Committee Name','Total receipts','Total disbursements','lat','lon']]
         latLon = [tuple(i[1:]) for i in latLon.itertuples()]
         colors = ['red','blue','grey']
@@ -179,20 +202,26 @@ def update_output(slider, state, cand):
                 s_latlon = [states[states['name']==state]['latitude_c'].iloc[0],states[states['name']== state]['longitude_c'].iloc[0]]
             else:
                 s_latlon = [states[states['name']==state]['latitude'].iloc[0],states[states['name']== state]['longitude'].iloc[0]]
-            if cand:
-                row = candidates[candidates['Candidate name'] == cand]
-                latlng = [row['lat'].iloc[0],row['lon'].iloc[0]]   
-                m = dl.Marker(position=latlng,children=[dl.Popup(f'Committee Name: \n {row["Affiliated Committee Name"].iloc[0]} \n Election cycle: 2022 \n Total Raised (YTD2022): {row["Total receipts"].iloc[0]} \n Total Spent (YTD2022): {row["Total disbursements"].iloc[0]}')])
-                second_map.append(dl.Pane(name='Individual-pin',children=[m]))
-                s_latlon = [row['lat'].iloc[0],row['lon'].iloc[0]] 
+            if cands: 
+                pins = []
+                for cand in cands:
+                    row = candidates[candidates['Candidate name'] == cand]
+                    latlng = [row['lat'].iloc[0],row['lon'].iloc[0]]   
+                    m = dl.Marker(position=latlng,children=[dl.Popup(f'Committee Name: \n {row["Affiliated Committee Name"].iloc[0]} \n Election cycle: 2022 \n Total Raised (YTD2022): {row["Total receipts"].iloc[0]} \n Total Spent (YTD2022): {row["Total disbursements"].iloc[0]}')])
+                    pins.append(m)
+                second_map.append(dl.Pane(name='Individual-pin',children=pins))
+                s_latlon = [row['lat'].iloc[0],row['lon'].iloc[0]]  
        
 
         else:
-            if cand: 
-                row = candidates[candidates['Candidate name'] == cand]
-                latlng = [row['lat'].iloc[0],row['lon'].iloc[0]]   
-                m = dl.Marker(position=latlng,children=[dl.Popup(f'Committee Name: \n {row["Affiliated Committee Name"].iloc[0]} \n Election cycle: 2022 \n Total Raised (YTD2022): {row["Total receipts"].iloc[0]} \n Total Spent (YTD2022): {row["Total disbursements"].iloc[0]}')])
-                second_map.append(dl.Pane(name='Individual-pin',children=[m]))
+            if cands: 
+                pins = []
+                for cand in cands:
+                    row = candidates[candidates['Candidate name'] == cand]
+                    latlng = [row['lat'].iloc[0],row['lon'].iloc[0]]   
+                    m = dl.Marker(position=latlng,children=[dl.Popup(f'Committee Name: \n {row["Affiliated Committee Name"].iloc[0]} \n Election cycle: 2022 \n Total Raised (YTD2022): {row["Total receipts"].iloc[0]} \n Total Spent (YTD2022): {row["Total disbursements"].iloc[0]}')])
+                    pins.append(m)
+                second_map.append(dl.Pane(name='Individual-pin',children=pins))
                 s_latlon = [row['lat'].iloc[0],row['lon'].iloc[0]]  
                 
         return data, dict(center=s_latlon, zoom=7, transition='flyTo'), second_map
