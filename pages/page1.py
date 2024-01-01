@@ -111,7 +111,7 @@ layout =  html.Div([
                     html.H5("Some Other Important Info Stats"),
                     html.Hr(),
                     dbc.Row(
-                        [dbc.Col(dcc.Markdown(f""" - Total Amount Raised by Party: 
+                        [dbc.Col(dcc.Markdown(f""" - Total Amount Raised by Party (Top 5): 
 {candidates[['Party affiliation','Total receipts']].groupby('Party affiliation').agg('sum').sort_values('Total receipts')[::-1][:5].reset_index()}"""),),
                         dbc.Col(dcc.Markdown(f""" - Total Committees by State and Party (Top 5): 
 {candidates[['Candidate state', 'Party affiliation', 'Affiliated Committee Name']].groupby(['Candidate state','Party affiliation']).agg('count').sort_values('Affiliated Committee Name').fillna('None')[::-1][:5].reset_index().rename(columns={"Candidate state":"State", 'Affiliated Committee Name':"# Affiliated Committee"})}"""),),
