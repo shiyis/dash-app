@@ -58,10 +58,10 @@ sidebar = html.Div(
             pills=True,
             className="nav-links"),
         html.Hr(),
-        html.Div(children=[html.H1("🗳️", className="logo"),
+        html.Div(children=[
         dcc.Upload(
             id='upload-data',
-            children=html.Div([
+            children=html.Div([html.H1("🗳️", className="logo"),
                 'Drag and Drop or ',
                 html.A('Select Your Data!')
             ]),
