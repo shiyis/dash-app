@@ -107,30 +107,31 @@ dcc.Markdown("""The corresponding variational distribution is `ideological_topic
 Please checkout this [notebook](https://colab.research.google.com/github/pyro-ppl/numpyro/blob/5291d0627d68598cf78b8ea97c540268660925c1/notebooks/source/tbip.ipynb) for the full implementation in Python.
             """)]),
 html.P(""),
+html.Br(),
 html.H5("Ideological Topics and Ideal Points Generated for Author's Political Leaning"),
 html.Hr(),
 dcc.Markdown("""Below are trained results for the list of 2022 federal election candidates' ideal points and topic aggregation of their Twitter archive
     """),
 dbc.Row(
-    [dbc.Col(dbc.Row(dbc.Col(children=[dcc.Dropdown(pd.DataFrame(pd.read_csv("./data/states.csv"))['name'].tolist(),id='state-dropdown-p2')],id='states-col-p2'))),
-    dbc.Col(dbc.Row(dbc.Col(children=[dcc.Dropdown(id='names-dropdown-p2'), dcc.Checklist(id='select-all',
-                options=['Select All'], value=[])],id='cand-names-col-p2'),id='cand-names-row-p2')),
+    [dbc.Col(dbc.Row(dbc.Col(children=[html.Label(['Select State'], style={'font-size': '13px', "text-align": "left", "off-set":4, "color": "#808080"}), dcc.Dropdown(pd.DataFrame(pd.read_csv("./data/states.csv"))['name'].tolist(),id='state-dropdown-p2')],id='states-col-p2'))),
+    dbc.Col(dbc.Row(dbc.Col(children=[html.Label(['Select Candidate'], style={'font-size': '13px', "text-align": "left", "off-set":4, "color": "#808080"}), dcc.Dropdown(id='names-dropdown-p2')],id='cand-names-col-p2'),id='cand-names-row-p2')),
 
     ]),
 
 dbc.Row([
 dbc.Col([
     dcc.Graph(id='bar-graph-plotly', figure={})
-], width=12, md=6, style={'height': '2vh'}),
-dbc.Col([
+]),
+dbc.Col(children=[
     dag.AgGrid(
         id='grid',
         rowData=authors.to_dict("records"),
         columnDefs=[{"field": i} for i in authors.columns],
         columnSize="sizeToFit",
+        style={"text-align": "center"}
     )
-], width=12, md=6),
-], className='mt-4'),
+], md=20, style={"margin": "2rem 0 0 0"}),
+], className='mt-4',style={"text-align": "center"}),
 html.Br(),
 html.Br(),
 html.Br()
@@ -142,15 +143,15 @@ html.Br()
 def update_output(value):
     a = states.loc[states['name'] == value, 'state']
 
-    dropdown = ''
+    dropdown = []
     if value:
         res = candidates.loc[candidates['State'] == a.iloc[0], 'Candidate name'].tolist()
         dropdown = [dcc.Dropdown(['Select all'] + res,id='names-dropdown-p2', value=res[0], searchable=True,  multi=True)]
 
     else:
         res = candidates['Candidate name'].tolist()
-        dropdown = dcc.Dropdown(res ,id='names-dropdown-p2', value=res[0], searchable=True,  multi=True)
-    return dropdown
+        dropdown = [dcc.Dropdown(res ,id='names-dropdown-p2', value=res[0], searchable=True,  multi=True)]
+    return [html.Label(['Select Candidate'], style={'font-size': '13px', "text-align": "left", "off-set":4, "color": "#808080"})] + dropdown
 
 
 
@@ -165,9 +166,8 @@ def update_output(value):
     ]
 )
 def my_callback(figure_empty):
-    # authors['split'] = authors[authors['ideal_point'] > 0]['ideal_point']
 
-    fig = px.scatter(authors, x=['ideal_point'], y=[1]*len(authors),  height=200,hover_data=['name'])
+    fig = px.scatter(authors, x=['ideal_point'], y=[1]*len(authors),hover_data=['name'])
     fig.update_xaxes(fixedrange=True)
     fig.update_yaxes(fixedrange=True)
 
@@ -176,14 +176,14 @@ def my_callback(figure_empty):
     y = np.array([1] * len(authors))
 
     layout = go.Layout(
-        xaxis={'title': 'Author\'s Ideal Point from Moderate to Progressive',
-                        'visible': True,
+        xaxis={'visible': True,
                         'showticklabels': True},
         yaxis={'title': 'y-label',
                         'visible': False,
                         'showticklabels': False},
 
-        height=400,
+        height=200,
+        margin=dict(l=0, r=0, t=0, b=0)
         )
 
     fig = go.Figure(layout=layout)

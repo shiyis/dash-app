@@ -39,10 +39,16 @@ CONTENT_STYLE = {
 sidebar = html.Div(
     [   
         html.P(" ", className="display-4"),
-        html.Hr(),
+        # html.Hr(),
         html.P(
-            "C4FE-TBIP", className="lead"
-        ),
+            "C4FE-TBIP", className="lead",
+        style={ 'width': '100%',
+                'height': '60px',
+                'lineHeight': '60px',
+                'borderWidth': '1px',
+                'borderStyle': 'solid',
+                'borderRadius': '0px',
+                'textAlign': 'center'}),
         html.Hr(),
         dbc.Nav(
             [
@@ -51,29 +57,29 @@ sidebar = html.Div(
             vertical=True,
             pills=True,
             className="nav-links"),
-        # html.Hr(),
-        html.H1("🗳️", className="logo"),
+        html.Hr(),
+        html.Div(children=[html.H1("🗳️", className="logo"),
         dcc.Upload(
             id='upload-data',
             children=html.Div([
                 'Drag and Drop or ',
-                html.A('Select Files')
+                html.A('Select Your Data!')
             ]),
-            style={
-                'width': '100%',
-                'height': '60px',
-                'lineHeight': '60px',
-                'borderWidth': '1px',
-                'borderStyle': 'dashed',
-                'borderRadius': '0px',
-                'textAlign': 'center',
-                'margin': '20px 0px 0px 0px',
-            },
         # Allow multiple files to be uploaded
         multiple=True
-        ),
-        html.Div(id='output-data-upload'),
-        html.Hr()
+        )], style={
+                'width': '100%',
+                'height': '110px',
+                'lineHeight': '60px',
+                'borderWidth': '1px',
+                'borderStyle': 'dotted',
+                'borderRadius': '0px',
+                'textAlign': 'center',
+                'font-size': '12.5px',
+                'margin': '20px 0px 0px 0px',
+            },),
+        html.Div(id='output-data-upload')
+        # html.Hr()
     ], className='sidebar',
     style=SIDEBAR_STYLE,
 )

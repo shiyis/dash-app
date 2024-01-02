@@ -4,3 +4,6 @@
 
 #content, #footer { background: #fff; }
 
+.ag-header-cell-label {
+    justify-content: center;
+  }

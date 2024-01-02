@@ -43,7 +43,7 @@ def create_choropleth(id='geojson1', info_id='info1'):
 
     # Create colorbar.
     ctg = ["{}+".format(cls, classes[i + 1]) for i, cls in enumerate(classes[:-1])] + ["{}+".format(classes[-1])]
-    colorbar = dlx.categorical_colorbar(categories=ctg, colorscale=colorscale, width=500, height=10, position="bottomleft")
+    colorbar = dlx.categorical_colorbar(categories=ctg, colorscale=colorscale, width=480, height=10, position="bottomleft")
 
     # Geojson rendering logic, must be JavaScript as it is executed in clientside.
     style_handle = assign("""function(feature, context){
@@ -66,7 +66,7 @@ def create_choropleth(id='geojson1', info_id='info1'):
                         id=id)
     # Create info control.
     info = html.Div(children=get_info(), id=info_id, className="info",
-                    style={"position": "absolute", "top": "305px", "left": "530px", "zIndex": "1000"})
+                    style={"position": "absolute", "top": "245px", "left": "530px", "zIndex": "1000"})
     return geojson,colorbar,info
 
 choropleth1 = create_choropleth()
@@ -83,8 +83,8 @@ layout =  html.Div([
                     html.P("""This part of the project will first present the receipts, disbursements, and other expenditures in terms of propagating political actions in visualization format grounded in states; for example, how many different political action committees there are by US states. This part of the project will also break down all the candidates of 2022 their basic information as mentioned above including their basic demographics, political party affiliation, election cycle, and incumbency."""),
                     html.P("""All info is retrievable through the Federal Election Commission's directory. This project seeks to conduct the research with full transparency and abide to relevant conduct code."""),
                     dbc.Row(
-                        [dbc.Col(dbc.Row(dbc.Col(children=[dcc.Dropdown(pd.DataFrame(pd.read_csv("./data/states.csv"))['name'].tolist(),id='state-dropdown')],id='states-col'))),
-                         dbc.Col(dbc.Row(dbc.Col(children=[dcc.Dropdown(id='names-dropdown')],id='cand-names-col'),id='cand-names-row'))]),
+                        [dbc.Col(dbc.Row(children=[html.Label(['Select State'], style={'font-size': '13px', "text-align": "left", "off-set":4, "color": "#808080"}), dcc.Dropdown(pd.DataFrame(pd.read_csv("./data/states.csv"))['name'].tolist(),id='state-dropdown')],id='states-row')),
+                         dbc.Col(dbc.Row(children=[html.Label(['Select Candidate'], style={'font-size': '13px', "text-align": "left", "off-set":4, "color": "#808080"}), dcc.Dropdown(id='names-dropdown')],id='cand-names-row'))]),
                     html.Div(html.Div(children=[html.Div(dcc.Slider(7000, 27500000, 3000000,value=3000000,id='pac-exp-filter'),style={'margin':'2rem -1.3rem 0rem -1.3rem'})],id='cand-names-col')),
                     html.P(),
                     html.Div(id='mapmessage', style={'color' : '#FFFFFF', 'fontSize' : '20px', 'marginTop' : '-25px'}),
@@ -107,14 +107,13 @@ layout =  html.Div([
                                   
                                   4. And finally since the committee is marked through their zipcode, the ones that are missing specific zipcodes will use the state default zipcode. Therefore, sometimes a few committees are stacked up against each other in the same pinned spot (the future update will try to incorporate more accurate indication of  address)."""),
                     html.Br(),                                        
-                    html.Br(),
                     html.H5("Some Other Important Info Stats"),
                     html.Hr(),
                     dbc.Row(
                         [dbc.Col(dcc.Markdown(f""" - Total Amount Raised by Party (Top 5): 
 {candidates[['Party affiliation','Total receipts']].groupby('Party affiliation').agg('sum').sort_values('Total receipts')[::-1][:5].reset_index()}"""),),
                         dbc.Col(dcc.Markdown(f""" - Total Committees by State and Party (Top 5): 
-{candidates[['Candidate state', 'Party affiliation', 'Affiliated Committee Name']].groupby(['Candidate state','Party affiliation']).agg('count').sort_values('Affiliated Committee Name').fillna('None')[::-1][:5].reset_index().rename(columns={"Candidate state":"State", 'Affiliated Committee Name':"# Affiliated Committee"})}"""),),
+{candidates[['Candidate state', 'Party affiliation', 'Affiliated Committee Name']].groupby(['Candidate state','Party affiliation']).agg('count').sort_values('Affiliated Committee Name').fillna('None')[::-1][:5].reset_index().rename(columns={"Candidate state":"State", 'Affiliated Committee Name':"# Affiliated Committees"})}"""),),
                         dbc.Col(dcc.Markdown(f""" - Total Money Raised by State and Party (Top 5): 
 {candidates[['Candidate state','Party affiliation','Total receipts']].groupby(['Candidate state','Party affiliation']).agg('sum').sort_values('Total receipts')[::-1][:5].reset_index().rename(columns={"Candidate state":"State"})}"""),)])
 ],className='page1',id='page1-content', style=PAGE_STYLE)
@@ -128,7 +127,7 @@ def update_output(value):
         res = candidates.loc[candidates['State'] == a.iloc[0], 'Candidate name'].tolist()
     else:
         res = candidates['Candidate name'].tolist()
-    return dcc.Dropdown(res,id='names-dropdown',searchable=True, multi=True)
+    return html.Label(['Select Candidate'], style={'font-size': '13px', "text-align": "left", "off-set":4, "color": "#808080"}), dcc.Dropdown(res,id='names-dropdown',searchable=True, multi=True)
 
 
 @callback(Output('candidates-stats-marker', 'children'), Output('candidates-individual-marker','viewport'), Output('candidates-individual-marker', 'children'),
