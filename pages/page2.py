@@ -24,7 +24,7 @@ dash.register_page(__name__, title='Text-based Ideal Points',location='sidebar')
 
 PAGE_STYLE = {
     "position":"absolute",
-    "margin":"4.5rem 4rem 0rem 24.5rem",
+    "margin":"4.5rem 4rem 0rem 22rem",
     "color":"#000",
     "text-shadow":"#000 0 0",
     'whiteSpace': 'pre-wrap'
@@ -113,7 +113,7 @@ html.Hr(),
 dcc.Markdown("""Below are trained results for the list of 2022 federal election candidates' ideal points and topic aggregation of their Twitter archive
     """),
 dbc.Row(
-    [dbc.Col(dbc.Row(dbc.Col(children=[html.Label(['Select State'], style={'font-size': '13px', "text-align": "left", "off-set":4, "color": "#808080"}), dcc.Dropdown(pd.DataFrame(pd.read_csv("./data/states.csv"))['name'].tolist(),id='state-dropdown-p2')],id='states-col-p2'))),
+    [dbc.Col(dbc.Row(dbc.Col(children=[html.Label(['Select State'], style={'font-size': '13px', "text-align": "left", "color": "#808080"}), dcc.Dropdown(pd.DataFrame(pd.read_csv("./data/states.csv"))['name'].tolist(),id='state-dropdown-p2')],id='states-col-p2'))),
     dbc.Col(dbc.Row(dbc.Col(children=[html.Label(['Select Candidate'], style={'font-size': '13px', "text-align": "left", "off-set":4, "color": "#808080"}), dcc.Dropdown(id='names-dropdown-p2')],id='cand-names-col-p2'),id='cand-names-row-p2')),
 
     ]),
@@ -176,7 +176,8 @@ def my_callback(figure_empty):
     y = np.array([1] * len(authors))
 
     layout = go.Layout(
-        xaxis={'visible': True,
+        xaxis={'title': 'Author\'s Ideal Point from Moderate to Progressive',
+                        'visible': True,
                         'showticklabels': True},
         yaxis={'title': 'y-label',
                         'visible': False,
