@@ -2,7 +2,7 @@
 
 
 
-#content, #footer { background: #fff; }
+#content, #footer { background: #fff; zoom: 80% }
 
 .ag-header-cell-label {
     justify-content: center;

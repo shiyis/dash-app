@@ -66,7 +66,7 @@ def create_choropleth(id='geojson1', info_id='info1'):
                         id=id)
     # Create info control.
     info = html.Div(children=get_info(), id=info_id, className="info",
-                    style={"position": "absolute", "top": "245px", "left": "530px", "zIndex": "1000"})
+                    style={"position": "absolute", "top": "285px", "left": "595px", "zIndex": "1000"})
     return geojson,colorbar,info
 
 choropleth1 = create_choropleth()
@@ -95,7 +95,7 @@ layout =  html.Div([
                          dbc.Col(dbc.Row(dbc.Col(children=[map2])),id='map2-col')]),
                     html.Br(),                                        
                     html.Br(),
-                    html.H5("What's On The Maps?"),
+                    html.H5("What's On The Map?"),
                     html.Hr(),
                     html.P("""To understand this these two maps more thoroughly, a few things that are important to note are:"""),
                     dcc.Markdown("""
