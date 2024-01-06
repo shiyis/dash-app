@@ -87,7 +87,7 @@ dbc.Col(children=[
 ], className='mt-4',style={"text-align": "center"}),
 html.P(""),
 html.Br(),
-html.H5("Ideological Topic Distrbution with Variational Encoding"),
+html.H5("Topic Modeling with Variational Encoding"),
 html.Hr(),
 """The model performs inference using """,html.A("variational inference.", href="https://arxiv.org/abs/1601.00670"),""" with """, html.A("reparameterization", href="https://arxiv.org/abs/1312.6114"),html.A(" gradients.", href="https://arxiv.org/abs/1401.4082"), 
 """ What this means in plain language is that imagine you have a bunch of data, like pictures of cats. Each cat picture can be described by a set of features—things like the color of the fur, the size of the ears, and the length of the tail. Now, let's say you want to understand the hidden or latent factors that contribute to these features. The challenge is that there might be some randomness or uncertainty in these latent factors.""","""
@@ -141,7 +141,7 @@ In topic modeling, the variational family represents the distributions of topics
             5. Discovering Latent Topics:""",html.Code("""
     The algorithm, through this variational inference process, discovers latent topics in the corpora based on how words co-occur across documents.
 """),"""
-In summary, variational inference, with the help of a variational family, allows us to approximate complex posterior distributions in topic modeling. It helps uncover latent topics and their distributions in a collection of documents, providing valuable insights into the underlying thematic structures.""", 
+In summary, variational inference, with the help of a variational family, allows us to approximate complex posterior distributions in topic modeling. It helps uncover latent topics and their distributions in a collection of documents, providing valuable insights into the underlying thematic structures.""", html.P(""""""),
 dcc.Markdown("""Again, because it is intractable to evaluate the posterior distribution $p(\\theta, \\beta, \\eta, x | y)$, so the posterior is estimated with a distribution $q_\\phi(\\theta, \\beta,\\eta,x)$, parameterized by $\\phi$ through minimizing the KL-Divergence between $q$ and the posterior (put simple is the distance between these two distributions), which is equivalent to maximizing the ELBO (or the Evidence Lower Bound):""", mathjax=True),dcc.Markdown("""
         $$\\mathbb{L}_{\\theta,\phi}(\\mathbf{x})=\mathbb{E}_{q_{\\phi}(\\mathbf{z}|\\mathbf{x})}[\\log p_{\\theta}(\\mathbf{x},\\mathbf{z})-\\log q_{\\phi}(\\mathbf{z}|\\mathbf{x})]$$""",mathjax=True,style={"text-align": "center"}), dcc.Markdown(                    
 """The variational family is set to be the mean-field family, meaning the latent variables factorize over documents $d$, topics $k$, and authors $$s$$:""", mathjax=True),
@@ -179,7 +179,8 @@ dcc.Markdown("""
         * `vocabulary.txt`: a `[num_words]` - length file where each line denotes the corresponding word in the vocabulary.
         * `author_map.txt`: a `[num_authors]` - length file where each line denotes the name of an author in the corpus.
 
-""",mathjax=True),dcc.Markdown("""Please checkout this [notebook](https://colab.research.google.com/github/pyro-ppl/numpyro/blob/5291d0627d68598cf78b8ea97c540268660925c1/notebooks/source/tbip.ipynb) for the full implementation in Python""")],className='page2',style=PAGE_STYLE)
+""",mathjax=True),dcc.Markdown("""Please checkout this [notebook](https://colab.research.google.com/github/pyro-ppl/numpyro/blob/5291d0627d68598cf78b8ea97c540268660925c1/notebooks/source/tbip.ipynb) for the full implementation in Python"""), html.Br(), html.H5("""Resulting Ideological Distribution Generated from Author's Political Content"""), html.Hr()
+],className='page2',style=PAGE_STYLE)
 
 @callback(
     Output('cand-names-col-p2', 'children'),
