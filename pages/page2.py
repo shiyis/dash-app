@@ -142,7 +142,7 @@ In topic modeling, the variational family represents the distributions of topics
             5. Discovering Latent Topics:""",html.Code("""
             The algorithm, through this variational inference process, discovers latent topics in the corpora based on how words co-occur across documents.
             """),"""
-            In summary, variational inference, with the help of a variational family, allows us to approximate complex posterior distributions in topic modeling. It helps uncover latent topics and their distributions in a collection of documents, providing valuable insights into the underlying thematic structures.""", """The default corpus for this Colab notebook is """ ,html.A("Senate speeches", href="https://data.stanford.edu/congress_text"), """ from the 114th Senate session (2015-2017). The project also used the following corpora: Tweets from 2022 Democratic presidential candidates.""",]),
+In summary, variational inference, with the help of a variational family, allows us to approximate complex posterior distributions in topic modeling. It helps uncover latent topics and their distributions in a collection of documents, providing valuable insights into the underlying thematic structures.""", """The default corpus for this Colab notebook is """ ,html.A("Senate speeches", href="https://data.stanford.edu/congress_text"), """ from the 114th Senate session (2015-2017). The project also used the following corpora: Tweets from 2022 Democratic presidential candidates.""",]),
 
 
 
@@ -185,7 +185,7 @@ dbc.Row([dcc.Markdown("""
 dcc.Markdown("""The corresponding variational distribution is `ideological_topic_distribution`.
             
 Please checkout this [notebook](https://colab.research.google.com/github/pyro-ppl/numpyro/blob/5291d0627d68598cf78b8ea97c540268660925c1/notebooks/source/tbip.ipynb) for the full implementation in Python.
-            """)])
+            """)]), html.H5("""Tensorboard to Display Ideological Topics Extracted from Author's Political Tweet""")
 ],className='page2',style=PAGE_STYLE)
 
 @callback(
