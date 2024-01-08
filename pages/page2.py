@@ -63,7 +63,7 @@ authors["name"] = authors["name"].str.replace("\n", "")
 
 layout = html.Div([html.H5("Text-based Ideal Point Generated for Author's Political Leaning"),
 html.Hr(),
-html.P([dcc.Markdown("""To continue with our project objective of measuring and investigating how a politician's internal motivation aligns with their external actions (disbursements and expenditure with respect to their political acitivities and agenda; which we have disclosed the most basic information in the previous section, or [C4FE Exploratory Data Analysis](https://c4fe-tbip.onrender.com/page1), this section conducted a statistical topic modeling over the authors/politicians' tweets."""),html.A("TBIP", href="https://www.aclweb.org/anthology/2020.acl-main.475/"), """ is an unsupervised probabilistic topic model called (Keyon V., Suresh N., David B. et al.) evaluates texts to quantify the political stances of their authors. The model does not require any text labeled with an ideology, nor does it use political parties or votes.""", html.P(""""""),dcc.Markdown("""Instead, it assesses the `latent political viewpoints` of text writers and how `per-topic word choice` varies according to the author's political stance `("ideological topics")` given a corpus of political text and the authors of each document."""),
+html.P([dcc.Markdown("""To continue with our project objective of measuring and investigating how a politician's internal motivation aligns with their external actions (disbursements and expenditures with respect to their political acitivities and agenda; which we have disclosed the most basic information in the previous section, or [C4FE Exploratory Data Analysis](https://c4fe-tbip.onrender.com/page1), this section carried out a statistical topic modeling over the authors/politicians' tweets."""),html.A("TBIP", href="https://www.aclweb.org/anthology/2020.acl-main.475/"), """ is an unsupervised probabilistic topic model called (Keyon V., Suresh N., David B. et al.) evaluates texts to quantify the political stances of their authors. The model does not require any text labeled with an ideology, nor does it use political parties or votes.""", html.P(""""""),dcc.Markdown("""Instead, it assesses the `latent political viewpoints` of text writers and how `per-topic word choice` varies according to the author's political stance `("ideological topics")` given a corpus of political text and the authors of each document."""),
 """Below are trained results for the list of 2022 federal election candidates' ideal points and topic aggregation of their Twitter archive.""",
 dbc.Row(
     [dbc.Col(dbc.Row(dbc.Col(children=[html.Label(['Select State'], style={'font-size': '13px', "text-align": "left", "color": "#808080"}), dcc.Dropdown(pd.DataFrame(pd.read_csv("./data/states.csv"))['name'].tolist(),id='state-dropdown-p2')],id='states-col-p2'))),
@@ -93,21 +93,23 @@ html.Hr(),
 """What this means in plain language is that imagine you have a bunch of data, like pictures of cats. Each cat picture can be described by a set of features—things like the color of the fur, the size of the ears, and the length of the tail. Now, let's say you want to understand the hidden or latent factors that contribute to these features. The challenge is that there might be some randomness or uncertainty in these latent factors.""","""
                 
             1. Encoding the Data:""",html.Code("""
-    The variational encoder takes each cat picture and encodes it into a set of numbers that represent the key features. However, instead of giving you a single set 
-    of numbers. It provides a distribution. This distribution tells you how likely different values of these features are."""),"""
+            The variational encoder takes each cat picture and encodes it into a set of numbers that represent the key features. 
+            However, instead of giving you a single set of numbers. It provides a distribution. This distribution tells you how likely different values of 
+            these features are."""),"""
                                                                                                                                               
             2. Introducing Randomness:""",html.Code("""
-    To account for uncertainty in the latent factors, the encoder introduces a bit of randomness into the encoding process. 
-    This means that even for the same cat picture, you might get slightly different sets of numbers each time due to this randomness."""),"""        
+            To account for uncertainty in the latent factors, the encoder introduces a bit of randomness into the encoding process. 
+            This means that even for the same cat picture, you might get slightly different sets of numbers each time due to this randomness."""),"""        
                                                                                                                                                             
             3. Measuring Latent Distribution:""",html.Code("""
-    The distribution you get from the variational encoder reflects the uncertainty or variability in the latent factors. 
-    It's like saying, "Well, we're not exactly sure about the size of the ears, but here's a range of possibilities, and here's how likely each possibility is."
-    """),"""
+            The distribution you get from the variational encoder reflects the uncertainty or variability in the latent factors. 
+            It's like saying, "Well, we're not exactly sure about the size of the ears, but here's a range of possibilities, and here's how likely 
+            each possibility is."
+            """),"""
             4. Sampling from the Distribution:""",html.Code("""
-    Now, when you want to generate or understand new cat pictures, you can sample from this distribution. Sampling means picking a specific set of numbers from 
-    the distribution. Since the distribution captures the uncertainty, each sample gives you a slightly different version of the cat picture, exploring 
-    the potential variations."""),"""
+            Now, when you want to generate or understand new cat pictures, you can sample from this distribution. Sampling means picking a specific set of 
+            numbers from the distribution. Since the distribution captures the uncertainty, each sample gives you a slightly different version of the cat 
+            picture, exploring the potential variations."""),"""
                                          
 In the case of this project, the algorithm for topic modeling used is an extension of another popular algorithm the Latent Dirichlet Allocation (LDA).
 
@@ -118,29 +120,29 @@ In variational inference, you need to specify a family of distributions from whi
 In topic modeling, the variational family represents the distributions of topics in documents and words in topics. It defines the form of the approximating distributions that the variational inference algorithm will consider. Common choices for the variational family include mean-field variational families.""","""
 
             Mean-Field Variational Family:""",html.Code("""
-    In mean-field variational inference, it is assumed that the posterior distribution factorizes across latent variables. 
-    This means that each latent variable is assumed to be independent of the others given certain parameters. 
-    For LDA, these parameters might include the distribution of topics in documents and the distribution of words in topics.
+            In mean-field variational inference, it is assumed that the posterior distribution factorizes across latent variables. 
+            This means that each latent variable is assumed to be independent of the others given certain parameters. 
+            For LDA, these parameters might include the distribution of topics in documents and the distribution of words in topics.
 """),"""
             1. Initialize Parameters:""",html.Code("""
-    Start with some initial parameters for the variational family.
+            Start with some initial parameters for the variational family.
 """),"""
             2. Optimization Process:""",html.Code("""
-    Optimize these parameters to make the approximating distribution as close as possible to the true posterior distribution.
+            Optimize these parameters to make the approximating distribution as close as possible to the true posterior distribution.
 """),"""
             3. Inference:""",html.Code("""
-    Once optimized, the parameters of the variational family give you an approximation of the posterior distribution, including the distributions of topics 
-    in documents and words in topics.
+            Once optimized, the parameters of the variational family give you an approximation of the posterior distribution, 
+            including the distributions of topics in documents and words in topics.
 """),"""
             4. Projecting Latent Information:""",html.Code("""
-    The parameters of the variational family can be interpreted as the estimated distributions of topics. 
-    These distributions are used to project latent information onto the documents and words. 
-    Each document gets a distribution over topics, and each topic gets a distribution over words."""),"""
+            The parameters of the variational family can be interpreted as the estimated distributions of topics. 
+            These distributions are used to project latent information onto the documents and words. 
+            Each document gets a distribution over topics, and each topic gets a distribution over words."""),"""
 
             5. Discovering Latent Topics:""",html.Code("""
-    The algorithm, through this variational inference process, discovers latent topics in the corpora based on how words co-occur across documents.
-"""),"""
-In summary, variational inference, with the help of a variational family, allows us to approximate complex posterior distributions in topic modeling. It helps uncover latent topics and their distributions in a collection of documents, providing valuable insights into the underlying thematic structures.""", """The default corpus for this Colab notebook is """ ,html.A("Senate speeches", href="https://data.stanford.edu/congress_text"), """ from the 114th Senate session (2015-2017). The project also used the following corpora: Tweets from 2022 Democratic presidential candidates.""",]),
+            The algorithm, through this variational inference process, discovers latent topics in the corpora based on how words co-occur across documents.
+            """),"""
+            In summary, variational inference, with the help of a variational family, allows us to approximate complex posterior distributions in topic modeling. It helps uncover latent topics and their distributions in a collection of documents, providing valuable insights into the underlying thematic structures.""", """The default corpus for this Colab notebook is """ ,html.A("Senate speeches", href="https://data.stanford.edu/congress_text"), """ from the 114th Senate session (2015-2017). The project also used the following corpora: Tweets from 2022 Democratic presidential candidates.""",]),
 
 
 
