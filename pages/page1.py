@@ -110,7 +110,7 @@ layout =  html.Div([
                                   
                                   3. The slider manipulates the committees to display by how much money they have raised and the amount is indicated by the size of the colored dot (the more the bigger).
                                   
-                                  4. And finally since the committee was initially marked through their zipcode, the ones that are missing specific zipcodes will use the state default zipcode; this has reulted a few committees stacking up in one pinned place against each other. (with the help of ArcGIS and search with the exact address on file, the new results are more accurate in terms of pinpointing the location)"""),
+                                  4. And finally since the committee was initially marked through their zipcode, the ones that are missing specific zipcodes will use the state default zipcode; this has reulted a few committees stacking up in one pinned place against each other (with the help of ArcGIS and search with the exact address on file, the new results are more accurate in terms of pinpointing the location)."""),
                     html.Br(),                                        
                     html.H5("Some Other Important Info Stats"),
                     html.Hr(),
