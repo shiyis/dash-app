@@ -185,7 +185,7 @@ dbc.Row([dcc.Markdown("""
 dcc.Markdown("""The corresponding variational distribution is `ideological_topic_distribution`.
             
 Please checkout this [notebook](https://colab.research.google.com/github/pyro-ppl/numpyro/blob/5291d0627d68598cf78b8ea97c540268660925c1/notebooks/source/tbip.ipynb) for the full implementation in Python.
-            """)]), html.H5("""Tensorboard to Display Ideological Topics Extracted from Author's Political Tweet""")
+            """)]), html.Br(), html.H5("""Tensorboard to Display Ideological Topics Extracted from Author's Political Tweet"""), html.Hr()
 ],className='page2',style=PAGE_STYLE)
 
 @callback(
