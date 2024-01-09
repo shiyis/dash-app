@@ -11,7 +11,7 @@ from dash.dash_table.Format import Group
 
 dash.register_page(__name__, title='Exploratory Data Analysis',location='sidebar')
 pd.set_option('float_format', '{:.2f}'.format)
-candidates = pd.read_csv("./data/2022/processed_weball.csv")
+candidates = pd.read_csv("./data/2022/processed_weball_updated_address.csv")
 candidates['Candidate state'] = candidates['Candidate state'].replace('00', 'N/A')
 states = pd.read_csv("./data/states.csv")
 
@@ -110,7 +110,7 @@ layout =  html.Div([
                                   
                                   3. The slider manipulates the committees to display by how much money they have raised and the amount is indicated by the size of the colored dot (the more the bigger).
                                   
-                                  4. And finally since the committee is marked through their zipcode, the ones that are missing specific zipcodes will use the state default zipcode. Therefore, sometimes a few committees are stacked up against each other in the same pinned spot (the future update will try to incorporate more accurate indication of  address)."""),
+                                  4. And finally since the committee was initially marked through their zipcode, the ones that are missing specific zipcodes will use the state default zipcode; this has reulted a few committees stacking up in one pinned place against each other. (with the help of ArcGIS and search with the exact address on file, the new results are more accurate in terms of pinpointing the location)"""),
                     html.Br(),                                        
                     html.H5("Some Other Important Info Stats"),
                     html.Hr(),
@@ -125,8 +125,7 @@ layout =  html.Div([
         'color': 'black',
         'fontWeight': 'bold',
     },
-)]),
-                        dbc.Col(children=[dcc.Markdown(f""" - Total Cmtes by State and Party (Top 5): 
+)]),dbc.Col(children=[dcc.Markdown(f""" - Total Cmtes by State and Party (Top 5): 
 """),dash_table.DataTable(table2.to_dict('records'), [{"name": i, "id": i} for i in table2.columns],
     id="descriptive_table2",
     is_focused=True,
@@ -135,8 +134,7 @@ layout =  html.Div([
         'backgroundColor': '#cfd8dc',
         'color': 'black',
         'fontWeight': 'bold',
-    })]),
-                        dbc.Col(children=[dcc.Markdown(f""" - Total Raised by State and Party (Top 5): 
+    })]),dbc.Col(children=[dcc.Markdown(f""" - Total Raised by State and Party (Top 5): 
 """),dash_table.DataTable(table3.to_dict('records'), [{"name": i, "id": i} for i in table3.columns],
     id="descriptive_table3",
     is_focused=True,

@@ -16,7 +16,7 @@ from scipy import sparse
 
 
 states = pd.read_csv("./data/states.csv")
-candidates = pd.read_csv("./data/2022/processed_weball.csv")
+candidates = pd.read_csv("./data/2022/processed_weball_updated_address.csv")
 
 
 dash.register_page(__name__, title='Text-based Ideal Points',location='sidebar')
