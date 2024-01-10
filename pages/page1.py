@@ -75,9 +75,9 @@ choropleth2 = create_choropleth(id='geojson2',info_id='info2')
 map1 = dl.Map(children=[dl.TileLayer()],style={'height': '450px','margin-top':'0rem'}, center=[39, -98], zoom=4, id='candidates-stats-marker')
 map2 = dl.Map(children=[dl.TileLayer()],style={'height': '450px','margin-top':'0rem'}, center=[states[states['state']== 'DC']['latitude'].iloc[0],states[states['state']== 'DC']['longitude'].iloc[0]],zoom=7, id='candidates-individual-marker')
 
-table1 = candidates[['Party affiliation','Total receipts']].groupby('Party affiliation').agg('sum').sort_values('Total receipts')[::-1][:5].reset_index()
-table2 = candidates[['Candidate state', 'Party affiliation', 'Affiliated Committee Name']].groupby(['Candidate state','Party affiliation']).agg('count').sort_values('Affiliated Committee Name').fillna('None')[::-1][:5].reset_index().rename(columns={"Candidate state":"State", 'Affiliated Committee Name':"# Affiliated Cmtes"})
-table3 = candidates[['Candidate state','Party affiliation','Total receipts']].groupby(['Candidate state','Party affiliation']).agg('sum').sort_values('Total receipts')[::-1][:5].reset_index().rename(columns={"Candidate state":"State"})
+table1 = candidates[['Party affiliation','Total receipts']].groupby('Party affiliation').agg('sum').sort_values('Total receipts')[::-1][:5].reset_index().round(2)
+table2 = candidates[['Candidate state', 'Party affiliation', 'Affiliated Committee Name']].groupby(['Candidate state','Party affiliation']).agg('count').sort_values('Affiliated Committee Name').fillna('None')[::-1][:5].reset_index().rename(columns={"Candidate state":"State", 'Affiliated Committee Name':"# Affiliated Cmtes"}).round(2)
+table3 = candidates[['Candidate state','Party affiliation','Total receipts']].groupby(['Candidate state','Party affiliation']).agg('sum').sort_values('Total receipts')[::-1][:5].reset_index().rename(columns={"Candidate state":"State"}).round(2)
 
 
 layout =  html.Div([    
@@ -86,11 +86,11 @@ layout =  html.Div([
                     html.P("""In socio-politics, quantified approaches and modeling techniques are applied in supporting and facilitating political analyses. Individuals, parties, committees and other political entities come together and try to push forward campaigns in hope to receive appropriate patrionization and support for their political agenda. """),
                     html.P("""The Political Action Committees (PACs or Super PACs) amass funding resources that could benefit the elections. These type of fundings could be from other individuals, or political entities. For the sole of purpose of understanding how the processes of fund raising activities like these really work, this part of the project explores the 2021-2022 PACs financial data."""),
                     html.P("""This part of the project will first present the receipts, disbursements, and other expenditures in terms of propagating political actions in visualization format grounded in states; for example, how many different political action committees there are by US states. This part of the project will also break down all the candidates of 2022 their basic information as mentioned above including their basic demographics, political party affiliation, election cycle, and incumbency."""),
-                    html.P("""All info is retrievable through the Federal Election Commission's directory. This project seeks to conduct the research with full transparency and abide to relevant conduct code."""),
+                    html.P("""All info is retrievable through the Federal Election Commission's directory. This project seeks to conduct the research with full transparency and abide to relevant code of conduct."""),
                     dbc.Row(
                         [dbc.Col(dbc.Row(children=[html.Label(['Select State'], style={'font-size': '13px', "text-align": "left", "off-set":4, "color": "#808080"}), dcc.Dropdown(pd.DataFrame(pd.read_csv("./data/states.csv"))['name'].tolist(),id='state-dropdown')],id='states-row')),
                          dbc.Col(dbc.Row(children=[html.Label(['Select Candidate'], style={'font-size': '13px', "text-align": "left", "off-set":4, "color": "#808080"}), dcc.Dropdown(id='names-dropdown')],id='cand-names-row'))]),
-                    html.Div(html.Div(children=[html.Div(dcc.Slider(7000, 27500000, 3000000,value=3000000,id='pac-exp-filter'),style={'margin':'2rem -1.3rem 0rem -1.3rem'})],id='cand-names-col')),
+                    html.Div(html.Div(children=[html.Div(dcc.Slider(7000, 27500000, 2500000,value=2500000,id='pac-exp-filter'),style={'margin':'2rem -1.3rem 0rem -1.3rem'})],id='cand-names-col')),
                     html.P(),
                     html.Div(id='mapmessage', style={'color' : '#FFFFFF', 'fontSize' : '20px', 'marginTop' : '-25px'}),
                     html.Br(),
@@ -109,8 +109,10 @@ layout =  html.Div([
                                   2. The backdrop layer displays the sum amount of money raised for each state and the data could be displayed by hovering over each state boundary.
                                   
                                   3. The slider manipulates the committees to display by how much money they have raised and the amount is indicated by the size of the colored dot (the more the bigger).
-                                  
-                                  4. And finally since the committee is marked through their zipcode, the ones that are missing specific zipcodes will use the state default zipcode. Therefore, sometimes a few committees are stacked up against each other in the same pinned spot (the future update will try to incorporate more accurate indication of  address)."""),
+
+                                  4. The color of the dots/circles indicates the party affiliation of each committee. 
+                                 
+                                 """),
                     html.Br(),                                        
                     html.H5("Some Other Important Info Stats"),
                     html.Hr(),
@@ -170,40 +172,36 @@ def update_output(slider, state, cands):
         groups = {'DEM': ('blue',[]), 'REP':('red',[]), 'OTH': ('grey',[])}
 
         for code,pty,name,r,s,lat,lng in latLon:
-            if r >= 1000000000:
+            if 28000000 < r <= 30000000:
+                radius = 53
+                opacity = 0.8
+            elif 24000000 < r <= 28000000:
                 radius = 50
-                opacity = 0.8
-            if r >= 20000000:
-                radius = 25
-                opacity = 0.8
-            elif r >= 10000000:
-                radius = 20
-                opacity = 0.7
-
-            elif r >= 5000000:
-                radius = 18
                 opacity = 0.6
-
-            elif r  >= 4000000:
-                radius = 15
+            elif 21000000 < r <= 24000000:
+                radius = 45
                 opacity = 0.5
-            elif r >= 3000000:
-                radius = 11
+            elif 18000000 < r <= 21000000:
+                radius = 40
                 opacity = 0.4
-            elif r >= 2000000:
-                radius = 9
+            elif 15000000 < r <= 18000000:
+                radius = 35
                 opacity = 0.3
-            elif r >= 1000000:
-                radius = 7
+            elif 12000000 < r <= 15000000:
+                radius = 30
                 opacity = 0.3
-                radius = 5
+            elif 9000000 < r <= 12000000:
+                radius = 20
                 opacity = 0.3
-            elif r == 0:
-                radius = 2
-                opacity = 0.2
+            elif 6000000 < r  <= 9000000:
+                radius = 15
+                opacity = 0.3
+            elif 3000000 < r <= 6000000:
+                radius = 10
+                opacity = 0.3
             else:
-                radius = 4
-                opacity = 0.3
+                radius = 5
+                opacity = 0.2
 
 
             if r > slider and r < slider + 2500000:
