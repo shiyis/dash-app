@@ -6,7 +6,7 @@ from dash import dcc, html, Output, callback
 import dash_leaflet as dl
 from dash_extensions.javascript import arrow_function
 from dash_extensions.javascript import assign
-
+import dash_table
 
 dash.register_page(__name__, title='Exploratory Data Analysis',location='sidebar')
 pd.set_option('float_format', '{:.2f}'.format)
@@ -75,6 +75,11 @@ choropleth2 = create_choropleth(id='geojson2',info_id='info2')
 map1 = dl.Map(children=[dl.TileLayer()],style={'height': '450px','margin-top':'0rem'}, center=[39, -98], zoom=4, id='candidates-stats-marker')
 map2 = dl.Map(children=[dl.TileLayer()],style={'height': '450px','margin-top':'0rem'}, center=[states[states['state']== 'DC']['latitude'].iloc[0],states[states['state']== 'DC']['longitude'].iloc[0]],zoom=7, id='candidates-individual-marker')
 
+table1 = candidates[['Party affiliation','Total receipts']].groupby('Party affiliation').agg('sum').sort_values('Total receipts')[::-1][:5].reset_index()
+table2 = candidates[['Candidate state', 'Party affiliation', 'Affiliated Committee Name']].groupby(['Candidate state','Party affiliation']).agg('count').sort_values('Affiliated Committee Name').fillna('None')[::-1][:5].reset_index().rename(columns={"Candidate state":"State", 'Affiliated Committee Name':"# Affiliated Cmtes"})
+table3 = candidates[['Candidate state','Party affiliation','Total receipts']].groupby(['Candidate state','Party affiliation']).agg('sum').sort_values('Total receipts')[::-1][:5].reset_index().rename(columns={"Candidate state":"State"})
+
+
 layout =  html.Div([    
                     html.H5("C4FE Exploratory Data Analysis"),
                     html.Hr(),
@@ -110,13 +115,37 @@ layout =  html.Div([
                     html.H5("Some Other Important Info Stats"),
                     html.Hr(),
                     dbc.Row(
-                        [dbc.Col(dcc.Markdown(f""" - Total Amount Raised by Party (Top 5): 
-{candidates[['Party affiliation','Total receipts']].groupby('Party affiliation').agg('sum').sort_values('Total receipts')[::-1][:5].reset_index()}"""),),
-                        dbc.Col(dcc.Markdown(f""" - Total Cmtes by State and Party (Top 5): 
-{candidates[['Candidate state', 'Party affiliation', 'Affiliated Committee Name']].groupby(['Candidate state','Party affiliation']).agg('count').sort_values('Affiliated Committee Name').fillna('None')[::-1][:5].reset_index().rename(columns={"Candidate state":"State", 'Affiliated Committee Name':"# Affiliated Cmtes"})}"""),),
-                        dbc.Col(dcc.Markdown(f""" - Total Raised by State and Party (Top 5): 
-{candidates[['Candidate state','Party affiliation','Total receipts']].groupby(['Candidate state','Party affiliation']).agg('sum').sort_values('Total receipts')[::-1][:5].reset_index().rename(columns={"Candidate state":"State"})}"""),)])
-],className='page1',id='page1-content', style=PAGE_STYLE)
+                        [dbc.Col([dcc.Markdown(f""" - Total Amount Raised by Party (Top 5): """), 
+                                            dash_table.DataTable(table1.to_dict('records'), [{'name': i, "id": i} for i in table1.columns],
+                                            id="descriptive_table",
+                                            is_focused=True,
+                                            style_cell={'textAlign': 'left', 'border': '1px solid gray', 'fontSize': 15},
+                                            style_header={
+                                                'backgroundColor': '#cfd8dc',
+                                                'color': 'black',
+                                                'fontWeight': 'bold',
+                                            })]),
+                        dbc.Col([dcc.Markdown(f""" - Total Cmtes by State and Party (Top 5):"""),
+                                            dash_table.DataTable(table2.to_dict('records'), [{'name': i, "id": i} for i in table2.columns],
+                                            id="descriptive_table",
+                                            is_focused=True,
+                                            style_cell={'textAlign': 'left', 'border': '1px solid gray', 'fontSize': 15},
+                                            style_header={
+                                                'backgroundColor': '#cfd8dc',
+                                                'color': 'black',
+                                                'fontWeight': 'bold',
+                                            })]),
+                        dbc.Col([dcc.Markdown(f""" - Total Raised by State and Party (Top 5): """), 
+                                            dash_table.DataTable(table3.to_dict('records'), [{'name': i, "id": i} for i in table3.columns],
+                                            id="descriptive_table",
+                                            is_focused=True,
+                                            style_cell={'textAlign': 'left', 'border': '1px solid gray', 'fontSize': 15},
+                                            style_header={
+                                                'backgroundColor': '#cfd8dc',
+                                                'color': 'black',
+                                                'fontWeight': 'bold',
+                                            })])
+])],className='page1',id='page1-content', style=PAGE_STYLE)
 
 @callback(
     Output('cand-names-row', 'children'),
