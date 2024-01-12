@@ -43,7 +43,7 @@ def create_choropleth(id='geojson1', info_id='info1'):
 
     # Create colorbar.
     ctg = ["{}+".format(cls, classes[i + 1]) for i, cls in enumerate(classes[:-1])] + ["{}+".format(classes[-1])]
-    colorbar = dlx.categorical_colorbar(categories=ctg, colorscale=colorscale, width=480, height=10, position="bottomleft")
+    colorbar = dlx.categorical_colorbar(categories=ctg, colorscale=colorscale, width=480, height=10, position="bottomleft",style={'opacity':"0.7"})
 
     # Geojson rendering logic, must be JavaScript as it is executed in clientside.
     style_handle = assign("""function(feature, context){
@@ -66,7 +66,7 @@ def create_choropleth(id='geojson1', info_id='info1'):
                         id=id)
     # Create info control.
     info = html.Div(children=get_info(), id=info_id, className="info",
-                    style={"position": "absolute", "top": "285px", "left": "595px", "zIndex": "1000"})
+                    style={"position": "absolute", "top": "300px", "left": "575px", "zIndex": "1000"})
     return geojson,colorbar,info
 
 choropleth1 = create_choropleth()

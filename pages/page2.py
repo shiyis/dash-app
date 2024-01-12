@@ -140,7 +140,7 @@ In topic modeling, the variational family represents the distributions of topics
             Each document gets a distribution over topics, and each topic gets a distribution over words."""),"""
 
             5. Discovering Latent Topics:""",html.Code("""
-            The algorithm, through this variational inference process, discovers latent topics in the corpora based on how words co-occur across documents.
+            The algorithm, through this variational inference process, discovers latent topics in the corpora based on how words co-occur across documents. Alternatively, it's measuring the [pointwise mutual information](https://en.wikipedia.org/wiki/Pointwise_mutual_information) between two probability distributions.
         """),"""
 In summary, variational inference, with the help of a variational family, allows us to approximate complex posterior distributions in topic modeling. It helps uncover latent topics and their distributions in a collection of documents, providing valuable insights into the underlying thematic structures.""", html.P(""""""),
 dcc.Markdown("""Again, because it is intractable to evaluate the posterior distribution $p(\\theta, \\beta, \\eta, x | y)$, so the posterior is estimated with a distribution $q_\\phi(\\theta, \\beta,\\eta,x)$, parameterized by $\\phi$ through minimizing the KL-Divergence between $q$ and the posterior (put simple is the distance between these two distributions), which is equivalent to maximizing the ELBO (or the Evidence Lower Bound):""", mathjax=True),dcc.Markdown("""
