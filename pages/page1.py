@@ -6,7 +6,7 @@ from dash import dcc, html, Output, callback
 import dash_leaflet as dl
 from dash_extensions.javascript import arrow_function
 from dash_extensions.javascript import assign
-import dash_table
+from dash import dash_table
 
 dash.register_page(__name__, title='Exploratory Data Analysis',location='sidebar')
 pd.set_option('float_format', '{:.2f}'.format)
@@ -147,7 +147,7 @@ layout =  html.Div([
                                                 'color': 'black',
                                                 'fontWeight': 'bold',
                                             })])
-])],className='page1',id='page1-content', style=PAGE_STYLE)
+]), html.Br(), html.Br()],className='page1',id='page1-content', style=PAGE_STYLE)
 
 @callback(
     Output('cand-names-row', 'children'),
