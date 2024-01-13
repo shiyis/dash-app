@@ -8,7 +8,7 @@ import dash_bootstrap_components as dbc
 from dash import dcc, html, dash_table, Input, Output, State, callback
 import dash_leaflet as dl
 from datetime import datetime
-dash.register_page(__name__, path='/',title='Project Intro and Roadmap',location='sidebar')
+dash.register_page(__name__, path='/',title='Project Intro & Roadmap',location='sidebar')
 
 PAGE_STYLE = {
     'background-color':'#fff',

@@ -97,32 +97,18 @@ However, instead of giving you a single set of numbers. It provides a distributi
 dbc.Col(children=["""                                                                                                                                              
 2. Introducing Randomness:""",html.Code("""
 To account for uncertainty in the latent factors, the encoder introduces a bit of randomness into the encoding process. 
-This means that even for the same cat picture, you might get slightly different sets of numbers each time due to this randomness.""")]),dbc.Col(children=["""                                                                                                                                                                3. Measuring Latent Distribution:""",html.Code("""
-The distribution you get from the variational encoder reflects the uncertainty or variability in the latent factors. 
-It's like saying, "well, we're not exactly sure about the size of the ears, but here's a range of possibilities, and here's how likely each possibility is."
+This means that even for the same cat picture, you might get slightly different sets of numbers each time due to this randomness.""")]),dbc.Col(children=["""
+3. Measuring Latent Distribution:""",html.Code("""
+The distribution you get from the variational encoder reflects the uncertainty or variability in the latent factors. It's like saying, "well, we're not exactly sure about the size of the ears, but here's a range of possiblities, and here's how likely each possibility is."
 """)]),dbc.Col(children=["""
 4. Sampling from the Distribution:""",html.Code("""
 Now, when you want to generate new cat pictures, you can sample from this distribution. Sampling means picking a specific set of numbers from the distribution. Since the distribution captures the uncertainty, each sample gives you a slightly different version of the cat picture, exploring the potential variations.""")])]),"""
 This is an extension of another popular algorithm the Latent Dirichlet Allocation (LDA). In the context textual topic modeling, variational inference helps approximate the posterior distribution of latent variables, such as the distribution of topics in documents and words in topics. In variational inference, we need to specify a family of distributions from which we will choose an approximation to the true (but often intractable) posterior distribution. This family of distributions is called the "variational family." Common choices for the variational family include mean-field variational families.""",
 
-dbc.Row(children=[dbc.Col(children=["""
-1. Mean-Field Variational Family:""",html.Code("""
-In mean-field variational inference, it is assumed that the posterior distribution factorizes across latent variables. This means that each latent variable is assumed to be independent of the others given certain parameters. For LDA, these parameters might include the distribution of topics in documents and the distribution of words in topics.
-""")]),dbc.Col(children=["""
-2. Init and Optimization Process:""",html.Code("""
-Start with some initial parameters for the variational family. Optimize these parameters to make the approximating distribution as close as possible to the true posterior distribution.
-In this case, it's through maximizing the evdience lower bound or minimizing the KL-Divergence between these two probability distributions.
-""")]),dbc.Col(children=["""
-3. Projecting Latent Information:""",html.Code("""
-The parameters of the variational family can be interpreted as the estimated distributions of topics. 
-These distributions are used to project latent information onto the documents and words. 
-Each document gets a distribution over topics, and each topic gets a distribution over words.""")]),dbc.Col(children=["""
-4. Discovering Latent Topics:""",html.Code("""
-The algorithm, through this variational inference process, discovers latent topics in the corpora based on how words co-occur across documents. 
-Alternatively, it's measuring the pointwise mutual information between two probability distributions.
-""")])]),"""
+"""
+
 In summary, variational inference, with the help of a variational family, allows us to approximate complex posterior distributions in topic modeling. It helps uncover latent topics and their distributions in a collection of documents, providing valuable insights into the underlying thematic structures.""", html.P(""""""),
-dcc.Markdown("""Again, because it is intractable to evaluate the posterior distribution $p(\\theta, \\beta, \\eta, x | y)$, so the posterior is estimated with a distribution $q_\\phi(\\theta, \\beta,\\eta,x)$, parameterized by $\\phi$ through minimizing the KL-Divergence between $q$ and the posterior (put simple is the distance between these two distributions), which is equivalent to maximizing the ELBO (or the Evidence Lower Bound):""", mathjax=True),dcc.Markdown("""
+dcc.Markdown("""Now we want to see above descriptions materialized in actual formulas. Again, because it is intractable to evaluate the posterior distribution $p(\\theta, \\beta, \\eta, x | y)$, so the posterior is estimated with a distribution $q_\\phi(\\theta, \\beta,\\eta,x)$, parameterized by $\\phi$ through minimizing the KL-Divergence between $q$ and the posterior (put simple is the distance between these two distributions), which is equivalent to maximizing the ELBO (or the Evidence Lower Bound):""", mathjax=True),dcc.Markdown("""
         $$\\mathbb{L}_{\\theta,\phi}(\\mathbf{x})=\mathbb{E}_{q_{\\phi}(\\mathbf{z}|\\mathbf{x})}[\\log p_{\\theta}(\\mathbf{x},\\mathbf{z})-\\log q_{\\phi}(\\mathbf{z}|\\mathbf{x})]$$""",mathjax=True,style={"text-align": "center"}), dcc.Markdown(                    
 """The variational family is set to be the mean-field family, meaning the latent variables factorize over documents $d$, topics $k$, and authors $$s$$:""", mathjax=True),
 dbc.Row([dcc.Markdown(
@@ -149,8 +135,21 @@ dbc.Row([dcc.Markdown("""
                         $\\mu_\\eta$: `ideological_topic_loc`
                         $\\sigma_\\eta$: `ideological_topic_scale`
     """, mathjax=True)],style={"text-align": "center"}),
-dcc.Markdown("""The corresponding variational distribution is `ideological_topic_distribution`.
-            """),"""The default corpus for this Colab notebook is """ ,html.A("Senate speeches", href="https://data.stanford.edu/congress_text"), """ from the 114th Senate session (2015-2017). The project also used the following corpora: Tweets from 2022 Democratic presidential candidates.""",]),
+dcc.Markdown("""The corresponding variational distribution is `ideological_topic_distribution`.  Below summarizes the above formulas in plainer language. """),
+dbc.Row(children=[dbc.Col(children=["""1. Mean-Field Variational Family:""",html.Code("""
+In mean-field variational inference, it is assumed that the posterior distribution factorizes across latent variables. This means that each latent variable is assumed to be independent of the others given certain parameters. For LDA, these parameters might include the distribution of topics in documents and the distribution of words in topics.
+""")]),dbc.Col(children=["""2. Init and Optimization Process:""",html.Code("""
+Start with some initial parameters for the variational family. Optimize these parameters to make the approximating distribution as close as possible to the true posterior distribution.
+In this case, it's through maximizing the evdience lower bound or minimizing the KL-Divergence between these two probability distributions.
+""")]),dbc.Col(children=["""3. Projecting Latent Information:""",html.Code("""
+The parameters of the variational family can be interpreted as the estimated distributions of topics. 
+These distributions are used to project latent information onto the documents and words. 
+Each document gets a distribution over topics, and each topic gets a distribution over words.""")]),dbc.Col(children=["""4. Discovering Latent Topics:""",html.Code("""
+The algorithm, through this variational inference process, discovers latent topics in the corpora based on how words co-occur across documents. 
+Alternatively, it's measuring the pointwise mutual information between two probability distributions.
+""")])]),
+"""
+The default corpus for this Colab notebook is """ ,html.A("Senate speeches", href="https://data.stanford.edu/congress_text"), """ from the 114th Senate session (2015-2017). The project also used the following corpora: Tweets from 2022 Democratic presidential candidates.""",]),
 """To replicate the whole process with my own Twitter data, I followed the steps below:""",
 dcc.Markdown("""
 
