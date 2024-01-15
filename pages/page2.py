@@ -92,7 +92,7 @@ html.Hr(),
 """The model performs inference using """,html.A("variational inference.", href="https://arxiv.org/abs/1601.00670"),""" with """, html.A("reparameterization", href="https://arxiv.org/abs/1312.6114"),html.A(" gradients.", href="https://arxiv.org/abs/1401.4082"), 
 """ What this means in plain language is that imagine you have a bunch of data, like pictures of cats. Each cat picture can be described by a set of features—things like the color of the fur, the size of the ears, and the length of the tail. Now, let's say you want to understand the hidden or latent factors that contribute to these features. The challenge is that there might be some randomness or uncertainty in these latent factors.""",dbc.Row(children=[dbc.Col(children=["""
 1. Encoding the Data:""",html.Code("""
-The variational encoder takes each cat picture and encodes it into a set of numbers that represent the key features. 
+The variational encoder takes each cat picture and encodes it into a set of numbers hat represent the key features. 
 However, instead of giving you a single set of numbers. It provides a distribution. This distribution tells you how likely different values of these features are.""")]),
 dbc.Col(children=["""                                                                                                                                              
 2. Introducing Randomness:""",html.Code("""
@@ -103,7 +103,7 @@ The distribution you get from the variational encoder reflects the uncertainty o
 """)]),dbc.Col(children=["""
 4. Sampling from the Distribution:""",html.Code("""
 Now, when generating new cat pictures, we sample from this distribution. Sampling means picking a specific set of numbers from the distribution. Since the distribution captures the uncertainty, each sample gives a slightly different version of the cat picture, exploring the potential variations.""")])]),"""
-This is an extension of another popular algorithm the Latent Dirichlet Allocation (LDA). In the context textual topic modeling, variational inference helps approximate the posterior distribution of latent variables, such as the distribution of topics in documents and words in topics. In variational inference, we need to specify a family of distributions from which we will choose an approximation to the true (but often intractable) posterior distribution. This family of distributions is called the "variational family." Common choices for the variational family include mean-field variational families.""",
+This is an extension of another popular algorithm the Latent Dirichlet Allocation (LDA). In the context of textual topic modeling, variational inference helps approximate the posterior distribution of latent variables, such as the distribution of topics in documents and words in topics. In variational inference, we need to specify a family of distributions from which we will choose an approximation to the true (but often intractable) posterior distribution. This family of distributions is called the "variational family." Common choices for the variational family include mean-field variational families.""",
 
 """
 

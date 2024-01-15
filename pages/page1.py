@@ -15,8 +15,6 @@ candidates['Candidate state'] = candidates['Candidate state'].replace('00', 'N/A
 states = pd.read_csv("./data/states.csv")
 
 
-
-
 PAGE_STYLE = {
     # 'background-color':'#fff',
     "position":"relative",
@@ -26,15 +24,12 @@ PAGE_STYLE = {
     'whiteSpace': 'pre-wrap'
 }
 
-
 def get_info(feature=None):
     header = [html.H4("PAC Financial Data by States")]
     if not feature:
         return header + [html.B("Hoover over a state")]
     return header + [html.B(feature["properties"]["name"]), html.Br(),
                     "Total Received: ${:.3f} \n\nTotal Spent: ${:.3f}".format(feature["properties"]["total_r"],feature["properties"]["total_s"])]
-
-
 
 def create_choropleth(id='geojson1', info_id='info1'):
     classes = [0, 5000000, 10000000, 50000000, 100000000, 200000000, 300000000]
@@ -159,7 +154,6 @@ def update_output(value):
     else:
         res = candidates['Candidate name'].tolist()
     return html.Label(['Select Candidate'], style={'font-size': '13px', "text-align": "left", "off-set":4, "color": "#808080"}), dcc.Dropdown(res,id='names-dropdown',searchable=True, multi=True)
-
 
 @callback(Output('candidates-stats-marker', 'children'), Output('candidates-individual-marker','viewport'), Output('candidates-individual-marker', 'children'),
     [dash.dependencies.Input('pac-exp-filter', 'value'),dash.dependencies.Input('state-dropdown', 'value'), dash.dependencies.Input('names-dropdown','value')])
