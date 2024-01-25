@@ -7,17 +7,22 @@ from dash import dcc, html, Output, callback
 import pandas as pd
 import numpy as np
 import os
-import numpy as np
-import dash_bootstrap_components as dbc
 import dash_ag_grid as dag
 import plotly.express as px
 import plotly.graph_objects as go
 from scipy import sparse
-
+from wordcloud import WordCloud, STOPWORDS
+import matplotlib.pyplot as plt
+import base64
+from io import BytesIO
+plt.switch_backend('Agg') 
 
 states = pd.read_csv("./data/states.csv")
 candidates = pd.read_csv("./data/2022/processed_weball.csv")
 
+
+with open("./data/2022/topics.txt", "r") as f:
+    d = f.readlines()
 
 dash.register_page(__name__, title='Text-based Ideal Points',location='sidebar')
 
@@ -42,20 +47,24 @@ author_indices = np.load(dataPath + "author_indices.npy")
 
 counts = sparse.load_npz(dataPath + "counts.npz")
 
-with open(dataPath + "vocabulary.txt",'r') as f:
-    vocabulary = f.readlines()
+# with open(dataPath + "vocabulary.txt",'r') as f:
+#     vocabulary = f.readlines()
 
 with open(dataPath + "author_map.txt",'r') as f:
     author_map = f.readlines()
 
-author_map = np.array(author_map)
-num_authors = int(author_indices.max() + 1)
-num_documents, num_words = counts.shape
-pre_initialize_parameters = True
+with open("./data/2022/topics.txt", "r") as f:
+        d = f.readlines()
 
-neutral_topic_mean = np.load("./data/2022/neutral_topic_mean.npy")
-negative_topic_mean = np.load("./data/2022/neutral_topic_mean.npy")
-positive_topic_mean = np.load("./data/2022/positive_topic_mean.npy")
+# author_map = np.array(author_map)
+# num_authors = int(author_indices.max() + 1)
+# num_documents, num_words = counts.shape
+# pre_initialize_parameters = True
+
+# neutral_topic_mean = np.load("./data/2022/neutral_topic_mean.npy")
+# negative_topic_mean = np.load("./data/2022/neutral_topic_mean.npy")
+# positive_topic_mean = np.load("./data/2022/positive_topic_mean.npy")
+        
 authors = pd.read_csv("./data/2022/authors.csv")
 authors["name"] = authors["name"].str.replace("\n", "")
 
@@ -148,12 +157,20 @@ dcc.Markdown("""
         * `vocabulary.txt`: a `[num_words]` - length file where each line denotes the corresponding word in the vocabulary.
         * `author_map.txt`: a `[num_authors]` - length file where each line denotes the name of an author in the corpus.
 
-""",mathjax=True),dcc.Markdown("""Please checkout this [notebook](https://colab.research.google.com/github/pyro-ppl/numpyro/blob/5291d0627d68598cf78b8ea97c540268660925c1/notebooks/source/tbip.ipynb) for the full implementation in Python"""), html.Br(), html.H5("""Resulting Ideological Distribution Generated from Author's Political Tweet"""), html.Hr()
+""",mathjax=True),dcc.Markdown("""Please checkout this [notebook](https://colab.research.google.com/github/pyro-ppl/numpyro/blob/5291d0627d68598cf78b8ea97c540268660925c1/notebooks/source/tbip.ipynb) for the full implementation in Python"""), html.Br(), html.H5("""Resulting Ideological Distribution Generated from Author's Political Tweet"""), html.Hr(), """In this section of the page, the trained topics and results will be displayed in visual format.   
+
+The final trained results are divided up into negative, neutral, and positive categories in parallel in order to show how an author's per-topic word choice shifts. 
+""",html.Div(html.Div(children=[html.Div(dcc.Slider(0,50, 10,value=10,id='pac-cands-topic-slider'),style={'margin':'2rem -1.3rem 0rem -1.3rem'})],id='cand-names-col')),
+dbc.Row([
+        dbc.Col([
+            html.Img(id='bar-graph-matplotlib')
+        ], width=12)
+    ]),
 ],className='page2',style=PAGE_STYLE)
 
 @callback(
     Output('cand-names-col-p2', 'children'),
-    [dash.dependencies.Input('state-dropdown-p2', 'value')])
+    [dash.dependencies.Input('pac-cands-topic-slider', 'value')])
 def update_output(value):
     a = states.loc[states['name'] == value, 'state']
 
@@ -238,3 +255,65 @@ def my_callback(state_choice, pillar_dropdown):
             selected_authors = pillar_dropdown
 
     return pillar_dropdown
+
+
+
+
+@callback(
+    Output(component_id='bar-graph-matplotlib', component_property='src'),
+    dash.dependencies.Input('pac-cands-topic-slider', 'value'),
+)
+def plot_data(selected_value):
+
+    # Build the matplotlib figure
+    topics = dict.fromkeys(range(selected_value))
+    for i in topics.keys():
+        for j in d:
+            if str(i) in j:
+                if topics[i] == None:
+                    topics[i] = [j]
+                elif len(topics[i]) < 3:
+                    topics[i].append(j)
+                else:
+                    pass
+
+    # Python program to generate WordCloud
+
+    stopwords = set(STOPWORDS)
+
+
+    nrows = (50 + 2) // 3
+    fig, axs = plt.subplots(nrows, 3, figsize=(14, 3 + 3 * nrows))
+    axs = axs.flatten()
+
+    # iterate through the csv file
+    for n, i in list(topics.items())[:selected_value]:
+        comment_words = ""
+        for val in i:
+        # typecaste each val to string
+            val = str(val)
+            # split the value
+            tokens = [''.join([j for j in i.strip() if j.isalpha() and i != '']) for i in val[val.index(':') + 1:].split("\\n")]
+            # Converts each token into lowercase
+
+        comment_words += " ".join(tokens) + " "
+
+        wordcloud = WordCloud(width = 800, height = 500,
+                        background_color ='white',
+                        stopwords = stopwords,
+                        min_font_size = 10).generate(comment_words)
+
+        axs[n].set_title(f"Topic {n + 1}")
+        axs[n].imshow(wordcloud, interpolation="bilinear")
+        axs[n].axis("off")
+
+    
+    # plt.show()
+
+    buf = BytesIO()
+    fig.savefig(buf, format="png")
+    # Embed the result in the html output.
+    fig_data = base64.b64encode(buf.getbuffer()).decode("ascii")
+    fig_bar_matplotlib = f'data:image/png;base64,{fig_data}'
+
+    return fig_bar_matplotlib

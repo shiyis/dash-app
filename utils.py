@@ -20,3 +20,6 @@ for n, i in enumerate(addresses):
         pass
 
 df.to_csv('./data/2022/processed_weball_updated_coordinates.csv')
+
+
+

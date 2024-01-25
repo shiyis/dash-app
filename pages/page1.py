@@ -160,7 +160,7 @@ def update_output(value):
 def update_output(slider, state, cands):
         latLon = candidates[['Party code','Party affiliation','Affiliated Committee Name','Total receipts','Total disbursements','lat','lon']]
         latLon = [tuple(i[1:]) for i in latLon.itertuples()]
-        colors = ['red','blue','grey']
+        colors = ['blue','red','grey']
         s_latlon = [states[states['state']== 'DC']['latitude'].iloc[0],states[states['state']== 'DC']['longitude'].iloc[0]]
 
         groups = {'DEM': ('blue',[]), 'REP':('red',[]), 'OTH': ('grey',[])}
