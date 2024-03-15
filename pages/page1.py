@@ -76,7 +76,7 @@ table3 = candidates[['Candidate state','Party affiliation','Total receipts']].gr
 
 
 layout =  html.Div([    
-                    html.H5("C4FE Exploratory Data Analysis"),
+                    html.H5("Candidates for Federal Elections Exploratory Data Analysis"),
                     html.Hr(),
                     html.P("""In socio-politics, quantified approaches and modeling techniques are applied in supporting and facilitating political analyses. Individuals, parties, committees and other political entities come together and try to push forward campaigns in hope to receive appropriate patrionization and support for their political agenda. """),
                     html.P("""The Political Action Committees (PACs or Super PACs) amass funding resources that could benefit the elections. These type of fundings could be from other individuals, or political entities. For the sole of purpose of understanding what the processes of fund raising activities like these really are, this part of the project explores the 2021-2022 PACs financial data."""),
