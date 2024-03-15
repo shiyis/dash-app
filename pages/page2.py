@@ -157,15 +157,16 @@ dcc.Markdown("""
         * `vocabulary.txt`: a `[num_words]` - length file where each line denotes the corresponding word in the vocabulary.
         * `author_map.txt`: a `[num_authors]` - length file where each line denotes the name of an author in the corpus.
 
-""",mathjax=True),dcc.Markdown("""Please checkout this [notebook](https://colab.research.google.com/github/pyro-ppl/numpyro/blob/5291d0627d68598cf78b8ea97c540268660925c1/notebooks/source/tbip.ipynb) for the full implementation in Python"""), html.Br(), html.H5("""Resulting Ideological Distribution Generated from Author's Political Tweet"""), html.Hr(), """In this section of the page, the trained topics and results will be displayed in visual format.   
+""",mathjax=True),dcc.Markdown("""Please checkout this [notebook](https://colab.research.google.com/github/pyro-ppl/numpyro/blob/5291d0627d68598cf78b8ea97c540268660925c1/notebooks/source/tbip.ipynb) for the full implementation in Python."""), html.Br()
+# html.H5("""Resulting Ideological Distribution Generated from Author's Political Tweet"""), html.Hr(), """In this section of the page, the trained topics and results will be displayed in visual format.   
 
-The final trained results are divided up into negative, neutral, and positive categories in parallel in order to show how an author's per-topic word choice shifts. 
-""",html.Div(html.Div(children=[html.Div(dcc.Slider(0,50, 10,value=10,id='pac-cands-topic-slider'),style={'margin':'2rem -1.3rem 0rem -1.3rem'})],id='cand-names-col')),
-dbc.Row([
-        dbc.Col([
-            html.Img(id='bar-graph-matplotlib')
-        ], width=12)
-    ]),
+# The final trained results are divided up into negative, neutral, and positive categories in parallel in order to show how an author's per-topic word choice shifts. 
+# """,html.Div(html.Div(children=[html.Div(dcc.Slider(0,50, 10,value=10,id='pac-cands-topic-slider'),style={'margin':'2rem -1.3rem 0rem -1.3rem'})],id='cand-names-col')),
+# dbc.Row([
+#         dbc.Col([
+#             html.Img(id='bar-graph-matplotlib')
+#         ], width=12)
+#     ]),
 ],className='page2',style=PAGE_STYLE)
 
 @callback(
