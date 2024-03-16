@@ -10,10 +10,10 @@ from dash import dash_table
 
 dash.register_page(__name__, title='Exploratory Data Analysis',location='sidebar')
 pd.set_option('float_format', '{:.2f}'.format)
-candidates = pd.read_csv("./data/2022/processed_weball.csv")
-candidates['Candidate state'] = candidates['Candidate state'].replace('00', 'N/A')
-states = pd.read_csv("./data/states.csv")
 
+
+candidates = pd.read_csv("./data/2022/processed_weball.csv")
+states = pd.read_csv("./data/states.csv")
 
 PAGE_STYLE = {
     # 'background-color':'#fff',
@@ -30,7 +30,6 @@ def get_info(feature=None):
         return header + [html.B("Hoover over a state")]
     return header + [html.B(feature["properties"]["name"]), html.Br(),
                     "Total Received: ${:.3f} \n\nTotal Spent: ${:.3f}".format(feature["properties"]["total_r"],feature["properties"]["total_s"])]
-
 def create_choropleth(id='geojson1', info_id='info1'):
     classes = [0, 5000000, 10000000, 50000000, 100000000, 200000000, 300000000]
     colorscale = ['#ffffed','#fcecc4','#ffd69f','#ffbb84','#ff9b78','#ff757b','#ff468e','#ff00ac']

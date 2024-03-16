@@ -16,14 +16,11 @@ import matplotlib.pyplot as plt
 import base64
 from io import BytesIO
 plt.switch_backend('Agg') 
-
 states = pd.read_csv("./data/states.csv")
 candidates = pd.read_csv("./data/2022/processed_weball.csv")
 
-
 with open("./data/2022/topics.txt", "r") as f:
     d = f.readlines()
-
 dash.register_page(__name__, title='Text-based Ideal Points',location='sidebar')
 
 
@@ -34,9 +31,6 @@ PAGE_STYLE = {
     "text-shadow":"#000 0 0",
     'whiteSpace': 'pre-wrap'
 }
-
-
-
 custom = './data/custom_data/clean/author_map.txt'
 if not os.path.isfile(custom):
     dataPath = './data/2022/candidate-tweets-2020/clean/'
@@ -44,32 +38,15 @@ else:
     dataPath = '/'.join(custom.split('/')[:-1])
 # Load data
 author_indices = np.load(dataPath + "author_indices.npy")
-
 counts = sparse.load_npz(dataPath + "counts.npz")
 
-# with open(dataPath + "vocabulary.txt",'r') as f:
-#     vocabulary = f.readlines()
 
 with open(dataPath + "author_map.txt",'r') as f:
     author_map = f.readlines()
-
 with open("./data/2022/topics.txt", "r") as f:
         d = f.readlines()
-
-# author_map = np.array(author_map)
-# num_authors = int(author_indices.max() + 1)
-# num_documents, num_words = counts.shape
-# pre_initialize_parameters = True
-
-# neutral_topic_mean = np.load("./data/2022/neutral_topic_mean.npy")
-# negative_topic_mean = np.load("./data/2022/neutral_topic_mean.npy")
-# positive_topic_mean = np.load("./data/2022/positive_topic_mean.npy")
-        
 authors = pd.read_csv("./data/2022/authors.csv")
 authors["name"] = authors["name"].str.replace("\n", "")
-
-
-
 layout = html.Div([html.H5("A Text-based Ideal Point Generated for Author's Political Leaning"),
 html.Hr(),
 html.P([dcc.Markdown("""To continue with our project objective of measuring and investigating how a politician's internal motivation aligns with their external actions (disbursements and expenditures with respect to their political acitivities and agenda; which we have disclosed the most basic information in the previous section, or [Candidates for Federal Elections Exploratory Data Analysis](https://c4fe-tbip.onrender.com/page1), this section will present a statistical topic modeling over the authors/politicians' tweets."""),html.A("TBIP or The Text-based Ideal Points Model", href="https://www.aclweb.org/anthology/2020.acl-main.475/"), """ is an unsupervised probabilistic topic model (Keyon V., Suresh N., David B. et al.) evaluates texts to quantify the political stances of their authors. The model does not require any text labeled with an ideology, nor does it use political parties or votes.""", html.P(""""""),dcc.Markdown("""Instead, it assesses the `latent political viewpoints` of text writers and how `per-topic word choice` varies according to the author's political stance `("ideological topics")` given a corpus of political text and the author of each document."""),
@@ -157,17 +134,7 @@ dcc.Markdown("""
         * `vocabulary.txt`: a `[num_words]` - length file where each line denotes the corresponding word in the vocabulary.
         * `author_map.txt`: a `[num_authors]` - length file where each line denotes the name of an author in the corpus.
 
-""",mathjax=True),dcc.Markdown("""Please checkout this [notebook](https://colab.research.google.com/github/pyro-ppl/numpyro/blob/5291d0627d68598cf78b8ea97c540268660925c1/notebooks/source/tbip.ipynb) for the full implementation in Python."""), html.Br()
-# html.H5("""Resulting Ideological Distribution Generated from Author's Political Tweet"""), html.Hr(), """In this section of the page, the trained topics and results will be displayed in visual format.   
-
-# The final trained results are divided up into negative, neutral, and positive categories in parallel in order to show how an author's per-topic word choice shifts. 
-# """,html.Div(html.Div(children=[html.Div(dcc.Slider(0,50, 10,value=10,id='pac-cands-topic-slider'),style={'margin':'2rem -1.3rem 0rem -1.3rem'})],id='cand-names-col')),
-# dbc.Row([
-#         dbc.Col([
-#             html.Img(id='bar-graph-matplotlib')
-#         ], width=12)
-#     ]),
-],className='page2',style=PAGE_STYLE)
+""",mathjax=True),dcc.Markdown("""Please checkout this [notebook](https://colab.research.google.com/github/pyro-ppl/numpyro/blob/5291d0627d68598cf78b8ea97c540268660925c1/notebooks/source/tbip.ipynb) for the full implementation in Python."""), html.Br()],className='page2',style=PAGE_STYLE)
 
 @callback(
     Output('cand-names-col-p2', 'children'),
@@ -184,10 +151,6 @@ def update_output(value):
         res = candidates['Candidate name'].tolist()
         dropdown = [dcc.Dropdown(res ,id='names-dropdown-p2', value=res[0], searchable=True,  multi=True)]
     return [html.Label(['Select Candidate'], style={'font-size': '13px', "text-align": "left", "off-set":4, "color": "#808080"})] + dropdown
-
-
-
-
 
 
 @callback(
@@ -237,7 +200,6 @@ def my_callback(figure_empty):
     return fig
 
 
-
 @callback(
     Output(component_id='graph-matplotlib', component_property='src'),
     [
@@ -256,8 +218,6 @@ def my_callback(state_choice, pillar_dropdown):
             selected_authors = pillar_dropdown
 
     return pillar_dropdown
-
-
 
 
 @callback(
