@@ -12,9 +12,11 @@ dash.register_page(__name__, title='Exploratory Data Analysis',location='sidebar
 pd.set_option('float_format', '{:.2f}'.format)
 
 
+# input data
 candidates = pd.read_csv("./data/2022/processed_weball.csv")
 states = pd.read_csv("./data/states.csv")
 
+# define page style
 PAGE_STYLE = {
     # 'background-color':'#fff',
     "position":"relative",
@@ -24,6 +26,7 @@ PAGE_STYLE = {
     'whiteSpace': 'pre-wrap'
 }
 
+# util functoins to create chloropleth 
 def get_info(feature=None):
     header = [html.H4("PAC Financial Data by States")]
     if not feature:
@@ -63,6 +66,7 @@ def create_choropleth(id='geojson1', info_id='info1'):
                     style={"position": "absolute", "top": "300px", "left": "575px", "zIndex": "1000"})
     return geojson,colorbar,info
 
+# creating chloropleth
 choropleth1 = create_choropleth()
 choropleth2 = create_choropleth(id='geojson2',info_id='info2')
 
