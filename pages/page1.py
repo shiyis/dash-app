@@ -182,8 +182,26 @@ table3 = (
 )
 
 
+group1_options = [
+    {"label": "Option 1", "value": "option1"},
+    {"label": "Option 2", "value": "option2"},
+    {"label": "Option 3", "value": "option3"},
+]
+
+group2_options = [
+    {"label": "Option A", "value": "optionA"},
+    {"label": "Option B", "value": "optionB"},
+    {"label": "Option C", "value": "optionC"},
+]
+
+group3_options = [
+    {"label": "Option X", "value": "optionX"},
+    {"label": "Option Y", "value": "optionY"},
+    {"label": "Option Z", "value": "optionZ"},
+]
+
 layout = html.Div(
-    [   
+    [
         html.H5("Exploratory Data Analysis of Federal Election Candidacy"),
         html.Hr(),
         html.P(
@@ -277,7 +295,102 @@ layout = html.Div(
                 ),
                 dbc.Col(
                     dbc.Row(
-                        children=[],
+                        children=[
+                            html.Div(
+                                [
+                                    html.Div(
+                                        [
+                                            html.Label(
+                                                ["# PACs in Selected Range"],
+                                                style={
+                                                    "font-size": "13px",
+                                                    "text-align": "left",
+                                                    "off-set": 4,
+                                                    "color": "#808080",
+                                                    "margin": "1.5rem 0rem 0rem 0rem",
+                                                },
+                                            ),
+                                            dcc.Dropdown(
+                                                id="group1-dropdown", value=" "
+                                            ),
+                                            html.Div(
+                                                id="group1-value",
+                                                style={
+                                                    "font-size": "13px",
+                                                    "text-align": "left",
+                                                    "off-set": 4,
+                                                    "color": "#808080",
+                                                },
+                                            ),
+                                        ],
+                                        style={
+                                            "width": "33.3%",
+                                            "display": "inline-block",
+                                        },
+                                    ),
+                                    html.Div(
+                                        [
+                                            html.Label(
+                                                ["Average Raised"],
+                                                style={
+                                                    "font-size": "13px",
+                                                    "text-align": "left",
+                                                    "off-set": 4,
+                                                    "color": "#808080",
+                                                    "margin": "1.5rem 0rem 0rem 0rem",
+                                                },
+                                            ),
+                                            dcc.Dropdown(
+                                                id="group2-dropdown", value=" "
+                                            ),
+                                            html.Div(
+                                                id="group2-value",
+                                                style={
+                                                    "font-size": "13px",
+                                                    "text-align": "left",
+                                                    "off-set": 4,
+                                                    "color": "#808080",
+                                                },
+                                            ),
+                                        ],
+                                        style={
+                                            "width": "33.3%",
+                                            "display": "inline-block",
+                                        },
+                                    ),
+                                    html.Div(
+                                        [
+                                            html.Label(
+                                                ["Average Spent"],
+                                                style={
+                                                    "font-size": "13px",
+                                                    "text-align": "left",
+                                                    "off-set": 4,
+                                                    "color": "#808080",
+                                                    "margin": "1.5rem 0rem 0rem 0rem",
+                                                },
+                                            ),
+                                            dcc.Dropdown(
+                                                id="group3-dropdown", value=" "
+                                            ),
+                                            html.Div(
+                                                id="group3-value",
+                                                style={
+                                                    "font-size": "13px",
+                                                    "text-align": "left",
+                                                    "off-set": 4,
+                                                    "color": "#808080",
+                                                },
+                                            ),
+                                        ],
+                                        style={
+                                            "width": "33.4%",
+                                            "display": "inline-block",
+                                        },
+                                    ),
+                                ]
+                            )
+                        ],
                         id="dynamic-1",
                     )
                 ),
@@ -309,11 +422,11 @@ layout = html.Div(
 
                                   2. The backdrop layer displays the sum amount of money raised for each state and the data could be displayed by hovering over each state boundary.
                                   
-                                  3. The slider manipulates the committees to display by how much money they have raised and the amount is indicated by the size of the colored dot (the more the bigger).
+                                  3. The slider manipulates the committees to display by how much money they havg raised and the amount is indicated by the size of the colored dot (the more the bigger).
 
                                   4. The color of the dots/circles indicates the party affiliation of each committee. 
 
-                                  5. The stats that are right next to the slider indicate # PACs, average raised and spent for all the committees that fall into the sliding range. 
+                                  5. The stats that are right next to the slider indicate # PACs, avgrage raised and spent for all the committees that fall into the sliding range. 
                                  
                                  """
         ),
@@ -425,7 +538,9 @@ def update_output(value):
     Output("candidates-stats-marker", "children"),
     Output("candidates-individual-marker", "viewport"),
     Output("candidates-individual-marker", "children"),
-    Output("dynamic-1", "children"),
+    Output("group1-dropdown", "options"),
+    Output("group2-dropdown", "options"),
+    Output("group3-dropdown", "options"),
     [
         dash.dependencies.Input("pac-exp-filter", "value"),
         dash.dependencies.Input("state-dropdown", "value"),
@@ -462,8 +577,6 @@ def update_output(slider, state, cands):
     spent_rep = 0
     spent_dem = 0
     spent_3rd = 0
-
-    
 
     for code, pty, name, r, s, lat, lng in latLon:
 
@@ -531,13 +644,14 @@ def update_output(slider, state, cands):
                     raised_dem += r
                     spent_dem += s
                 groups[pty][1].append(cm)
-    ave_r_rep = round(raised_rep / n_rep,2) if n_rep != 0 else 0
-    ave_r_dem = round(raised_dem / n_dem,2) if n_dem != 0 else 0
-    ave_r_3rd = round(raised_3rd / n_3rd,2) if n_3rd != 0 else 0
 
-    ave_s_rep = round(spent_rep / n_rep,2)  if n_rep != 0 else 0
-    ave_s_dem = round(spent_dem / n_dem,2)  if n_dem != 0 else 0
-    ave_s_3rd = round(spent_3rd / n_3rd,2)  if n_3rd != 0 else 0
+    avg_r_rep = round(raised_rep / n_rep, 2) if n_rep != 0 else 0
+    avg_r_dem = round(raised_dem / n_dem, 2) if n_dem != 0 else 0
+    avg_r_3rd = round(raised_3rd / n_3rd, 2) if n_3rd != 0 else 0
+
+    avg_s_rep = round(spent_rep / n_rep, 2) if n_rep != 0 else 0
+    avg_s_dem = round(spent_dem / n_dem, 2) if n_dem != 0 else 0
+    avg_s_3rd = round(spent_3rd / n_3rd, 2) if n_3rd != 0 else 0
 
     data = [
         dl.TileLayer(),
@@ -650,45 +764,37 @@ def update_output(slider, state, cands):
         dict(center=s_latlon, zoom=7, transition="flyTo"),
         second_map,
         [
-            dbc.Col(children=[
-                f"# PACs - REP: {n_rep}\n",
-                f"# PACs - DEM: {n_dem}\n",
-                f"# PACs - 3RD: {n_3rd}\n",],
-                style={
-                    "font-size": "13px",
-                    "text-align": "left",
-                    "off-set": 4,
-                    "color": "#808080",
-                    "margin": "1.9rem -5rem 0rem 0rem",
-
-                },
-            ),
-            dbc.Col(children=[
-                f"Avg Raised - REP: {ave_r_rep}\n",
-                f"Avg Raised - DEM: {ave_r_dem}\n",
-                f"Avg Raised - 3RD: {ave_r_3rd}\n",],
-                style={
-                    "font-size": "13px",
-                    "text-align": "left",
-                    "off-set": 4,
-                    "color": "#808080",
-                    "margin": "1.9rem 0rem 0rem 0rem",
-                },
-            ),
-            dbc.Col(children=[
-                f"Avg Spent - REP: {ave_s_rep}\n",
-                f"Avg Spent - DEM: {ave_s_dem}\n",
-                f"Avg Spent - 3RD: {ave_r_3rd}\n",],
-                style={
-                    "font-size": "13px",
-                    "text-align": "left",
-                    "off-set": 4,
-                    "color": "#808080",
-                    "margin": "1.9rem 0rem 0rem 0rem",
-                },
-            ),
+            {"label": "REP", "value": n_rep},
+            {"label": "DEM", "value": n_dem},
+            {"label": "3RD", "value": n_3rd},
+        ],
+        [
+            {"label": "REP", "value": avg_r_rep},
+            {"label": "DEM", "value": avg_r_dem},
+            {"label": "3RD", "value": avg_r_3rd},
+        ],
+        [
+            {"label": "REP", "value": avg_s_rep},
+            {"label": "DEM", "value": avg_s_dem},
+            {"label": "3RD", "value": avg_s_3rd},
         ],
     )
+
+
+@callback(
+    [
+        Output("group1-value", "children"),
+        Output("group2-value", "children"),
+        Output("group3-value", "children"),
+    ],
+    [
+        dash.dependencies.Input("group1-dropdown", "value"),
+        dash.dependencies.Input("group2-dropdown", "value"),
+        dash.dependencies.Input("group3-dropdown", "value"),
+    ],
+)
+def display_selected_value(group1_value, group2_value, group3_value):
+    return group1_value, group2_value, group3_value
 
 
 @callback(Output("info1", "children"), dash.dependencies.Input("geojson1", "hoverData"))
