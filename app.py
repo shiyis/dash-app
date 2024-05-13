@@ -105,7 +105,7 @@ sidebar = html.Div(
                 )
             ],
             style={
-                "width": "85%",
+                "width": "88%",
                 "height": "118px",
                 "lineHeight": "40px",
                 "borderWidth": "2px",
