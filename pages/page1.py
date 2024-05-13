@@ -9,7 +9,7 @@ from dash_extensions.javascript import assign
 from dash import dash_table
 
 dash.register_page(
-    __name__, path="/", title="Exploratory Data Analysis", location="sidebar"
+    __name__, path="/page1", title="Exploratory Data Analysis", location="sidebar"
 )
 pd.set_option("float_format", "{:.2f}".format)
 
@@ -183,7 +183,7 @@ table3 = (
 
 
 layout = html.Div(
-    [
+    [   
         html.H5("Exploratory Data Analysis of Federal Election Candidacy"),
         html.Hr(),
         html.P(
@@ -196,7 +196,7 @@ layout = html.Div(
             """This part of the project will first present the receipts, disbursements, and other expenditures in terms of propagating political actions in visualization format grounded in states; for example, how many different political action committees there are by US states. This part of the project will also break down all the candidates of 2022 their basic information as mentioned above including their basic demographics, political party affiliation, election cycle, and incumbency."""
         ),
         html.P(
-            """All info is retrievable through the Federal Election Commission's directory. This project seeks to conduct the research with full transparency and abide to relevant code of conduct."""
+            """All info is retrievable through the Federal Election Commission's directory."""
         ),
         dbc.Row(
             [
@@ -255,7 +255,7 @@ layout = html.Div(
                                             "text-align": "left",
                                             "off-set": 4,
                                             "color": "#808080",
-                                            "margin": "2.1rem 0rem 0rem 0rem",
+                                            "margin": "1.5rem 0rem 0rem 0rem",
                                         },
                                     ),
                                     html.Div(
@@ -659,7 +659,7 @@ def update_output(slider, state, cands):
                     "text-align": "left",
                     "off-set": 4,
                     "color": "#808080",
-                    "margin": "2.5rem -5rem 0rem 0rem",
+                    "margin": "1.9rem -5rem 0rem 0rem",
 
                 },
             ),
@@ -672,7 +672,7 @@ def update_output(slider, state, cands):
                     "text-align": "left",
                     "off-set": 4,
                     "color": "#808080",
-                    "margin": "2.5rem 0rem 0rem 0rem",
+                    "margin": "1.9rem 0rem 0rem 0rem",
                 },
             ),
             dbc.Col(children=[
@@ -684,7 +684,7 @@ def update_output(slider, state, cands):
                     "text-align": "left",
                     "off-set": 4,
                     "color": "#808080",
-                    "margin": "2.5rem 0rem 0rem 0rem",
+                    "margin": "1.9rem 0rem 0rem 0rem",
                 },
             ),
         ],

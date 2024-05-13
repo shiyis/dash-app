@@ -7,6 +7,11 @@ h1, h2, h3, h4, h5, p, a {
     font-family: "Heebo-Regular", system-ui;
 }
 
+h5 {
+    font-weight: 700;
+    font-family: "Heebo-Medium", system-ui;
+}
+
 
 a, p {
     font-size: 15px;

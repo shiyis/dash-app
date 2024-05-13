@@ -76,7 +76,7 @@ sidebar = html.Div(
             pills=True,
             className="nav-links",
         ),
-        html.Hr(),
+        # html.Hr(),
         html.Div(
             children=[
                 dcc.Upload(
@@ -94,7 +94,7 @@ sidebar = html.Div(
                             html.A(
                                 "Drag & Drop or Select Your Data!",
                                 style={
-                                    "font-size": "12px",
+                                    "font-size": "11px",
                                     "text-shadow": "0 0 1px white",
                                 },
                             ),
@@ -105,15 +105,15 @@ sidebar = html.Div(
                 )
             ],
             style={
-                "width": "100%",
-                "height": "100px",
+                "width": "85%",
+                "height": "118px",
                 "lineHeight": "40px",
-                "borderWidth": "3.5px",
-                # "borderStyle": "dashed",
-                "borderRadius": "15px",
+                "borderWidth": "2px",
+                "borderStyle": "dashed",
+                "borderRadius": "1px",
                 "textAlign": "center",
                 "font-size": "11px",
-                "margin": "20px 0px 0px 0px",
+                "margin": "15px -15px 30px 15px",
             },
         ),
         html.Div(id="output-data-upload"),
