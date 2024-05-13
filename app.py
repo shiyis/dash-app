@@ -62,7 +62,7 @@ sidebar = html.Div(
                 "whitespace": "1px",
                 "font-size": "50px",
                 "border-radius": "11px",
-                "font-family": "Lato",
+                "font-family": "Heebo-Bold, system-ui",
             },
         ),
         html.Hr(),
