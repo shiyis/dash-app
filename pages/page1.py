@@ -304,7 +304,7 @@ layout = html.Div(
                                                 id="group1-dropdown"
                                             ),
                                             html.Div(
-                                                id="group1-value",
+                                                id="group1-value", value=" "
                                                 style={
                                                     "font-size": "13px",
                                                     "text-align": "left",
@@ -325,7 +325,7 @@ layout = html.Div(
                                     html.Div(
                                         [
                                             html.Label(
-                                                ["Average Raised"],
+                                                ["Average $ Raised"],
                                                 style={
                                                     "font-size": "13px",
                                                     "text-align": "left",
@@ -335,7 +335,7 @@ layout = html.Div(
                                                 },
                                             ),
                                             dcc.Dropdown(
-                                                id="group2-dropdown"
+                                                id="group2-dropdown", value=" "
                                             ),
                                             html.Div(children=[" "],
                                                 id="group2-value",
@@ -358,7 +358,7 @@ layout = html.Div(
                                     html.Div(
                                         [
                                             html.Label(
-                                                ["Average Spent"],
+                                                ["Average $ Spent"],
                                                 style={
                                                     "font-size": "13px",
                                                     "text-align": "left",
@@ -368,7 +368,7 @@ layout = html.Div(
                                                 },
                                             ),
                                             dcc.Dropdown(
-                                                id="group3-dropdown"
+                                                id="group3-dropdown", value=" "
                                             ),
                                             html.Div(
                                                 id="group3-value",
