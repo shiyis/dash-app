@@ -14,7 +14,7 @@ dash.register_page(
 
 
 PAGE_STYLE = {
-    "margin": "-1rem 0rem 0rem 15rem",
+    "margin": "-2rem 0rem 0rem 15rem",
     "font-family": "system-ui",
     "background-color": "#e2def2",
     "padding-top": "3rem",
@@ -28,7 +28,7 @@ layout = html.Div(
                 html.Img(
                     src="assets/intro.png",
                     style={
-                        "width": "1200px",
+                        "width": "1300px",
                         "height": "auto",
                         "display": "block",
                         "margin": "0 auto",
