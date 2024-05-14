@@ -303,7 +303,7 @@ layout = html.Div(
                                             dcc.Dropdown(
                                                 id="group1-dropdown", options=placeholder_options, value=" "
                                             ),
-                                            html.Div(
+                                            html.Div(children=[" "],
                                                 id="group1-value",
                                                 style={
                                                     "font-size": "13px",
@@ -333,7 +333,7 @@ layout = html.Div(
                                             dcc.Dropdown(
                                                 id="group2-dropdown", options=placeholder_options, value=" "
                                             ),
-                                            html.Div(
+                                            html.Div(children=[" "],
                                                 id="group2-value",
                                                 style={
                                                     "font-size": "13px",
@@ -363,7 +363,7 @@ layout = html.Div(
                                             dcc.Dropdown(
                                                 id="group3-dropdown", options=placeholder_options, value=" "
                                             ),
-                                            html.Div(
+                                            html.Div(children=[" "],
                                                 id="group3-value",
                                                 style={
                                                     "font-size": "13px",
