@@ -333,12 +333,11 @@ def my_callback(figure_empty):
             "title": "Author's Ideal Point from Moderate to Progressive",
             "visible": True,
             "showticklabels": True,
-            
         },
         yaxis={"title": "y-label", "visible": False, "showticklabels": False},
         height=230,
         margin=dict(l=0, r=0, t=0, b=0),
-        plot_bgcolor='#f2f2f2',  # Set the background color of the plot
+        plot_bgcolor="#f2f2f2",  # Set the background color of the plot
         # paper_bgcolor='#f2f2f2'  # Set the background color of the entire plot area
     )
 
