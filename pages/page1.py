@@ -182,23 +182,13 @@ table3 = (
 )
 
 
-group1_options = [
-    {"label": "Option 1", "value": "option1"},
-    {"label": "Option 2", "value": "option2"},
-    {"label": "Option 3", "value": "option3"},
+placeholder_options = [
+    {"label": " ", "value": " "},
+    {"label": " ", "value": " "},
+    {"label": " ", "value": " "},
 ]
 
-group2_options = [
-    {"label": "Option A", "value": "optionA"},
-    {"label": "Option B", "value": "optionB"},
-    {"label": "Option C", "value": "optionC"},
-]
 
-group3_options = [
-    {"label": "Option X", "value": "optionX"},
-    {"label": "Option Y", "value": "optionY"},
-    {"label": "Option Z", "value": "optionZ"},
-]
 
 layout = html.Div(
     [
@@ -311,7 +301,7 @@ layout = html.Div(
                                                 },
                                             ),
                                             dcc.Dropdown(
-                                                id="group1-dropdown", value=" "
+                                                id="group1-dropdown", options=placeholder_options, value=" "
                                             ),
                                             html.Div(
                                                 id="group1-value",
@@ -341,7 +331,7 @@ layout = html.Div(
                                                 },
                                             ),
                                             dcc.Dropdown(
-                                                id="group2-dropdown", value=" "
+                                                id="group2-dropdown", options=placeholder_options, value=" "
                                             ),
                                             html.Div(
                                                 id="group2-value",
@@ -371,7 +361,7 @@ layout = html.Div(
                                                 },
                                             ),
                                             dcc.Dropdown(
-                                                id="group3-dropdown", value=" "
+                                                id="group3-dropdown", options=placeholder_options, value=" "
                                             ),
                                             html.Div(
                                                 id="group3-value",
