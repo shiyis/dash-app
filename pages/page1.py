@@ -290,8 +290,9 @@ layout = html.Div(
                                 [
                                     html.Div(
                                         [
-                                            html.Label(
-                                                ["# PACs in Selected Range"],
+                                            html.Label(children=
+                                                ["# PACs"],
+                                                id="group1-label",
                                                 style={
                                                     "font-size": "13px",
                                                     "text-align": "left",
@@ -301,10 +302,10 @@ layout = html.Div(
                                                 },
                                             ),
                                             dcc.Dropdown(
-                                                id="group1-dropdown"
+                                                id="group1-dropdown", value=" "
                                             ),
-                                            html.Div(
-                                                id="group1-value", value=" "
+                                            html.Div(children=[" "],
+                                                id="group1-value",
                                                 style={
                                                     "font-size": "13px",
                                                     "text-align": "left",
@@ -325,7 +326,8 @@ layout = html.Div(
                                     html.Div(
                                         [
                                             html.Label(
-                                                ["Average $ Raised"],
+                                                ["Avg Raised"],
+                                                id="group2-label",
                                                 style={
                                                     "font-size": "13px",
                                                     "text-align": "left",
@@ -358,7 +360,8 @@ layout = html.Div(
                                     html.Div(
                                         [
                                             html.Label(
-                                                ["Average $ Spent"],
+                                                children=["Avg Spent"],
+                                                id="group3-label",
                                                 style={
                                                     "font-size": "13px",
                                                     "text-align": "left",
@@ -370,7 +373,7 @@ layout = html.Div(
                                             dcc.Dropdown(
                                                 id="group3-dropdown", value=" "
                                             ),
-                                            html.Div(
+                                            html.Div(children=[" "],
                                                 id="group3-value",
                                                 style={
                                                     "font-size": "13px",
@@ -584,10 +587,10 @@ def update_output(slider, state, cands):
 
         if 28000000 < r <= 30000000:
             radius = 53
-            opacity = 0.8
+            opacity = 0.7
         elif 24000000 < r <= 28000000:
             radius = 50
-            opacity = 0.6
+            opacity = 0.5
         elif 21000000 < r <= 24000000:
             radius = 45
             opacity = 0.5
@@ -764,28 +767,28 @@ def update_output(slider, state, cands):
         dict(center=s_latlon, zoom=7, transition="flyTo"),
         second_map,
         [
-            {"label": "REP", "value": n_rep},
-            {"label": "DEM", "value": n_dem},
-            {"label": "3RD", "value": n_3rd},
+            {"label": "Republican", "value": n_rep},
+            {"label": "Democrat", "value": n_dem},
+            {"label": "3rd Party", "value": n_3rd},
         ],
         [
-            {"label": "REP", "value": avg_r_rep},
-            {"label": "DEM", "value": avg_r_dem},
-            {"label": "3RD", "value": avg_r_3rd},
+            {"label": "Republican", "value": avg_r_rep},
+            {"label": "Democrat", "value": avg_r_dem},
+            {"label": "3rd Party", "value": avg_r_3rd},
         ],
         [
-            {"label": "REP", "value": avg_s_rep},
-            {"label": "DEM", "value": avg_s_dem},
-            {"label": "3RD", "value": avg_s_3rd},
+            {"label": "Republican", "value": avg_s_rep},
+            {"label": "Democrat", "value": avg_s_dem},
+            {"label": "3rd Party", "value": avg_s_3rd},
         ],
     )
 
 
 @callback(
     [
-        Output("group1-value", "children"),
-        Output("group2-value", "children"),
-        Output("group3-value", "children"),
+        Output("group1-label", "children"),
+        Output("group2-label", "children"),
+        Output("group3-label", "children"),
     ],
     [
         dash.dependencies.Input("group1-dropdown", "value"),
@@ -794,7 +797,7 @@ def update_output(slider, state, cands):
     ],
 )
 def display_selected_value(group1_value, group2_value, group3_value):
-    return group1_value, group2_value, group3_value
+    return ["# PACs: ", group1_value] , ["Avg Raised($): ", group2_value] , ["Avg Spent($): ", group3_value]
 
 
 @callback(Output("info1", "children"), dash.dependencies.Input("geojson1", "hoverData"))
