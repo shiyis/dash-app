@@ -2,7 +2,7 @@ import dash
 import pandas as pd
 import dash_bootstrap_components as dbc
 import dash_leaflet.express as dlx
-from dash import dcc, html, Output, callback
+from dash import dcc, html, Output, callback, callback_context
 import dash_leaflet as dl
 from dash_extensions.javascript import arrow_function
 from dash_extensions.javascript import assign
@@ -118,8 +118,7 @@ def create_choropleth(id="geojson1", info_id="info1"):
         style={
             "position": "absolute",
             "top": "300px",
-            "left": "650px",
-            "zIndex": "1000",
+            "left": "640px",
             "width": "100px",
         },
     )
@@ -315,14 +314,8 @@ layout = html.Div(
                                             ),
                                         ],
                                         style={
-                                            # "width": "30%",
-                                            # "display": "inline-flex",
-                                            # "flex-direction": "column",
-                                            # "align-items": "stretch",
-                                            # "align-content": "center",
                                             "width": "30%",
                                             "display": "inline-block",
-                                            "margin": "0 0 0 0rem",
                                         },
                                     ),
                                     html.Div(
@@ -353,14 +346,9 @@ layout = html.Div(
                                             ),
                                         ],
                                         style={
-                                            # "width": "30%",
-                                            # "display": "inline-flex",
-                                            # "flex-direction": "column",
-                                            # "align-items": "stretch",
-                                            # "align-content": "center",
-                                            "width": "29.2%",
+                                            "width": "30%",
                                             "display": "inline-block",
-                                            "margin": "0 2rem 0 2rem",
+                                            "margin-left": "5%",
                                         },
                                     ),
                                     html.Div(
@@ -393,11 +381,7 @@ layout = html.Div(
                                         style={
                                             "width": "30%",
                                             "display": "inline-block",
-                                            # "margin": "0 0 0 2rem",
-                                            # "display": "inline-flex",
-                                            # "flex-direction": "column",
-                                            # "align-items": "stretch",
-                                            # "align-content": "center",
+                                            "margin-left": "5%",
                                         },
                                     ),
                                 ]
@@ -523,6 +507,7 @@ layout = html.Div(
 )
 
 
+
 @callback(
     Output("cand-names-row", "children"),
     [dash.dependencies.Input("state-dropdown", "value")],
@@ -557,6 +542,7 @@ def update_output(value):
         dash.dependencies.Input("pac-exp-filter", "value"),
         dash.dependencies.Input("state-dropdown", "value"),
         dash.dependencies.Input("names-dropdown", "value"),
+
     ],
 )
 def update_output(slider, state, cands):
@@ -590,13 +576,15 @@ def update_output(slider, state, cands):
     spent_dem = 0
     spent_3rd = 0
 
+    cms = []
+
     for code, pty, name, r, s, lat, lng in latLon:
 
         # number of PACs divided by party
 
         if 28000000 < r <= 30000000:
             radius = 53
-            opacity = 0.7
+            opacity = 0.8
         elif 24000000 < r <= 28000000:
             radius = 50
             opacity = 0.5
@@ -636,7 +624,20 @@ def update_output(slider, state, cands):
                 radius=radius,
                 children=[
                     dl.Popup(
-                        f"Committee Name: \n {name} \n Election cycle: 2022 \n Total Raised (YTD2022): {r} \n Total Spent (YTD2022): {s}"
+                        children=html.Div(
+                            children=[
+                                f"Committee Name: \n {name} \n Election cycle: 2022 \n Total Raised (YTD2022): {r} \n Total Spent (YTD2022): {s}",
+                            ],
+                            style={
+                                "width": "250px",
+                                "backgroundColor": "#fff",
+                                "borderRadius": "5px",
+                                "padding": "10px",
+                                "boxShadow": "0 2px 5px rgba(0, 0, 0, 0.3)",
+                                "color": "#333",
+                                "whiteSpace": "pre-wrap",
+                            },
+                        ),
                     )
                 ],
             )
@@ -656,6 +657,8 @@ def update_output(slider, state, cands):
                     raised_dem += r
                     spent_dem += s
                 groups[pty][1].append(cm)
+            cms.append(cm)
+
 
     avg_r_rep = round(raised_rep / n_rep, 2) if n_rep != 0 else 0
     avg_r_dem = round(raised_dem / n_dem, 2) if n_dem != 0 else 0
@@ -745,8 +748,23 @@ def update_output(slider, state, cands):
                 m = dl.Marker(
                     position=latlng,
                     children=[
-                        dl.Popup(
-                            f'Committee Name: \n {row["Affiliated Committee Name"].iloc[0]} \n Election cycle: 2022 \n Total Raised (YTD2022): {row["Total receipts"].iloc[0]} \n Total Spent (YTD2022): {row["Total disbursements"].iloc[0]}'
+                        dl.Tooltip(
+                            children=html.Div(
+                                children=[
+                                    f'Committee Name: \n {row["Affiliated Committee Name"].iloc[0]} \n Election cycle: 2022 \n Total Raised (YTD2022): {row["Total receipts"].iloc[0]} \n Total Spent (YTD2022): {row["Total disbursements"].iloc[0]}'
+                                ],
+                                style={
+                                    "width": "250px",
+                                    "backgroundColor": "#fff",
+                                    "borderRadius": "5px",
+                                    "padding": "10px",
+                                    "boxShadow": "0 2px 5px rgba(0, 0, 0, 0.3)",
+                                    "color": "#333",
+                                    "whiteSpace": "pre-wrap",
+                                },
+                            ),
+                            direction="top",
+                            zIndexOffset="2000"
                         )
                     ],
                 )
