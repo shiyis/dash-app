@@ -52,10 +52,12 @@ layout = html.Div(
         html.Div(
             [
                 html.Iframe(
-                    src="https://copy-of-politix-a-politi-mzz410r.gamma.site/",
+                    src="https://gamma.app/embed/l9741p0k5hh1zlo",
                     style={
                         "height": "2500px",
                         "width": "100%",
+                        "allow": "fullscreen",
+                        "max-width": "100%",
                         "font-family": "system-ui",
                         "padding": "0 0 0 0",
                         "--card-width": "90rem",
