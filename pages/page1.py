@@ -189,7 +189,6 @@ placeholder_options = [
 ]
 
 
-
 layout = html.Div(
     [
         html.H5("Exploratory Data Analysis of Federal Election Candidacy"),
@@ -290,8 +289,8 @@ layout = html.Div(
                                 [
                                     html.Div(
                                         [
-                                            html.Label(children=
-                                                ["# PACs"],
+                                            html.Label(
+                                                children=["# PACs"],
                                                 id="group1-label",
                                                 style={
                                                     "font-size": "13px",
@@ -304,7 +303,8 @@ layout = html.Div(
                                             dcc.Dropdown(
                                                 id="group1-dropdown", value=" "
                                             ),
-                                            html.Div(children=[" "],
+                                            html.Div(
+                                                children=[" "],
                                                 id="group1-value",
                                                 style={
                                                     "font-size": "13px",
@@ -319,8 +319,7 @@ layout = html.Div(
                                             "display": "inline-flex",
                                             "flex-direction": "column",
                                             "align-items": "stretch",
-                                            "align-content": "center"
-
+                                            "align-content": "center",
                                         },
                                     ),
                                     html.Div(
@@ -339,7 +338,8 @@ layout = html.Div(
                                             dcc.Dropdown(
                                                 id="group2-dropdown", value=" "
                                             ),
-                                            html.Div(children=[" "],
+                                            html.Div(
+                                                children=[" "],
                                                 id="group2-value",
                                                 style={
                                                     "font-size": "13px",
@@ -354,7 +354,7 @@ layout = html.Div(
                                             "display": "inline-flex",
                                             "flex-direction": "column",
                                             "align-items": "stretch",
-                                            "align-content": "center"
+                                            "align-content": "center",
                                         },
                                     ),
                                     html.Div(
@@ -373,7 +373,8 @@ layout = html.Div(
                                             dcc.Dropdown(
                                                 id="group3-dropdown", value=" "
                                             ),
-                                            html.Div(children=[" "],
+                                            html.Div(
+                                                children=[" "],
                                                 id="group3-value",
                                                 style={
                                                     "font-size": "13px",
@@ -388,7 +389,7 @@ layout = html.Div(
                                             "display": "inline-flex",
                                             "flex-direction": "column",
                                             "align-items": "stretch",
-                                            "align-content": "center"
+                                            "align-content": "center",
                                         },
                                     ),
                                 ]
@@ -797,7 +798,11 @@ def update_output(slider, state, cands):
     ],
 )
 def display_selected_value(group1_value, group2_value, group3_value):
-    return ["# PACs: ", group1_value] , ["Avg Raised($): ", group2_value] , ["Avg Spent($): ", group3_value]
+    return (
+        ["# PACs: ", group1_value],
+        ["Avg Raised($): ", group2_value],
+        ["Avg Spent($): ", group3_value],
+    )
 
 
 @callback(Output("info1", "children"), dash.dependencies.Input("geojson1", "hoverData"))
