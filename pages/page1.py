@@ -301,9 +301,9 @@ layout = html.Div(
                                                 },
                                             ),
                                             dcc.Dropdown(
-                                                id="group1-dropdown", options=placeholder_options, value=" "
+                                                id="group1-dropdown"
                                             ),
-                                            html.Div(children=[" "],
+                                            html.Div(
                                                 id="group1-value",
                                                 style={
                                                     "font-size": "13px",
@@ -315,7 +315,11 @@ layout = html.Div(
                                         ],
                                         style={
                                             "width": "33.3%",
-                                            "display": "inline-block",
+                                            "display": "inline-flex",
+                                            "flex-direction": "column",
+                                            "align-items": "stretch",
+                                            "align-content": "center"
+
                                         },
                                     ),
                                     html.Div(
@@ -331,7 +335,7 @@ layout = html.Div(
                                                 },
                                             ),
                                             dcc.Dropdown(
-                                                id="group2-dropdown", options=placeholder_options, value=" "
+                                                id="group2-dropdown"
                                             ),
                                             html.Div(children=[" "],
                                                 id="group2-value",
@@ -345,7 +349,10 @@ layout = html.Div(
                                         ],
                                         style={
                                             "width": "33.3%",
-                                            "display": "inline-block",
+                                            "display": "inline-flex",
+                                            "flex-direction": "column",
+                                            "align-items": "stretch",
+                                            "align-content": "center"
                                         },
                                     ),
                                     html.Div(
@@ -361,9 +368,9 @@ layout = html.Div(
                                                 },
                                             ),
                                             dcc.Dropdown(
-                                                id="group3-dropdown", options=placeholder_options, value=" "
+                                                id="group3-dropdown"
                                             ),
-                                            html.Div(children=[" "],
+                                            html.Div(
                                                 id="group3-value",
                                                 style={
                                                     "font-size": "13px",
@@ -375,7 +382,10 @@ layout = html.Div(
                                         ],
                                         style={
                                             "width": "33.4%",
-                                            "display": "inline-block",
+                                            "display": "inline-flex",
+                                            "flex-direction": "column",
+                                            "align-items": "stretch",
+                                            "align-content": "center"
                                         },
                                     ),
                                 ]
@@ -416,7 +426,7 @@ layout = html.Div(
 
                                   4. The color of the dots/circles indicates the party affiliation of each committee. 
 
-                                  5. The stats that are right next to the slider indicate # PACs, avgrage raised and spent for all the committees that fall into the sliding range. 
+                                  5. The stats that are right next to the slider indicate # PACs, avgrage raised and spent (separate by party affiliation) for all the committees that fall into the sliding range. 
                                  
                                  """
         ),
