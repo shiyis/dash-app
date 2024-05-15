@@ -314,7 +314,7 @@ layout = html.Div(
                                             ),
                                         ],
                                         style={
-                                            "width": "30%",
+                                            "width": "32%",
                                             "display": "inline-block",
                                         },
                                     ),
@@ -346,9 +346,9 @@ layout = html.Div(
                                             ),
                                         ],
                                         style={
-                                            "width": "30%",
+                                            "width": "32%",
                                             "display": "inline-block",
-                                            "margin-left": "5%",
+                                            "margin-left": "2%",
                                         },
                                     ),
                                     html.Div(
@@ -379,9 +379,9 @@ layout = html.Div(
                                             ),
                                         ],
                                         style={
-                                            "width": "30%",
+                                            "width": "32%",
                                             "display": "inline-block",
-                                            "margin-left": "5%",
+                                            "margin-left": "2%",
                                         },
                                     ),
                                 ]
@@ -417,13 +417,13 @@ layout = html.Div(
                                   1. There are three layers to the map that divide up the committees by party affiliation (on the top right corner of the map the results could be filtered through checking or unchecking each box).
 
                                   2. The backdrop layer displays the sum amount of money raised for each state and the data could be displayed by hovering over each state boundary.
-                                  
+
                                   3. The slider manipulates the committees to display by how much money they have raised and the amount is indicated by the size of the colored dot (the more the bigger).
 
-                                  4. The color of the dots/circles indicates the party affiliation of each committee. 
+                                  4. The color of the dots/circles indicates the party affiliation of each committee.
 
-                                  5. The stats that are right next to the slider indicate # PACs, average raised and spent (by party affiliation) for all the committees that fall into the sliding range. 
-                                 
+                                  5. The stats that are right next to the slider indicate # PACs, average raised and spent (by party affiliation) for all the committees that fall into the sliding range.
+
                                  """
         ),
         html.Br(),
