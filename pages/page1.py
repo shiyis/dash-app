@@ -188,11 +188,11 @@ table3 = (
 # ]
 
 checkbox_options = [
-    {"label": " # PACs", "value": "PACs"},
     {"label": " Avg Raised", "value": "Avg Raised"},
     {"label": " Avg Spent", "value": "Avg Spent"},
     {"label": " Total Raised", "value": "Total Raised"},
     {"label": " Total Spent", "value": "Total Spent"},
+    {"label": " # PACs", "value": "# PACs"},
 ]
 
 
@@ -223,7 +223,7 @@ layout = html.Div(
                                     "font-size": "13px",
                                     "text-align": "left",
                                     "off-set": 4,
-                                    "color": "#808080",
+                                    "color": "#000",
                                 },
                             ),
                             dcc.Dropdown(
@@ -245,7 +245,7 @@ layout = html.Div(
                                     "font-size": "13px",
                                     "text-align": "left",
                                     "off-set": 4,
-                                    "color": "#808080",
+                                    "color": "#000",
                                 },
                             ),
                             dcc.Dropdown(id="names-dropdown"),
@@ -263,13 +263,15 @@ layout = html.Div(
                             html.Div(
                                 children=[
                                     html.Label(
-                                        ["PAC Money Raised and Spent"],
+                                        [
+                                            "PAC Money Raised and Spent between 2021-2022"
+                                        ],
                                         style={
                                             "font-size": "13px",
                                             "text-align": "left",
                                             "off-set": 4,
-                                            "color": "#808080",
-                                            "margin": "2rem 0rem 0.5rem 0rem",
+                                            "color": "#000",
+                                            "margin": "2.6rem 0rem 0rem 0rem",
                                         },
                                     ),
                                     html.Div(
@@ -277,7 +279,7 @@ layout = html.Div(
                                             7000,
                                             27500000,
                                             2500000,
-                                            value=0,
+                                            value=2500000,
                                             id="pac-exp-filter",
                                         ),
                                         style={"margin": "0.5rem -1.3rem 0rem -1.3rem"},
@@ -301,205 +303,102 @@ layout = html.Div(
                                             id="checkboxes",
                                             options=checkbox_options,
                                             inline=True,
+                                            value=[
+                                                "# PACs",
+                                                "Avg Raised",
+                                                "Avg Spent",
+                                                "Total Raised",
+                                                "Total Spent",
+                                            ],
                                             labelStyle={
                                                 "display": "inline-block",
-                                                "width": "20%",
+                                                "width": "17%",
                                                 "font-size": "13px",
                                                 "text-align": "right",
-                                                "display": "inline-block",
-                                                # "width": "100%",
-                                                # "off-set": 4,
-                                                "color": "#808080",
-                                                "margin": "1.5rem 0rem 0rem 0rem",
+                                                "color": "#000",
+                                                "margin": "1.5rem 0rem 0rem 1.1rem",
                                             },
                                         ),
-                                        dcc.Checklist(id="parties-checkbox", options=
+                                        html.Table(
                                             [
-                                                {"label": " REP", "value": " "},
-                                                {"label": " DEM", "value": "   "},
-                                                {"label": " 3RD", "value": "    "},
-                                            ],
-                                            # value="REP",
-                                            # id="radio-items",
-                                            style={
-                                                "font-size": "13px",
-                                                # "text-align": "left",
-                                                "display": "inline-block",
-                                                # "width": "100%",
-                                                "off-set": 4,
-                                                "color": "#808080",
-                                                # "margin": "-1rem 0rem 0rem 0rem",
-                                            },
-
+                                                html.Tr(
+                                                    [
+                                                        html.Td(
+                                                            dcc.Checklist(
+                                                                id="parties-checkbox",
+                                                                options=[
+                                                                    {
+                                                                        "label": " REP",
+                                                                        "value": "REP",
+                                                                    },
+                                                                    {
+                                                                        "label": " DEM",
+                                                                        "value": "DEM",
+                                                                    },
+                                                                    {
+                                                                        "label": " 3RD",
+                                                                        "value": "3RD",
+                                                                    },
+                                                                ],
+                                                                value=[
+                                                                    "REP",
+                                                                    "DEM",
+                                                                    "3RD",
+                                                                ],
+                                                            ),
+                                                            style={
+                                                                "vertical-align": "middle",
+                                                                "width": "9%",
+                                                            },
+                                                        ),
+                                                        html.Tbody(
+                                                            [
+                                                                html.Tr(
+                                                                    # style={
+                                                                    #     "height": "50px"
+                                                                    # },
+                                                                    id="table-row-1",
+                                                                )
+                                                            ]
+                                                        ),
+                                                        html.Tbody(
+                                                            [
+                                                                html.Tr(
+                                                                    # style={
+                                                                    #     "height": "50px"
+                                                                    # },
+                                                                    id="table-row-2",
+                                                                )
+                                                            ]
+                                                        ),
+                                                        html.Tbody(
+                                                            [
+                                                                html.Tr(
+                                                                    # style={
+                                                                    #     "height": "50px"
+                                                                    # },
+                                                                    id="table-row-3",
+                                                                )
+                                                            ]
+                                                        ),
+                                                    ]
+                                                )
+                                            ], style={'borderCollapse': 'collapse', 'width': '100%'}
                                         ),
-                                #         html.Div(
-                                #             children=[" "],
-                                #             id="group1-value",
-                                #             style={
-                                #                 "font-size": "13px",
-                                #                 "text-align": "left",
-                                #                 "off-set": 4,
-                                #                 "color": "#808080",
-                                #             },
-                                #         ),
-                                #     ],
-                                #     style={
-                                #         "width": "10%",
-                                #         "display": "inline-flex",
-                                #         "flex-direction": "column",
-                                #         "justify-content": "flex-start",
-                                #         "align-items": "baseline",
-                                #         "align-content": "flex-end",
-                                #         "flex-wrap": "wrap",
-                                #     },
-                                # ),
-                                # html.Label(
-                                #     children=["# PACs"],
-                                #     id="group1-label",
-                                #     style={
-                                #         "font-size": "13px",
-                                #         "text-align": "left",
-                                #         "off-set": 4,
-                                #         "color": "#808080",
-                                #         "margin": "1.5rem 0rem 0.5rem 0rem",
-                                #     },
-                                # ),
-                                # # dcc.Dropdown(
-                                # #     id="group1-dropdown", value=" "
-                                # # ),
-                                # html.Div(
-                                #     children=[" "],
-                                #     id="group1-value",
-                                #     style={
-                                #         "font-size": "13px",
-                                #         "text-align": "left",
-                                #         "off-set": 4,
-                                #         "color": "#808080",
-                                #     },
-                                # ),
-                                # # html.Div(
-                                # #     [
-                                # html.Label(
-                                #     ["Avg Raised"],
-                                #     id="group2-label",
-                                #     style={
-                                #         "font-size": "13px",
-                                #         "text-align": "left",
-                                #         "off-set": 4,
-                                #         "color": "#808080",
-                                #         # "margin": "1.5rem 0rem 0.5rem 0rem",
-                                #     },
-                                # ),
-                                # # dcc.Dropdown(
-                                # #     id="group2-dropdown", value=" "
-                                # # ),ay": "inline-block"}),
-                                # html.Div(
-                                #     children=[" "],
-                                #     id="group2-value",
-                                #     style={
-                                #         "font-size": "13px",
-                                #         "text-align": "left",
-                                #         "off-set": 4,
-                                #         "color": "#808080",
-                                #     },
-                                # ),
-                                # html.Div(
-                                #     children=[" "],
-                                #     id="group3-value",
-                                #     style={
-                                #         "font-size": "13px",
-                                #         "text-align": "left",
-                                #         "off-set": 4,
-                                #         "color": "#808080",
-                                #     },
-                                # ),
-                                # #     ],
-                                # #     style={
-                                # #         "width": "10%",
-                                # #         "display": "inline-blox",
-                                # #     #     "flex-direction": "column",
-                                # #     #     "justify-content": "flex-start",
-                                # #     #     "align-items": "baseline",
-                                # #     #     "align-content": "flex-end",
-                                # #     #     "flex-wrap": "wrap",
-                                # #         # "margin-left": "2%",
-                                # #     },
-                                # # # ),
-                                # # html.Div(
-                                # #     [
-                                # # dcc.Dropdown(
-                                # #     id="group3-dropdown", value=" "
-                                # # ),
-                                # html.Div(
-                                #     children=[" "],
-                                #     id="group3-value",
-                                #     style={
-                                #         "font-size": "13px",
-                                #         "text-align": "left",
-                                #         "off-set": 4,
-                                #         "color": "#808080",
-                                #     },
-                                # ),
-                                # #     ],
-                                # #     # style={
-                                # #     #     "width": "10%",
-                                # #     #     "display": "inline-flex",
-                                # #     #     "flex-direction": "column",
-                                # #     #     "justify-content": "flex-start",
-                                # #     #     "align-items": "baseline",
-                                # #     #     "align-content": "flex-end",
-                                # #     #     "flex-wrap": "wrap",
-                                # #     #     # "margin-left": "2%",
-                                # #     # },
-                                # # ),
-                                # html.Div(
-                                #     [
-                                #         html.Label(
-                                #             children=["Avg Spent"],
-                                #             id="group3-label",
-                                #             style={
-                                #                 "font-size": "13px",
-                                #                 "text-align": "left",
-                                #                 "off-set": 4,
-                                #                 "color": "#808080",
-                                #                 "margin": "1.5rem 0rem 0.5rem 0rem",
-                                #             },
-                                #         ),
-                                #         # dcc.Dropdown(
-                                #         #     id="group3-dropdown", value=" "
-                                #         # ),
-                                #         # dcc.RadioItems([
-                                #         #         {'label': 'REP', 'value': ' '},
-                                #         #         {'label': 'DEM', 'value': '  '},
-                                #         #         {'label': '3RD', 'value': '   '}
-                                #         #     ], value='REP', id='radio-items3', style={"display": "inline-block"}),
-                                #         html.Div(
-                                #             children=[" "],
-                                #             id="group3-value",
-                                #             style={
-                                #                 "font-size": "13px",
-                                #                 "text-align": "left",
-                                #                 "off-set": 4,
-                                #                 "color": "#808080",
-                                #             },
-                                #         ),
-                                        #     ],
-                                        #     # style={
-                                        #     #     "width": "10%",
-                                        #     #     "display": "inline-flex",
-                                        #     #     "flex-direction": "column",
-                                        #     #     "justify-content": "flex-start",
-                                        #     #     "align-items": "baseline",
-                                        #     #     "align-content": "flex-end",
-                                        #     #     "flex-wrap": "wrap",
-                                        #     #     # "margin-left": "2%",
-                                        #     # },
-                                        # ),
                                     ]
                                 ),
                             ],
                             id="dynamic-1",
-                            style={"--bs-gutter-x": "2rem"},
+                            style={
+                                "--bs-gutter-x": "1.5rem",
+                                "font-size": "13px",
+                                # "text-align": "left",
+                                # "display": "inline-block",
+                                # "width": "100%",
+                                "off-set": 4,
+                                "color": "#000",
+                                # "margin": "-1rem 0rem 0rem 0rem",
+                            },
                         ),
                     ),
                 ),
@@ -637,15 +536,20 @@ def update_output(value):
             "font-size": "13px",
             "text-align": "left",
             "off-set": 4,
-            "color": "#808080",
+            "color": "#000",
         },
     ), dcc.Dropdown(res, id="names-dropdown", searchable=True, multi=True)
 
 
 @callback(
-    Output("candidates-stats-marker", "children"),
-    Output("candidates-individual-marker", "viewport"),
-    Output("candidates-individual-marker", "children"),
+    [
+        Output("candidates-stats-marker", "children"),
+        Output("candidates-individual-marker", "viewport"),
+        Output("candidates-individual-marker", "children"),
+        Output("table-row-1", "children"),
+        Output("table-row-2", "children"),
+        Output("table-row-3", "children"),
+    ],
     # Output("group1-dropdown", "options"),
     # Output("group2-dropdown", "options"),
     # Output("group3-dropdown", "options"),
@@ -653,9 +557,11 @@ def update_output(value):
         dash.dependencies.Input("pac-exp-filter", "value"),
         dash.dependencies.Input("state-dropdown", "value"),
         dash.dependencies.Input("names-dropdown", "value"),
+        # dash.dependencies.Input("parties-checkbox", "value"),
+        dash.dependencies.Input("checkboxes", "value"),
     ],
 )
-def update_output(slider, state, cands):
+def update_output(slider, state, cands, stats):
     latLon = candidates[
         [
             "Party code",
@@ -687,7 +593,7 @@ def update_output(slider, state, cands):
     spent_3rd = 0
 
     cms = []
-
+    # print(party, stat)
     for code, pty, name, r, s, lat, lng in latLon:
 
         # number of PACs divided by party
@@ -769,13 +675,88 @@ def update_output(slider, state, cands):
                 groups[pty][1].append(cm)
             cms.append(cm)
 
-    avg_r_rep = round(raised_rep / n_rep, 2) if n_rep != 0 else 0
-    avg_r_dem = round(raised_dem / n_dem, 2) if n_dem != 0 else 0
-    avg_r_3rd = round(raised_3rd / n_3rd, 2) if n_3rd != 0 else 0
+    avg_r_rep = round(raised_rep / n_rep, 1) if n_rep != 0 else 0
+    avg_r_dem = round(raised_dem / n_dem, 1) if n_dem != 0 else 0
+    avg_r_3rd = round(raised_3rd / n_3rd, 1) if n_3rd != 0 else 0
 
-    avg_s_rep = round(spent_rep / n_rep, 2) if n_rep != 0 else 0
-    avg_s_dem = round(spent_dem / n_dem, 2) if n_dem != 0 else 0
-    avg_s_3rd = round(spent_3rd / n_3rd, 2) if n_3rd != 0 else 0
+    avg_s_rep = round(spent_rep / n_rep, 1) if n_rep != 0 else 0
+    avg_s_dem = round(spent_dem / n_dem, 1) if n_dem != 0 else 0
+    avg_s_3rd = round(spent_3rd / n_3rd, 1) if n_3rd != 0 else 0
+
+    row1 = [ html.Td(
+            avg_r_rep,
+            id="rep-1",
+            style={
+                "vertical-align": "middle",
+                "width": "18%",
+            },
+        ),
+        html.Td(
+            avg_s_rep,
+            id="rep-2",
+            style={
+                "vertical-align": "middle",
+                "width": "17%",
+            },
+        ),
+        html.Td(
+            round(raised_rep, 2),
+            id="rep-3",
+            style={
+                "vertical-align": "middle",
+                "width": "18%",
+            },
+        ),
+        html.Td(
+            round(spent_rep, 2),
+            id="rep-4",
+            style={
+                "vertical-align": "middle",
+                "width": "25%",
+            },
+        ),
+        html.Td(
+            n_rep,
+            id="rep-5",
+            style={
+                "vertical-align": "middle",
+                "width": "1%",
+            },
+        ),
+    ]
+    rep = [avg_r_rep, avg_s_rep, raised_rep, spent_rep, n_rep]
+    dem = [avg_r_dem, avg_s_dem, raised_dem, spent_dem, n_dem]
+    trd = [avg_r_3rd, avg_s_3rd, raised_3rd, spent_3rd, n_3rd]
+
+
+    row2 = []
+    row3 = []
+
+    for i in range(5):
+        if rep[i] == 0 and len(set(rep)) == 1:
+            row1 = []
+
+    for i in range(5):
+        if dem[i] !=0:
+            v = round(dem[i],1)
+            style = style = row1[i].style
+
+        else:
+            v = " "
+            style = {"":""}
+        td = html.Td(children=v, id=f"dem-{i}", style=style)
+        row2.append(td)
+
+    for i in range(5):
+        if trd[i] !=0:
+            v = round(trd[i],1)
+            style = row1[i].style
+
+        else:
+            v = " "
+            style = {"":""}
+        td = html.Td(children=v, id=f"3rd-{i}", style=style)
+        row3.append(td)
 
     data = [
         dl.TileLayer(),
@@ -902,21 +883,9 @@ def update_output(slider, state, cands):
         data,
         dict(center=s_latlon, zoom=7, transition="flyTo"),
         second_map,
-        # [
-        #     {"label": "Republican", "value": n_rep},
-        #     {"label": "Democrat", "value": n_dem},
-        #     {"label": "3rd Party", "value": n_3rd},
-        # ],
-        # [
-        #     {"label": "Republican", "value": avg_r_rep},
-        #     {"label": "Democrat", "value": avg_r_dem},
-        #     {"label": "3rd Party", "value": avg_r_3rd},
-        # ],
-        # [
-        #     {"label": "Republican", "value": avg_s_rep},
-        #     {"label": "Democrat", "value": avg_s_dem},
-        #     {"label": "3rd Party", "value": avg_s_3rd},
-        # ],
+        row1,
+        row2,
+        row3,
     )
 
 
