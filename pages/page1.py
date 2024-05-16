@@ -180,11 +180,19 @@ table3 = (
     .round(2)
 )
 
+#
+# placeholder_options = [
+#     {"label": " ", "value": " "},
+#     {"label": " ", "value": " "},
+#     {"label": " ", "value": " "},
+# ]
 
-placeholder_options = [
-    {"label": " ", "value": " "},
-    {"label": " ", "value": " "},
-    {"label": " ", "value": " "},
+checkbox_options = [
+    {"label": " # PACs", "value": "PACs"},
+    {"label": " Avg Raised", "value": "Avg Raised"},
+    {"label": " Avg Spent", "value": "Avg Spent"},
+    {"label": " Total Raised", "value": "Total Raised"},
+    {"label": " Total Spent", "value": "Total Spent"},
 ]
 
 
@@ -261,7 +269,7 @@ layout = html.Div(
                                             "text-align": "left",
                                             "off-set": 4,
                                             "color": "#808080",
-                                            "margin": "1.5rem 0rem 0rem 0rem",
+                                            "margin": "2rem 0rem 0.5rem 0rem",
                                         },
                                     ),
                                     html.Div(
@@ -283,112 +291,217 @@ layout = html.Div(
                 ),
                 dbc.Col(
                     dbc.Row(
-                        children=[
-                            html.Div(
-                                [
-                                    html.Div(
-                                        [
-                                            html.Label(
-                                                children=["# PACs"],
-                                                id="group1-label",
-                                                style={
-                                                    "font-size": "13px",
-                                                    "text-align": "left",
-                                                    "off-set": 4,
-                                                    "color": "#808080",
-                                                    "margin": "1.5rem 0rem 0rem 0rem",
-                                                },
-                                            ),
-                                            dcc.Dropdown(
-                                                id="group1-dropdown", value=" "
-                                            ),
-                                            html.Div(
-                                                children=[" "],
-                                                id="group1-value",
-                                                style={
-                                                    "font-size": "13px",
-                                                    "text-align": "left",
-                                                    "off-set": 4,
-                                                    "color": "#808080",
-                                                },
-                                            ),
-                                        ],
-                                        style={
-                                            "width": "32%",
-                                            "display": "inline-block",
-                                        },
-                                    ),
-                                    html.Div(
-                                        [
-                                            html.Label(
-                                                ["Avg Raised"],
-                                                id="group2-label",
-                                                style={
-                                                    "font-size": "13px",
-                                                    "text-align": "left",
-                                                    "off-set": 4,
-                                                    "color": "#808080",
-                                                    "margin": "1.5rem 0rem 0rem 0rem",
-                                                },
-                                            ),
-                                            dcc.Dropdown(
-                                                id="group2-dropdown", value=" "
-                                            ),
-                                            html.Div(
-                                                children=[" "],
-                                                id="group2-value",
-                                                style={
-                                                    "font-size": "13px",
-                                                    "text-align": "left",
-                                                    "off-set": 4,
-                                                    "color": "#808080",
-                                                },
-                                            ),
-                                        ],
-                                        style={
-                                            "width": "32%",
-                                            "display": "inline-block",
-                                            "margin-left": "2%",
-                                        },
-                                    ),
-                                    html.Div(
-                                        [
-                                            html.Label(
-                                                children=["Avg Spent"],
-                                                id="group3-label",
-                                                style={
-                                                    "font-size": "13px",
-                                                    "text-align": "left",
-                                                    "off-set": 4,
-                                                    "color": "#808080",
-                                                    "margin": "1.5rem 0rem 0rem 0rem",
-                                                },
-                                            ),
-                                            dcc.Dropdown(
-                                                id="group3-dropdown", value=" "
-                                            ),
-                                            html.Div(
-                                                children=[" "],
-                                                id="group3-value",
-                                                style={
-                                                    "font-size": "13px",
-                                                    "text-align": "left",
-                                                    "off-set": 4,
-                                                    "color": "#808080",
-                                                },
-                                            ),
-                                        ],
-                                        style={
-                                            "width": "32%",
-                                            "display": "inline-block",
-                                            "margin-left": "2%",
-                                        },
-                                    ),
-                                ]
-                            )
-                        ],
-                        id="dynamic-1",
-                    )
+                        dbc.Col(
+                            children=[
+                                html.Div(
+                                    [
+                                        # html.Div(
+                                        #     [
+                                        dcc.Checklist(
+                                            id="checkboxes",
+                                            options=checkbox_options,
+                                            inline=True,
+                                            labelStyle={
+                                                "display": "inline-block",
+                                                "width": "20%",
+                                                "font-size": "13px",
+                                                "text-align": "right",
+                                                "display": "inline-block",
+                                                # "width": "100%",
+                                                # "off-set": 4,
+                                                "color": "#808080",
+                                                "margin": "1.5rem 0rem 0rem 0rem",
+                                            },
+                                        ),
+                                        dcc.Checklist(id="parties-checkbox", options=
+                                            [
+                                                {"label": " REP", "value": " "},
+                                                {"label": " DEM", "value": "   "},
+                                                {"label": " 3RD", "value": "    "},
+                                            ],
+                                            # value="REP",
+                                            # id="radio-items",
+                                            style={
+                                                "font-size": "13px",
+                                                # "text-align": "left",
+                                                "display": "inline-block",
+                                                # "width": "100%",
+                                                "off-set": 4,
+                                                "color": "#808080",
+                                                # "margin": "-1rem 0rem 0rem 0rem",
+                                            },
+
+                                        ),
+                                #         html.Div(
+                                #             children=[" "],
+                                #             id="group1-value",
+                                #             style={
+                                #                 "font-size": "13px",
+                                #                 "text-align": "left",
+                                #                 "off-set": 4,
+                                #                 "color": "#808080",
+                                #             },
+                                #         ),
+                                #     ],
+                                #     style={
+                                #         "width": "10%",
+                                #         "display": "inline-flex",
+                                #         "flex-direction": "column",
+                                #         "justify-content": "flex-start",
+                                #         "align-items": "baseline",
+                                #         "align-content": "flex-end",
+                                #         "flex-wrap": "wrap",
+                                #     },
+                                # ),
+                                # html.Label(
+                                #     children=["# PACs"],
+                                #     id="group1-label",
+                                #     style={
+                                #         "font-size": "13px",
+                                #         "text-align": "left",
+                                #         "off-set": 4,
+                                #         "color": "#808080",
+                                #         "margin": "1.5rem 0rem 0.5rem 0rem",
+                                #     },
+                                # ),
+                                # # dcc.Dropdown(
+                                # #     id="group1-dropdown", value=" "
+                                # # ),
+                                # html.Div(
+                                #     children=[" "],
+                                #     id="group1-value",
+                                #     style={
+                                #         "font-size": "13px",
+                                #         "text-align": "left",
+                                #         "off-set": 4,
+                                #         "color": "#808080",
+                                #     },
+                                # ),
+                                # # html.Div(
+                                # #     [
+                                # html.Label(
+                                #     ["Avg Raised"],
+                                #     id="group2-label",
+                                #     style={
+                                #         "font-size": "13px",
+                                #         "text-align": "left",
+                                #         "off-set": 4,
+                                #         "color": "#808080",
+                                #         # "margin": "1.5rem 0rem 0.5rem 0rem",
+                                #     },
+                                # ),
+                                # # dcc.Dropdown(
+                                # #     id="group2-dropdown", value=" "
+                                # # ),ay": "inline-block"}),
+                                # html.Div(
+                                #     children=[" "],
+                                #     id="group2-value",
+                                #     style={
+                                #         "font-size": "13px",
+                                #         "text-align": "left",
+                                #         "off-set": 4,
+                                #         "color": "#808080",
+                                #     },
+                                # ),
+                                # html.Div(
+                                #     children=[" "],
+                                #     id="group3-value",
+                                #     style={
+                                #         "font-size": "13px",
+                                #         "text-align": "left",
+                                #         "off-set": 4,
+                                #         "color": "#808080",
+                                #     },
+                                # ),
+                                # #     ],
+                                # #     style={
+                                # #         "width": "10%",
+                                # #         "display": "inline-blox",
+                                # #     #     "flex-direction": "column",
+                                # #     #     "justify-content": "flex-start",
+                                # #     #     "align-items": "baseline",
+                                # #     #     "align-content": "flex-end",
+                                # #     #     "flex-wrap": "wrap",
+                                # #         # "margin-left": "2%",
+                                # #     },
+                                # # # ),
+                                # # html.Div(
+                                # #     [
+                                # # dcc.Dropdown(
+                                # #     id="group3-dropdown", value=" "
+                                # # ),
+                                # html.Div(
+                                #     children=[" "],
+                                #     id="group3-value",
+                                #     style={
+                                #         "font-size": "13px",
+                                #         "text-align": "left",
+                                #         "off-set": 4,
+                                #         "color": "#808080",
+                                #     },
+                                # ),
+                                # #     ],
+                                # #     # style={
+                                # #     #     "width": "10%",
+                                # #     #     "display": "inline-flex",
+                                # #     #     "flex-direction": "column",
+                                # #     #     "justify-content": "flex-start",
+                                # #     #     "align-items": "baseline",
+                                # #     #     "align-content": "flex-end",
+                                # #     #     "flex-wrap": "wrap",
+                                # #     #     # "margin-left": "2%",
+                                # #     # },
+                                # # ),
+                                # html.Div(
+                                #     [
+                                #         html.Label(
+                                #             children=["Avg Spent"],
+                                #             id="group3-label",
+                                #             style={
+                                #                 "font-size": "13px",
+                                #                 "text-align": "left",
+                                #                 "off-set": 4,
+                                #                 "color": "#808080",
+                                #                 "margin": "1.5rem 0rem 0.5rem 0rem",
+                                #             },
+                                #         ),
+                                #         # dcc.Dropdown(
+                                #         #     id="group3-dropdown", value=" "
+                                #         # ),
+                                #         # dcc.RadioItems([
+                                #         #         {'label': 'REP', 'value': ' '},
+                                #         #         {'label': 'DEM', 'value': '  '},
+                                #         #         {'label': '3RD', 'value': '   '}
+                                #         #     ], value='REP', id='radio-items3', style={"display": "inline-block"}),
+                                #         html.Div(
+                                #             children=[" "],
+                                #             id="group3-value",
+                                #             style={
+                                #                 "font-size": "13px",
+                                #                 "text-align": "left",
+                                #                 "off-set": 4,
+                                #                 "color": "#808080",
+                                #             },
+                                #         ),
+                                        #     ],
+                                        #     # style={
+                                        #     #     "width": "10%",
+                                        #     #     "display": "inline-flex",
+                                        #     #     "flex-direction": "column",
+                                        #     #     "justify-content": "flex-start",
+                                        #     #     "align-items": "baseline",
+                                        #     #     "align-content": "flex-end",
+                                        #     #     "flex-wrap": "wrap",
+                                        #     #     # "margin-left": "2%",
+                                        #     # },
+                                        # ),
+                                    ]
+                                ),
+                            ],
+                            id="dynamic-1",
+                            style={"--bs-gutter-x": "2rem"},
+                        ),
+                    ),
                 ),
             ]
         ),
@@ -397,7 +510,6 @@ layout = html.Div(
             id="mapmessage",
             style={"color": "#FFFFFF", "fontSize": "20px", "marginTop": "-25px"},
         ),
-        html.Br(),
         html.Br(),
         dbc.Row(
             [
@@ -507,7 +619,6 @@ layout = html.Div(
 )
 
 
-
 @callback(
     Output("cand-names-row", "children"),
     [dash.dependencies.Input("state-dropdown", "value")],
@@ -535,14 +646,13 @@ def update_output(value):
     Output("candidates-stats-marker", "children"),
     Output("candidates-individual-marker", "viewport"),
     Output("candidates-individual-marker", "children"),
-    Output("group1-dropdown", "options"),
-    Output("group2-dropdown", "options"),
-    Output("group3-dropdown", "options"),
+    # Output("group1-dropdown", "options"),
+    # Output("group2-dropdown", "options"),
+    # Output("group3-dropdown", "options"),
     [
         dash.dependencies.Input("pac-exp-filter", "value"),
         dash.dependencies.Input("state-dropdown", "value"),
         dash.dependencies.Input("names-dropdown", "value"),
-
     ],
 )
 def update_output(slider, state, cands):
@@ -659,7 +769,6 @@ def update_output(slider, state, cands):
                 groups[pty][1].append(cm)
             cms.append(cm)
 
-
     avg_r_rep = round(raised_rep / n_rep, 2) if n_rep != 0 else 0
     avg_r_dem = round(raised_dem / n_dem, 2) if n_dem != 0 else 0
     avg_r_3rd = round(raised_3rd / n_3rd, 2) if n_3rd != 0 else 0
@@ -764,7 +873,7 @@ def update_output(slider, state, cands):
                                 },
                             ),
                             direction="top",
-                            zIndexOffset="2000"
+                            zIndexOffset="2000",
                         )
                     ],
                 )
@@ -793,21 +902,21 @@ def update_output(slider, state, cands):
         data,
         dict(center=s_latlon, zoom=7, transition="flyTo"),
         second_map,
-        [
-            {"label": "Republican", "value": n_rep},
-            {"label": "Democrat", "value": n_dem},
-            {"label": "3rd Party", "value": n_3rd},
-        ],
-        [
-            {"label": "Republican", "value": avg_r_rep},
-            {"label": "Democrat", "value": avg_r_dem},
-            {"label": "3rd Party", "value": avg_r_3rd},
-        ],
-        [
-            {"label": "Republican", "value": avg_s_rep},
-            {"label": "Democrat", "value": avg_s_dem},
-            {"label": "3rd Party", "value": avg_s_3rd},
-        ],
+        # [
+        #     {"label": "Republican", "value": n_rep},
+        #     {"label": "Democrat", "value": n_dem},
+        #     {"label": "3rd Party", "value": n_3rd},
+        # ],
+        # [
+        #     {"label": "Republican", "value": avg_r_rep},
+        #     {"label": "Democrat", "value": avg_r_dem},
+        #     {"label": "3rd Party", "value": avg_r_3rd},
+        # ],
+        # [
+        #     {"label": "Republican", "value": avg_s_rep},
+        #     {"label": "Democrat", "value": avg_s_dem},
+        #     {"label": "3rd Party", "value": avg_s_3rd},
+        # ],
     )
 
 

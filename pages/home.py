@@ -28,7 +28,7 @@ layout = html.Div(
                 html.Img(
                     src="assets/intro.png",
                     style={
-                        "width": "1300px",
+                        "width": "1100px",
                         "height": "auto",
                         "display": "block",
                         "margin": "0 auto",
