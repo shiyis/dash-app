@@ -295,7 +295,6 @@ layout = html.Div(
                                         dcc.Checklist(
                                             id="checkboxes",
                                             options=checkbox_options,
-                                            value=[i["value"] for i in checkbox_options if i["value"]],
                                             inline=True,
                                             labelStyle={
                                                 "display": "inline-block",
