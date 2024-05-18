@@ -758,6 +758,8 @@ def update_output(slider, state, cands, parties, stats):
             },
         ),
     ]
+
+
     for i in range(5):
         if trd[i] !=0:
             v = round(trd[i],1)
@@ -779,7 +781,12 @@ def update_output(slider, state, cands, parties, stats):
                     tmp[row[i]][col[j]] = rows[row[i]][col[j]]
 
         row1, row2, row3 = tmp
-
+    else:
+        for i in range(3):
+            if stats:
+                for j in stats:
+                    tmp[i][col[j]] = rows[i][col[j]]
+        row1, row2, row3 = tmp
     data = [
         dl.TileLayer(),
         dl.LayersControl(
