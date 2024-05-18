@@ -180,13 +180,6 @@ table3 = (
     .round(2)
 )
 
-#
-# placeholder_options = [
-#     {"label": " ", "value": " "},
-#     {"label": " ", "value": " "},
-#     {"label": " ", "value": " "},
-# ]
-
 checkbox_options = [
     {"label": " Avg Raised", "value": "Avg Raised"},
     {"label": " Avg Spent", "value": "Avg Spent"},
@@ -303,13 +296,6 @@ layout = html.Div(
                                             id="checkboxes",
                                             options=checkbox_options,
                                             inline=True,
-                                            value=[
-                                                "# PACs",
-                                                "Avg Raised",
-                                                "Avg Spent",
-                                                "Total Raised",
-                                                "Total Spent",
-                                            ],
                                             labelStyle={
                                                 "display": "inline-block",
                                                 "width": "17%",
@@ -340,11 +326,6 @@ layout = html.Div(
                                                                         "value": "3RD",
                                                                     },
                                                                 ],
-                                                                value=[
-                                                                    "REP",
-                                                                    "DEM",
-                                                                    "3RD",
-                                                                ],
                                                             ),
                                                             style={
                                                                 "vertical-align": "middle",
@@ -354,9 +335,6 @@ layout = html.Div(
                                                         html.Tbody(
                                                             [
                                                                 html.Tr(
-                                                                    # style={
-                                                                    #     "height": "50px"
-                                                                    # },
                                                                     id="table-row-1",
                                                                 )
                                                             ]
@@ -364,9 +342,6 @@ layout = html.Div(
                                                         html.Tbody(
                                                             [
                                                                 html.Tr(
-                                                                    # style={
-                                                                    #     "height": "50px"
-                                                                    # },
                                                                     id="table-row-2",
                                                                 )
                                                             ]
@@ -374,9 +349,6 @@ layout = html.Div(
                                                         html.Tbody(
                                                             [
                                                                 html.Tr(
-                                                                    # style={
-                                                                    #     "height": "50px"
-                                                                    # },
                                                                     id="table-row-3",
                                                                 )
                                                             ]
@@ -392,12 +364,8 @@ layout = html.Div(
                             style={
                                 "--bs-gutter-x": "1.5rem",
                                 "font-size": "13px",
-                                # "text-align": "left",
-                                # "display": "inline-block",
-                                # "width": "100%",
                                 "off-set": 4,
                                 "color": "#000",
-                                # "margin": "-1rem 0rem 0rem 0rem",
                             },
                         ),
                     ),
@@ -425,17 +393,17 @@ layout = html.Div(
         ),
         dcc.Markdown(
             """
-                                  1. There are three layers to the map that divide up the committees by party affiliation (on the top right corner of the map the results could be filtered through checking or unchecking each box).
+              1. There are three layers to the map that divide up the committees by party affiliation (on the top right corner of the map the results could be filtered through checking or unchecking each box).
 
-                                  2. The backdrop layer displays the sum amount of money raised for each state and the data could be displayed by hovering over each state boundary.
+              2. The backdrop layer displays the sum amount of money raised for each state and the data could be displayed by hovering over each state boundary.
 
-                                  3. The slider manipulates the committees to display by how much money they have raised and the amount is indicated by the size of the colored dot (the more the bigger).
+              3. The slider manipulates the committees to display by how much money they have raised and the amount is indicated by the size of the colored dot (the more the bigger).
 
-                                  4. The color of the dots/circles indicates the party affiliation of each committee.
+              4. The color of the dots/circles indicates the party affiliation of each committee.
 
-                                  5. The stats that are right next to the slider indicate # PACs, average raised and spent (by party affiliation) for all the committees that fall into the sliding range.
+              5. The stats that are right next to the slider indicate # PACs, average raised and spent (by party affiliation) for all the committees that fall into the sliding range.
 
-                                 """
+             """
         ),
         html.Br(),
         html.H5("Some Other Important Info Stats"),
@@ -550,18 +518,16 @@ def update_output(value):
         Output("table-row-2", "children"),
         Output("table-row-3", "children"),
     ],
-    # Output("group1-dropdown", "options"),
-    # Output("group2-dropdown", "options"),
-    # Output("group3-dropdown", "options"),
     [
         dash.dependencies.Input("pac-exp-filter", "value"),
         dash.dependencies.Input("state-dropdown", "value"),
         dash.dependencies.Input("names-dropdown", "value"),
-        # dash.dependencies.Input("parties-checkbox", "value"),
+        dash.dependencies.Input("parties-checkbox", "value"),
         dash.dependencies.Input("checkboxes", "value"),
+
     ],
 )
-def update_output(slider, state, cands, stats):
+def update_output(slider, state, cands, parties, stats):
     latLon = candidates[
         [
             "Party code",
@@ -573,6 +539,9 @@ def update_output(slider, state, cands, stats):
             "lon",
         ]
     ]
+
+    row = {"REP": 0, "DEM": 1, "3RD": 2}
+    col = {"Avg Raised": 0, "Avg Spent": 1, "Total Raised": 2, "Total Spent": 3, "# PACs": 4}
     latLon = [tuple(i[1:]) for i in latLon.itertuples()]
     colors = ["blue", "red", "grey"]
     s_latlon = [
@@ -696,7 +665,7 @@ def update_output(slider, state, cands, stats):
             id="rep-2",
             style={
                 "vertical-align": "middle",
-                "width": "17%",
+                "width": "16%",
             },
         ),
         html.Td(
@@ -704,7 +673,7 @@ def update_output(slider, state, cands, stats):
             id="rep-3",
             style={
                 "vertical-align": "middle",
-                "width": "18%",
+                "width": "19%",
             },
         ),
         html.Td(
@@ -747,6 +716,48 @@ def update_output(slider, state, cands, stats):
         td = html.Td(children=v, id=f"dem-{i}", style=style)
         row2.append(td)
 
+
+    template = [ html.Td(
+            " ",
+            id="rep-1",
+            style={
+                "vertical-align": "middle",
+                "width": "18%",
+            },
+        ),
+        html.Td(
+            " ",
+            id="rep-2",
+            style={
+                "vertical-align": "middle",
+                "width": "16%",
+            },
+        ),
+        html.Td(
+            " ",
+            id="rep-3",
+            style={
+                "vertical-align": "middle",
+                "width": "19%",
+            },
+        ),
+        html.Td(
+            " ",
+            id="rep-4",
+            style={
+                "vertical-align": "middle",
+                "width": "25%",
+            },
+        ),
+        html.Td(
+            " ",
+            id="rep-5",
+            style={
+                "vertical-align": "middle",
+                "width": "1%",
+            },
+        ),
+    ]
     for i in range(5):
         if trd[i] !=0:
             v = round(trd[i],1)
@@ -757,6 +768,17 @@ def update_output(slider, state, cands, stats):
             style = {"":""}
         td = html.Td(children=v, id=f"3rd-{i}", style=style)
         row3.append(td)
+
+    tmp = [template, [i for i in template], [i for i in template]]
+    rows = [row1, row2, row3]
+
+    if parties:
+        for i in parties:
+            if stats:
+                for j in stats:
+                    tmp[row[i]][col[j]] = rows[row[i]][col[j]]
+
+        row1, row2, row3 = tmp
 
     data = [
         dl.TileLayer(),
@@ -889,24 +911,7 @@ def update_output(slider, state, cands, stats):
     )
 
 
-@callback(
-    [
-        Output("group1-label", "children"),
-        Output("group2-label", "children"),
-        Output("group3-label", "children"),
-    ],
-    [
-        dash.dependencies.Input("group1-dropdown", "value"),
-        dash.dependencies.Input("group2-dropdown", "value"),
-        dash.dependencies.Input("group3-dropdown", "value"),
-    ],
-)
-def display_selected_value(group1_value, group2_value, group3_value):
-    return (
-        ["# PACs: ", group1_value],
-        ["Avg Raised($): ", group2_value],
-        ["Avg Spent($): ", group3_value],
-    )
+
 
 
 @callback(Output("info1", "children"), dash.dependencies.Input("geojson1", "hoverData"))
