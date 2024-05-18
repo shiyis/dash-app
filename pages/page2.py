@@ -70,49 +70,6 @@ layout = html.Div(
                     """Instead, it assesses the `latent political viewpoints` of text writers and how `per-topic word choice` varies according to the author's political stance `("ideological topics")` given a corpus of political text and the author of each document."""
                 ),
                 """Below are the resulting ideal points,\n""",
-                # dbc.Row(
-                #     [
-                #         dbc.Col(
-                #             dbc.Row(
-                #                 children=[
-                #                     html.Label(
-                #                         ["Select State"],
-                #                         style={
-                #                             "font-size": "13px",
-                #                             "text-align": "left",
-                #                             "off-set": 4,
-                #                             "color": "#808080",
-                #                         },
-                #                     ),
-                #                     dcc.Dropdown(
-                #                         pd.DataFrame(pd.read_csv("./data/states.csv"))[
-                #                             "name"
-                #                         ].tolist(),
-                #                         id="state-dropdown",
-                #                     ),
-                #                 ],
-                #                 id="states-row",
-                #             )
-                #         ),
-                #         dbc.Col(
-                #             dbc.Row(
-                #                 children=[
-                #                     html.Label(
-                #                         ["Select Candidate"],
-                #                         style={
-                #                             "font-size": "13px",
-                #                             "text-align": "left",
-                #                             "off-set": 4,
-                #                             "color": "#808080",
-                #                         },
-                #                     ),
-                #                     dcc.Dropdown(id="names-dropdown"),
-                #                 ],
-                #                 id="cand-names-row-2",
-                #             )
-                #         ),
-                #     ]
-                # ),
                 dbc.Row(
                     [
                         dbc.Col([], id="bar-graph-plotly"),
@@ -164,7 +121,7 @@ layout = html.Div(
                 dbc.Row(
                     [
                         dcc.Markdown(
-                            """$$q_\\phi(\\theta, \\beta, \\eta, x) = \\prod_{d,k,s} q(\\theta_d)q(\\beta_k)q(\\eta_k)q(x_s).$$""",
+                            """$$q_\\phi(\\theta, \\beta, \\eta, x) = \\prod_{d,k,s} q(\\theta_d)q(\\beta_k)q(\\eta_k)q(x_s)$$""",
                             mathjax=True,
                         )
                     ],
@@ -180,7 +137,7 @@ layout = html.Div(
                             $$q(\\theta_d) = \\text{LogNormal}_K(\\mu_{\\theta_d}\\sigma^2_{\\theta_d})$$
                             $$q(\\beta_k) = \\text{LogNormal}_V(\\mu_{\\beta_k}, \\sigma^2_{\\beta_k})$$
                             $$q(\\eta_k) = \\mathcal{N}_V(\\mu_{\\eta_k}, \\sigma^2_{\\eta_k})$$
-                            $$q(x_s) = \\mathcal{N}(\\mu_{x_s}, \\sigma^2_{x_s}).$$""",
+                            $$q(x_s) = \\mathcal{N}(\\mu_{x_s}, \\sigma^2_{x_s})$$""",
                             mathjax=True,
                         )
                     ],
@@ -194,7 +151,7 @@ layout = html.Div(
                 dbc.Row(
                     [
                         dcc.Markdown(
-                            """ 
+                            """
                         `loc`: location variables $\\mu$
                         `scale`: scale variables $\\sigma$
                         $\\mu_\\eta$: `ideological_topic_loc`
@@ -256,7 +213,7 @@ layout = html.Div(
         ),
         """To replicate the whole process with my own Twitter data, I followed the steps below:""",
         dcc.Markdown(
-            """ 
+            """
         * `counts.npz`: a `[num_documents, num_words]` [sparse CSR matrix](https://docs.scipy.org/doc/scipy-0.14.0/reference/generated/scipy.sparse.csr_matrix.html) containing the word counts for each document.
         * `author_indices.npy`: a `[num_documents]` vector where each entry is an integer in the set `{0, 1, ..., num_authors - 1}`, indicating the author of the corresponding document in `counts.npz`.
         * `vocabulary.txt`: a `[num_words]` - length file where each line denotes the corresponding word in the vocabulary.
@@ -300,7 +257,6 @@ def update_output(value):
     Output("bar-graph-plotly", "children"),
     [
         dash.dependencies.Input("bar-graph-plotly", "figure")
-        # whatever other inputs
     ],
 )
 def my_callback(figure_empty):
