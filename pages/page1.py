@@ -653,8 +653,10 @@ def update_output(slider, state, cands, parties, stats):
     avg_s_dem = round(spent_dem / n_dem, 1) if n_dem != 0 else 0
     avg_s_3rd = round(spent_3rd / n_3rd, 1) if n_3rd != 0 else 0
 
-    row1 = [ html.Td(
-            avg_r_rep,
+
+
+    template = [ html.Td(
+            0,
             id="rep-1",
             style={
                 "vertical-align": "middle",
@@ -662,7 +664,7 @@ def update_output(slider, state, cands, parties, stats):
             },
         ),
         html.Td(
-            avg_s_rep,
+            0,
             id="rep-2",
             style={
                 "vertical-align": "middle",
@@ -670,7 +672,7 @@ def update_output(slider, state, cands, parties, stats):
             },
         ),
         html.Td(
-            round(raised_rep, 2),
+            0,
             id="rep-3",
             style={
                 "vertical-align": "middle",
@@ -678,7 +680,7 @@ def update_output(slider, state, cands, parties, stats):
             },
         ),
         html.Td(
-            round(spent_rep, 2),
+            0,
             id="rep-4",
             style={
                 "vertical-align": "middle",
@@ -686,7 +688,7 @@ def update_output(slider, state, cands, parties, stats):
             },
         ),
         html.Td(
-            n_rep,
+            0,
             id="rep-5",
             style={
                 "vertical-align": "middle",
@@ -694,71 +696,34 @@ def update_output(slider, state, cands, parties, stats):
             },
         ),
     ]
+
     rep = [avg_r_rep, avg_s_rep, raised_rep, spent_rep, n_rep]
     dem = [avg_r_dem, avg_s_dem, raised_dem, spent_dem, n_dem]
     trd = [avg_r_3rd, avg_s_3rd, raised_3rd, spent_3rd, n_3rd]
 
-
-    row2 = []
-    row3 = []
-
-    for i in range(5):
-        if rep[i] == 0 and len(set(rep)) == 1:
-            row1 = []
+    row1 = [i for i in template]
+    row2 = [i for i in template]
+    row3 = [i for i in template]
 
     for i in range(5):
-        if dem[i] !=0:
+        if rep[i] != 0:
+            v = round(rep[i],1)
+            style = row1[i].style
+            td = html.Td(children=v, id=f"rep-{i}", style=style)
+            row1[i] = td
+
+        if dem[i] != 0:
             v = round(dem[i],1)
-            style = style = row1[i].style
+            style = row1[i].style
+            td = html.Td(children=v, id=f"dem-{i}", style=style)
+            row2[i] = td
+        if trd[i] != 0:
+            v = round(trd[i],1)
+            style = row1[i].style
+            td = html.Td(children=v, id=f"3rd-{i}", style=style)
+            row3[i] = td
 
-        else:
-            v = " "
-            style = {"":""}
-        td = html.Td(children=v, id=f"dem-{i}", style=style)
-        row2.append(td)
 
-
-    template = [ html.Td(
-            " ",
-            id="rep-1",
-            style={
-                "vertical-align": "middle",
-                "width": "18%",
-            },
-        ),
-        html.Td(
-            " ",
-            id="rep-2",
-            style={
-                "vertical-align": "middle",
-                "width": "16%",
-            },
-        ),
-        html.Td(
-            " ",
-            id="rep-3",
-            style={
-                "vertical-align": "middle",
-                "width": "19%",
-            },
-        ),
-        html.Td(
-            " ",
-            id="rep-4",
-            style={
-                "vertical-align": "middle",
-                "width": "25%",
-            },
-        ),
-        html.Td(
-            " ",
-            id="rep-5",
-            style={
-                "vertical-align": "middle",
-                "width": "1%",
-            },
-        ),
-    ]
 
 
     for i in range(5):
