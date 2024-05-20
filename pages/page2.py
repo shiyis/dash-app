@@ -180,7 +180,7 @@ layout = html.Div(
                                 """2. Init and Optimization Process:""",
                                 html.Code(
                                     """
-                                          Start with some initial parameters for the variational family. Optimize these parameters to make the approximating distribution as close as possible to the true posterior distribution.In this case, it's through maximizing the evdience lower bound or minimizing the KL-Divergence between these two probability distributions."""
+                                          Start with some initial parameters for the variational family. Optimize these parameters to make the approximating distribution as close as possible to the true posterior distribution. In this case, it's through maximizing the evdience lower bound or minimizing the KL-Divergence between these two probability distributions."""
                                 ),
                             ]
                         ),
