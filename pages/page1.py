@@ -405,7 +405,7 @@ layout = html.Div(
 
               4. The color of the dots/circles indicates the party affiliation of each committee.
 
-              5. The stats that are right next to the slider indicate # PACs, average raised and spent (by party affiliation) for all the committees that fall into the sliding range.
+              5. The stats that are right next to the slider indicate # PACs, average/total raise and spent (by party affiliation) for all the committees that fall into the sliding range.
 
              """
         ),
