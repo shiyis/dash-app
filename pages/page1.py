@@ -325,7 +325,6 @@ layout = html.Div(
                                                                         "label": " 3RD",
                                                                         "value": "3RD",
                                                                     },
-
                                                                 ],
                                                             ),
                                                             style={
@@ -356,7 +355,11 @@ layout = html.Div(
                                                         ),
                                                     ]
                                                 )
-                                            ], style={'borderCollapse': 'collapse', 'width': '100%'}
+                                            ],
+                                            style={
+                                                "borderCollapse": "collapse",
+                                                "width": "100%",
+                                            },
                                         ),
                                     ]
                                 ),
@@ -525,7 +528,6 @@ def update_output(value):
         dash.dependencies.Input("names-dropdown", "value"),
         dash.dependencies.Input("parties-checkbox", "value"),
         dash.dependencies.Input("checkboxes", "value"),
-
     ],
 )
 def update_output(slider, state, cands, parties, stats):
@@ -542,7 +544,13 @@ def update_output(slider, state, cands, parties, stats):
     ]
 
     row = {"REP": 0, "DEM": 1, "3RD": 2}
-    col = {"Avg Raised": 0, "Avg Spent": 1, "Total Raised": 2, "Total Spent": 3, "# PACs": 4}
+    col = {
+        "Avg Raised": 0,
+        "Avg Spent": 1,
+        "Total Raised": 2,
+        "Total Spent": 3,
+        "# PACs": 4,
+    }
     latLon = [tuple(i[1:]) for i in latLon.itertuples()]
     colors = ["blue", "red", "grey"]
     s_latlon = [
@@ -550,6 +558,7 @@ def update_output(slider, state, cands, parties, stats):
         states[states["state"] == "DC"]["longitude"].iloc[0],
     ]
     groups = {"DEM": ("blue", []), "REP": ("red", []), "OTH": ("grey", [])}
+
     n_rep = 0
     n_dem = 0
     n_3rd = 0
@@ -563,7 +572,7 @@ def update_output(slider, state, cands, parties, stats):
     spent_3rd = 0
 
     cms = []
-    # print(party, stat)
+
     for code, pty, name, r, s, lat, lng in latLon:
 
         # number of PACs divided by party
@@ -653,11 +662,10 @@ def update_output(slider, state, cands, parties, stats):
     avg_s_dem = round(spent_dem / n_dem, 1) if n_dem != 0 else 0
     avg_s_3rd = round(spent_3rd / n_3rd, 1) if n_3rd != 0 else 0
 
-
-
-    template = [ html.Td(
+    template = [
+        html.Td(
             0,
-            id="rep-1",
+            id="rep-0",
             style={
                 "vertical-align": "middle",
                 "width": "18%",
@@ -665,7 +673,7 @@ def update_output(slider, state, cands, parties, stats):
         ),
         html.Td(
             0,
-            id="rep-2",
+            id="rep-1",
             style={
                 "vertical-align": "middle",
                 "width": "16%",
@@ -673,7 +681,7 @@ def update_output(slider, state, cands, parties, stats):
         ),
         html.Td(
             0,
-            id="rep-3",
+            id="rep-2",
             style={
                 "vertical-align": "middle",
                 "width": "19%",
@@ -681,7 +689,7 @@ def update_output(slider, state, cands, parties, stats):
         ),
         html.Td(
             0,
-            id="rep-4",
+            id="rep-3",
             style={
                 "vertical-align": "middle",
                 "width": "25%",
@@ -689,7 +697,134 @@ def update_output(slider, state, cands, parties, stats):
         ),
         html.Td(
             0,
-            id="rep-5",
+            id="rep-4",
+            style={
+                "vertical-align": "middle",
+                "width": "1%",
+            },
+        ),
+    ]
+
+    template1 = [
+        html.Td(
+            0,
+            id="rep-0",
+            style={
+                "vertical-align": "middle",
+                "width": "18%",
+            },
+        ),
+        html.Td(
+            0,
+            id="rep-1",
+            style={
+                "vertical-align": "middle",
+                "width": "16%",
+            },
+        ),
+        html.Td(
+            0,
+            id="rep-2",
+            style={
+                "vertical-align": "middle",
+                "width": "19%",
+            },
+        ),
+        html.Td(
+            0,
+            id="rep-3",
+            style={
+                "vertical-align": "middle",
+                "width": "25%",
+            },
+        ),
+        html.Td(
+            0,
+            id="rep-4",
+            style={
+                "vertical-align": "middle",
+                "width": "1%",
+            },
+        ),
+    ]
+    template2 = [
+        html.Td(
+            0,
+            id="dem-0",
+            style={
+                "vertical-align": "middle",
+                "width": "18%",
+            },
+        ),
+        html.Td(
+            0,
+            id="dem-1",
+            style={
+                "vertical-align": "middle",
+                "width": "16%",
+            },
+        ),
+        html.Td(
+            0,
+            id="dem-2",
+            style={
+                "vertical-align": "middle",
+                "width": "19%",
+            },
+        ),
+        html.Td(
+            0,
+            id="dem-3",
+            style={
+                "vertical-align": "middle",
+                "width": "25%",
+            },
+        ),
+        html.Td(
+            0,
+            id="dem-4",
+            style={
+                "vertical-align": "middle",
+                "width": "1%",
+            },
+        ),
+    ]
+    template3 = [
+        html.Td(
+            0,
+            id="3rd-0",
+            style={
+                "vertical-align": "middle",
+                "width": "18%",
+            },
+        ),
+        html.Td(
+            0,
+            id="3rd-1",
+            style={
+                "vertical-align": "middle",
+                "width": "16%",
+            },
+        ),
+        html.Td(
+            0,
+            id="3rd-2",
+            style={
+                "vertical-align": "middle",
+                "width": "19%",
+            },
+        ),
+        html.Td(
+            0,
+            id="3rd-3",
+            style={
+                "vertical-align": "middle",
+                "width": "25%",
+            },
+        ),
+        html.Td(
+            0,
+            id="3rd-4",
             style={
                 "vertical-align": "middle",
                 "width": "1%",
@@ -706,38 +841,22 @@ def update_output(slider, state, cands, parties, stats):
     row3 = [i for i in template]
 
     for i in range(5):
-        if rep[i] != 0:
-            v = round(rep[i],1)
-            style = row1[i].style
-            td = html.Td(children=v, id=f"rep-{i}", style=style)
-            row1[i] = td
+        v1 = round(rep[i], 1)
+        style = row1[i].style
+        td = html.Td(children=v1, id=f"rep-{i}", style=style)
+        row1[i] = td
 
-        if dem[i] != 0:
-            v = round(dem[i],1)
-            style = row1[i].style
-            td = html.Td(children=v, id=f"dem-{i}", style=style)
-            row2[i] = td
-        if trd[i] != 0:
-            v = round(trd[i],1)
-            style = row1[i].style
-            td = html.Td(children=v, id=f"3rd-{i}", style=style)
-            row3[i] = td
+        v2 = round(dem[i], 1)
+        style = row2[i].style
+        td = html.Td(children=v2, id=f"dem-{i}", style=style)
+        row2[i] = td
 
+        v3 = round(trd[i], 1)
+        style = row3[i].style
+        td = html.Td(children=v3, id=f"3rd-{i}", style=style)
+        row3[i] = td
 
-
-
-    for i in range(5):
-        if trd[i] !=0:
-            v = round(trd[i],1)
-            style = row1[i].style
-
-        else:
-            v = " "
-            style = {"":""}
-        td = html.Td(children=v, id=f"3rd-{i}", style=style)
-        row3.append(td)
-
-    tmp = [template, [i for i in template], [i for i in template]]
+    tmp = [template1, template2, template3]
     rows = [row1, row2, row3]
 
     if parties:
@@ -745,14 +864,15 @@ def update_output(slider, state, cands, parties, stats):
             if stats:
                 for j in stats:
                     tmp[row[i]][col[j]] = rows[row[i]][col[j]]
-
         row1, row2, row3 = tmp
+
     else:
         for i in range(3):
             if stats:
                 for j in stats:
                     tmp[i][col[j]] = rows[i][col[j]]
         row1, row2, row3 = tmp
+
     data = [
         dl.TileLayer(),
         dl.LayersControl(
@@ -882,9 +1002,6 @@ def update_output(slider, state, cands, parties, stats):
         row2,
         row3,
     )
-
-
-
 
 
 @callback(Output("info1", "children"), dash.dependencies.Input("geojson1", "hoverData"))

@@ -255,9 +255,7 @@ def update_output(value):
 
 @callback(
     Output("bar-graph-plotly", "children"),
-    [
-        dash.dependencies.Input("bar-graph-plotly", "figure")
-    ],
+    [dash.dependencies.Input("bar-graph-plotly", "figure")],
 )
 def my_callback(figure_empty):
     fig = px.scatter(
