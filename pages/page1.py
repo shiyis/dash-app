@@ -295,6 +295,9 @@ layout = html.Div(
                                         dcc.Checklist(
                                             id="checkboxes",
                                             options=checkbox_options,
+                                            value=[
+                                                i["value"] for i in checkbox_options
+                                            ],
                                             inline=True,
                                             labelStyle={
                                                 "display": "inline-block",
@@ -325,6 +328,11 @@ layout = html.Div(
                                                                         "label": " 3RD",
                                                                         "value": "3RD",
                                                                     },
+                                                                ],
+                                                                value=[
+                                                                    "REP",
+                                                                    "DEM",
+                                                                    "3RD",
                                                                 ],
                                                             ),
                                                             style={
