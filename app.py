@@ -23,14 +23,15 @@ SIDEBAR_STYLE = {
     "height": "100%",
     "padding": "15rem 2rem 0 2rem",
     "font-size": "1rem",
-    "background-color": "#37136b",
+    "background-color": "#24385b",
     "-moz-transform": "scale(1.1)",
     "-ms-transform": "scale(1.1)",
     "-webkit-transform": "scale(1.1)",
     # "transform": "scale(1.1)",
     "font-family": "system-ui",
-    "text-shadow": "-2.5px 0px 0px #ea39b9",
+    "text-shadow": "rgb(23, 2, 41) -3.5px -3px 4px",
     "z-index": "3",
+    "color": "#ccc",
     "zoom": "80%",
 }
 

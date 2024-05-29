@@ -16,7 +16,7 @@ dash.register_page(
 PAGE_STYLE = {
     "margin": "-2rem 0rem 0rem 15rem",
     "font-family": "system-ui",
-    "background-color": "#e2def2",
+    "background-color": "#999",
     "padding-top": "3rem",
 }
 
