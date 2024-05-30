@@ -101,7 +101,9 @@ layout = html.Div(
                 """ with """,
                 html.A("reparameterization", href="https://arxiv.org/abs/1312.6114"),
                 html.A(" gradients.", href="https://arxiv.org/abs/1401.4082"),
-                """ What this means in plain language is that imagine you have a bunch of data, like pictures of cats. Each cat picture can be described by a set of features—things like the color of the fur, the size of the ears, and the length of the tail. Now, let's say you want to understand the hidden or latent factors that contribute to these features. The challenge is that there might be some randomness or uncertainty in these latent factors.\n\n""",
+                """Imagine you have a bunch of cat pictures, and you want to generate new, realistic cat pictures that you've never seen before. A VAE would learn to represent the underlying patterns and structures of cat pictures in a lower-dimensional latent space. This latent space would capture the essential features of cat pictures, such as the shape of the ears, the color of the fur, and the length of the tail. The VAE would then use this latent space to generate new cat pictures that are similar to the ones it's seen before.\n\n""",
+
+                """In the context of topic modeling, VAEs can be used to learn a probabilistic representation of topics in a document collection. The latent space would capture the underlying themes and patterns in the documents, and the VAE would generate topic distributions for each document based on this latent space.\n\n""",
                 """This is an extension of another popular algorithm the Latent Dirichlet Allocation (LDA). In the context of textual topic modeling, variational inference helps approximate the posterior distribution of latent variables, such as the distribution of topics in documents and words in topics. In variational inference, we need to specify a family of distributions from which we will choose an approximation to the true (but often intractable) posterior distribution. This family of distributions is called the "variational family." Common choices for the variational family include mean-field variational families.\n\n""",
                 """In summary, variational inference, with the help of a variational family, allows us to approximate complex posterior distributions in topic modeling. It helps uncover latent topics and their distributions in a collection of documents, providing valuable insights into the underlying thematic structures.""",
                 html.P(""""""),
@@ -110,7 +112,7 @@ layout = html.Div(
                     mathjax=True,
                 ),
                 dcc.Markdown(
-                    """$$\\mathbb{L}_{\\theta,\phi}(\\mathbf{x})=\mathbb{E}_{q_{\\phi}(\\mathbf{z}|\\mathbf{x})}[\\log p_{\\theta}(\\mathbf{x},\\mathbf{z})-\\log q_{\\phi}(\\mathbf{z}|\\mathbf{x})]$$""",
+                    """$$\\mathbb{L}_{\\theta,\\phi}(\\mathbf{x})=\\mathbb{E}_{q_{\\phi}(\\mathbf{z}|\\mathbf{x})}[\\log p_{\\theta}(\\mathbf{x},\\mathbf{z})-\\log q_{\\phi}(\\mathbf{z}|\\mathbf{x})]$$""",
                     mathjax=True,
                     style={"text-align": "center"},
                 ),

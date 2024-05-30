@@ -28,7 +28,7 @@ layout = html.Div(
                 html.Iframe(
                     src="https://gamma.app/embed/l9741p0k5hh1zlo",
                     style={
-                        "width": "1300px",
+                        "width": "1350px",
                         "height": "2300px",
                         "display": "block",
                         "margin": "0 auto",
