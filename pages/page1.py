@@ -9,7 +9,7 @@ from dash_extensions.javascript import assign
 from dash import dash_table
 
 dash.register_page(
-    __name__, path="/page1", title="Exploratory Data Analysis", location="sidebar"
+    __name__, path="/", title="Exploratory Data Analysis", location="sidebar"
 )
 pd.set_option("float_format", "{:.2f}".format)
 
