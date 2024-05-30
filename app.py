@@ -118,7 +118,7 @@ sidebar = html.Div(
             },
         ),
         html.Div(id="output-data-upload"),
-        html.Hr(),
+        # html.Hr(),
         # html.Hr()
     ],
     className="sidebar",
