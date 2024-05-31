@@ -20,7 +20,7 @@
     font-family: monospace;
     position:relative;
     letter-spacing: 0.05rem;
-    color: brown;
+    color: #921a25;
     padding-left:-5px;
 }
 
@@ -32,12 +32,12 @@
 
 
 .nav-link {
-  color: #ccc
+  color: #e8e8e8
 }
 
 
 
 
 code {
-  color: #00a699
+  color: #921a25
 }
