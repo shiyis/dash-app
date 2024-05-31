@@ -20,14 +20,14 @@
     font-family: monospace;
     position:relative;
     letter-spacing: 0.05rem;
-    color: #950000;
+    color: #eaa802;
     padding-left:-5px;
 }
 
 
 
 .nav-pills .nav-link.active, .nav-pills .show>.nav-link {
-    background-color: #957800;
+    background-color: #8800ff;
     box-shadow: none;
 }
 
@@ -41,4 +41,16 @@
 
 code {
   color: #921a25
+}
+
+.sidebar{
+
+  hr {
+    border-top: 1px solid #fff;
+    border-style: ridge;
+    border-width: 4px;
+    opacity: 0.6;
+
+  }
+
 }
