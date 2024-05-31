@@ -29,9 +29,9 @@ SIDEBAR_STYLE = {
     "-webkit-transform": "scale(1.1)",
     # "transform": "scale(1.1)",
     "font-family": "system-ui",
-    "text-shadow": "#000 3px 0px 0px",
+    "text-shadow": "rgb(0, 0, 0) 1.5px 0px 1px",
     "z-index": "3",
-    "color": "#28c9b5",
+    "color": "#fff",
     "zoom": "80%",
 }
 
