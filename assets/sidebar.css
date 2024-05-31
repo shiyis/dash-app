@@ -27,7 +27,8 @@
 
 
 .nav-pills .nav-link.active, .nav-pills .show>.nav-link {
-    background-color: #ffc107
+    background-color: #957800;
+    box-shadow: none;
 }
 
 

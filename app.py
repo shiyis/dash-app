@@ -31,7 +31,7 @@ SIDEBAR_STYLE = {
     "font-family": "system-ui",
     "text-shadow": "#000 3px 0px 0px",
     "z-index": "3",
-    "color": "#44d9e8",
+    "color": "#28c9b5",
     "zoom": "80%",
 }
 
