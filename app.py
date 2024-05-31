@@ -106,7 +106,7 @@ sidebar = html.Div(
                 )
             ],
             style={
-                "width": "90%",
+                "width": "95%",
                 "height": "118px",
                 "lineHeight": "40px",
                 "borderWidth": "2px",
@@ -114,7 +114,7 @@ sidebar = html.Div(
                 "borderRadius": "1px",
                 "textAlign": "center",
                 "font-size": "11px",
-                "margin": "25px -15px 30px 11px",
+                "margin": "25px 0px 30px 5px",
             },
         ),
         html.Div(id="output-data-upload"),

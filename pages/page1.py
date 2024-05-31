@@ -202,8 +202,8 @@ layout = html.Div(
         html.P(
             """This part of the project will first present the receipts, disbursements, and other expenditures in terms of propagating political actions in visualization format grounded in states; for example, how many different political action committees there are by US states. This part of the project will also break down all the candidates of 2022 their basic information as mentioned above including their basic demographics, political party affiliation, election cycle, and incumbency."""
         ),
-        html.P(
-            """All info is retrievable through the Federal Election Commission's directory. Please check out this link for full documentation: """,
+        dcc.Markdown(
+            """All info is retrievable through the Federal Election Commission's directory. Please check out this [link](https://shiyis.github.io/politix-docs/docs/roadmap/) for full documentation. """,
         ),
         html.A(
             """link""",
