@@ -29,7 +29,10 @@ a {
 }
 
 
+#checkboxes {
 
+  text-align: right
+}
 code {
   color: #00a699
 }

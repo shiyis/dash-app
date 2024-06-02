@@ -21,11 +21,11 @@ states = pd.read_csv("./data/states.csv")
 # define page style
 PAGE_STYLE = {
     "position": "relative",
-    "margin": "4.5rem 4rem 0rem 20rem",
+    "margin": "2.5rem 5rem 0rem 5rem",
     "color": "#000",
     "text-shadow": "#000 0 0",
-    "whiteSpace": "pre-wrap",
-    "font-family": "system-ui",
+    # "whiteSpace": "pre-wrap",
+    # "font-family": "system-ui",
 }
 
 
@@ -118,7 +118,7 @@ def create_choropleth(id="geojson1", info_id="info1"):
         style={
             "position": "absolute",
             "top": "300px",
-            "left": "640px",
+            "left": "780px",
             "width": "100px",
         },
     )
@@ -191,7 +191,7 @@ checkbox_options = [
 
 layout = html.Div(
     [
-        html.H5("Exploratory Data Analysis of Federal Election Candidacy"),
+        html.H5("Exploratory Data Analysis of Federal Election Candidacy 🗳️"),
         html.Hr(),
         html.P(
             """In socio-politics, quantified approaches and modeling techniques are applied in supporting and facilitating political analyses. Individuals, parties, committees and other political entities come together and try to push forward campaigns in hope to receive appropriate patrionization and support for their political agenda. """
@@ -204,9 +204,6 @@ layout = html.Div(
         ),
         dcc.Markdown(
             """All info is retrievable through the Federal Election Commission's directory. Please check out this [link](https://shiyis.github.io/politix-docs/docs/roadmap/) for full documentation. """,
-        ),
-        html.A(
-            """link""",
         ),
         dbc.Row(
             [
@@ -309,6 +306,7 @@ layout = html.Div(
                                                 "text-align": "right",
                                                 "color": "#000",
                                                 "margin": "1.5rem 0rem 0rem 1.1rem",
+                                                "text-align": "right"
                                             },
                                         ),
                                         html.Table(
@@ -340,7 +338,7 @@ layout = html.Div(
                                                             ),
                                                             style={
                                                                 "vertical-align": "middle",
-                                                                "width": "9%",
+                                                                "width": "13%",
                                                             },
                                                         ),
                                                         html.Tbody(
@@ -679,7 +677,7 @@ def update_output(slider, state, cands, parties, stats):
             id="rep-0",
             style={
                 "vertical-align": "middle",
-                "width": "18%",
+                "width": "13.5%",
             },
         ),
         html.Td(
@@ -687,7 +685,7 @@ def update_output(slider, state, cands, parties, stats):
             id="rep-1",
             style={
                 "vertical-align": "middle",
-                "width": "16%",
+                "width": "11.5%",
             },
         ),
         html.Td(
@@ -695,7 +693,7 @@ def update_output(slider, state, cands, parties, stats):
             id="rep-2",
             style={
                 "vertical-align": "middle",
-                "width": "19%",
+                "width": "13%",
             },
         ),
         html.Td(
@@ -703,7 +701,7 @@ def update_output(slider, state, cands, parties, stats):
             id="rep-3",
             style={
                 "vertical-align": "middle",
-                "width": "25%",
+                "width": "17%",
             },
         ),
         html.Td(

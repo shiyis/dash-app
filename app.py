@@ -1,190 +1,50 @@
-# app.py
-
 import dash
-import pandas as pd
-import os
+from dash import html, dcc
 import dash_bootstrap_components as dbc
-from dash import dcc, html, dash_table, Input, Output, State
-from datetime import datetime
+import pandas as pd
+import dash_leaflet.express as dlx
+from dash import dcc, html, Output, callback, callback_context
+import dash_leaflet as dl
+from dash_extensions.javascript import arrow_function
+from dash_extensions.javascript import assign
+from dash import dash_table
 
-p = os.path.abspath(__file__)
-os.chdir(os.path.dirname(p))
 
-app = dash.Dash(__name__, use_pages=True, external_stylesheets=[dbc.themes.VAPOR])
-app.config["suppress_callback_exceptions"] = True
+app = dash.Dash(__name__, use_pages=True, external_stylesheets=[dbc.themes.SPACELAB])
 server = app.server
 
-SIDEBAR_STYLE = {
-    "position": "fixed",
-    "top": 0,
-    "left": "10px",
-    "bottom": 0,
-    "width": "auto",
-    "height": "100%",
-    "padding": "15rem 2rem 0 2rem",
-    "font-size": "1rem",
-    "background-color": "#6eadad",
-    "-moz-transform": "scale(1.1)",
-    "-ms-transform": "scale(1.1)",
-    "-webkit-transform": "scale(1.1)",
-    # "transform": "scale(1.1)",
-    "font-family": "system-ui",
-    "text-shadow": "rgb(0, 0, 0) 2px 0.5px 0.5px",
-    "z-index": "3",
-    "color": "#fff",
-    "zoom": "80%",
-}
+# Define the menubar
+menubar = dbc.NavbarSimple(
+    children=[
+        dbc.NavItem(dbc.NavLink("Election EDA", href="/", id="election-eda")),
+        dbc.NavItem(dbc.NavLink("Ideal Points", href="page2", id="measuring-ideal-points")),
+        dbc.NavItem(dbc.NavLink("GitHub Repo", href="https://github.com/shiyis/politix", external_link=True)),
 
-# the styles for the main content position it to the right of the sidebar and
-# # add some padding.
-CONTENT_STYLE = {
-    "background-color": "#fff",
-    "position": "relative",
-    "height": "2500px",
-    "margin-left": "20rem",
-    "z-index": "2",
-}
-
-
-sidebar = html.Div(
-    [
-        html.P(" ", className="display-4"),
-        html.P(
-            "POLITIX",
-            className="lead",
-            style={
-                "width": "100%",
-                "height": "67px",
-                "lineHeight": "80px",
-                "borderWidth": "5px",
-                # "borderStyle": "solid",
-                "padding-bottom": "10px",
-                "textAlign": "center",
-                "whitespace": "1px",
-                "font-size": "50px",
-                "border-radius": "11px",
-                "font-family": "Heebo-Bold, system-ui",
-            },
-        ),
-        html.Hr(),
-        dbc.Nav(
-            [
-                dbc.NavLink(page["title"], href=page["path"], active="exact")
-                for page in dash.page_registry.values()
-                if page["location"] == "sidebar"
-            ],
-            vertical=True,
-            pills=True,
-            className="nav-links",
-        ),
-        # html.Hr(),
-        html.Div(
-            children=[
-                dcc.Upload(
-                    id="upload-data",
-                    children=html.Div(
-                        [
-                            html.H1(
-                                "🗳️",
-                                className="logo",
-                                style={
-                                    "font-size": "60px",
-                                    "text-shadow": "#000 0px 0px 0px",
-                                },
-                            ),
-                            html.A(
-                                "Drag & Drop or Select Your Data!",
-                                style={
-                                    "font-size": "11px",
-                                    "text-shadow": "0 0 1px white",
-                                },
-                            ),
-                        ]
-                    ),
-                    # Allow multiple files to be uploaded
-                    multiple=True,
-                )
-            ],
-            style={
-                "width": "100%",
-                "height": "115px",
-                "lineHeight": "40px",
-                # "borderWidth": "1px",
-                "padding-top": "0.5rem",
-                # "borderStyle": "solid",
-                "borderRadius": "3px",
-                "textAlign": "center",
-                "font-size": "11px",
-                "background-color": "color(srgb 0.142 0.2195 0.355 / 0.29)",
-                "margin": "10px 0px 10px 0px",
-            },
-        ),
-        html.Div(id="output-data-upload"),
-        # html.Hr(),
-        # html.Hr()
     ],
-    className="sidebar",
-    style=SIDEBAR_STYLE,
+    brand="POLITIX: A Political Text Ideology Extraction Project",
+    brand_href="/",
+    color="primary",
+    dark=True,
+    fluid=True,
+    style= {
+
+        "position": "relative",
+        # "margin": "0rem 5rem 0rem 5rem",
+        "padding": "0.5rem 4.2rem 0.5rem 4.2rem",
+        "color": "#000",
+        "text-shadow": "#000 0 0",
+        "whiteSpace": "pre-wrap",
+        "font-family": "system-ui",
+
+    }
 )
-
-content = html.Div(id="page-content", style=CONTENT_STYLE)
-
-
-# processed uploaded file
-def parse_contents(contents, filename, date):
-    content_type, content_string = contents.split(",")
-
-    decoded = base64.b64decode(content_string)
-    try:
-        if "csv" in filename:
-            # Assume that the user uploaded a CSV file
-            df = pd.read_csv(io.StringIO(decoded.decode("utf-8")))
-        elif "xls" in filename:
-            # Assume that the user uploaded an excel file
-            df = pd.read_excel(io.BytesIO(decoded))
-    except Exception as e:
-        print(e)
-        return html.Div(["There was an error processing this file."])
-
-    return html.Div(
-        [
-            html.H5(filename),
-            html.H6(datetime.datetime.fromtimestamp(date)),
-            dash_table.DataTable(
-                df.to_dict("records"), [{"name": i, "id": i} for i in df.columns]
-            ),
-            html.Hr(),  # horizontal line
-            # For debugging, display the raw contents provided by the web browser
-            html.Div("Raw Content"),
-            html.Pre(
-                contents[0:200] + "...",
-                style={"whiteSpace": "pre-wrap", "wordBreak": "break-all"},
-            ),
-        ]
-    )
-
-
-@app.callback(
-    Output("output-data-upload", "children"),
-    Input("upload-data", "contents"),
-    State("upload-data", "filename"),
-    State("upload-data", "last_modified"),
-)
-def update_output(list_of_contents, list_of_names, list_of_dates):
-    if list_of_contents is not None:
-        children = [
-            parse_contents(c, n, d)
-            for c, n, d in zip(list_of_contents, list_of_names, list_of_dates)
-        ]
-        return children
-
 
 content = html.Div([dash.page_container], id="page-content")
-
-
-app.layout = html.Div([dcc.Location(id="url"), sidebar, content])
-
+# Define the app layout
+app.layout = html.Div([
+    menubar,
+    content
+])
 
 if __name__ == "__main__":
-    # update the port number
-    app.run_server(debug=True, port=8050)
+    app.run_server(debug=False, port=8050)
