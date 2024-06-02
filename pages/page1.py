@@ -720,7 +720,7 @@ def update_output(slider, state, cands, parties, stats):
             id="rep-0",
             style={
                 "vertical-align": "middle",
-                "width": "18%",
+                "width": "13.5%%",
             },
         ),
         html.Td(
@@ -728,7 +728,7 @@ def update_output(slider, state, cands, parties, stats):
             id="rep-1",
             style={
                 "vertical-align": "middle",
-                "width": "16%",
+                "width": "11.5%",
             },
         ),
         html.Td(
@@ -736,7 +736,7 @@ def update_output(slider, state, cands, parties, stats):
             id="rep-2",
             style={
                 "vertical-align": "middle",
-                "width": "19%",
+                "width": "13%",
             },
         ),
         html.Td(
@@ -744,7 +744,7 @@ def update_output(slider, state, cands, parties, stats):
             id="rep-3",
             style={
                 "vertical-align": "middle",
-                "width": "25%",
+                "width": "17%",
             },
         ),
         html.Td(
@@ -762,7 +762,7 @@ def update_output(slider, state, cands, parties, stats):
             id="dem-0",
             style={
                 "vertical-align": "middle",
-                "width": "18%",
+                "width": "13.5%",
             },
         ),
         html.Td(
@@ -770,7 +770,7 @@ def update_output(slider, state, cands, parties, stats):
             id="dem-1",
             style={
                 "vertical-align": "middle",
-                "width": "16%",
+                "width": "11.5%",
             },
         ),
         html.Td(
@@ -778,7 +778,7 @@ def update_output(slider, state, cands, parties, stats):
             id="dem-2",
             style={
                 "vertical-align": "middle",
-                "width": "19%",
+                "width": "13%",
             },
         ),
         html.Td(
@@ -786,7 +786,7 @@ def update_output(slider, state, cands, parties, stats):
             id="dem-3",
             style={
                 "vertical-align": "middle",
-                "width": "25%",
+                "width": "17%",
             },
         ),
         html.Td(
@@ -804,7 +804,7 @@ def update_output(slider, state, cands, parties, stats):
             id="3rd-0",
             style={
                 "vertical-align": "middle",
-                "width": "18%",
+                "width": "13.5%",
             },
         ),
         html.Td(
@@ -812,7 +812,7 @@ def update_output(slider, state, cands, parties, stats):
             id="3rd-1",
             style={
                 "vertical-align": "middle",
-                "width": "16%",
+                "width": "11.5%",
             },
         ),
         html.Td(
@@ -820,7 +820,7 @@ def update_output(slider, state, cands, parties, stats):
             id="3rd-2",
             style={
                 "vertical-align": "middle",
-                "width": "19%",
+                "width": "13%",
             },
         ),
         html.Td(
@@ -828,7 +828,7 @@ def update_output(slider, state, cands, parties, stats):
             id="3rd-3",
             style={
                 "vertical-align": "middle",
-                "width": "25%",
+                "width": "17%",
             },
         ),
         html.Td(
