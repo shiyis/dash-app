@@ -34,7 +34,7 @@ PAGE_STYLE = {
     "position": "absolute",
     "margin": "2.5rem 5rem 0rem 5rem",
     "color": "#000",
-    "text-shadow": "#000 0 0",
+    # "text-shadow": "#000 0 0",
     "whiteSpace": "pre-wrap",
 }
 
@@ -72,7 +72,7 @@ layout = html.Div(
                 """Below are the resulting ideal points,\n""",
                 dbc.Row(
                     [
-                        dbc.Col(children=[html.Div(children=[],id="bar-graph-plotly")]),
+                        dbc.Col(dbc.Row(children=[],id="bar-graph-plotly")),
                         dbc.Col(
                             children=[
                                 dag.AgGrid(
@@ -238,7 +238,7 @@ def my_callback(figure_empty):
         )
     )
 
-    return dcc.Graph(id="bar-graph-plotly", figure=fig)
+    return [dcc.Graph(id="bar-graph-plotly", figure=fig)]
 
 
 # @callback(

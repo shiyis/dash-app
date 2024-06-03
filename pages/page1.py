@@ -23,7 +23,7 @@ PAGE_STYLE = {
     "position": "relative",
     "margin": "2.5rem 5rem 0rem 5rem",
     "color": "#000",
-    "text-shadow": "#000 0 0",
+    # "text-shadow": "#000 0 0",
     # "whiteSpace": "pre-wrap",
     # "font-family": "system-ui",
 }
