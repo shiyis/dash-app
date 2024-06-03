@@ -977,8 +977,8 @@ def update_output(slider, state, cands, parties, stats):
                                     "whiteSpace": "pre-wrap",
                                 },
                             ),
-                            direction="top",
-                            zIndexOffset="2000",
+                            # direction="top",
+                            # zIndexOffset="2000",
                         )
                     ],
                 )
