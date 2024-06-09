@@ -165,7 +165,7 @@ table2 = (
     .rename(
         columns={
             "Candidate state": "State",
-            "Affiliated Committee Name": "# Affiliated cmtes",
+            "Affiliated Committee Name": "# Affiliated Comms",
         }
     )
     .round(2)
@@ -446,7 +446,7 @@ layout = html.Div(
                 ),
                 dbc.Col(
                     [
-                        dcc.Markdown(f""" - Total Cmtes by State and Party (Top 5):"""),
+                        dcc.Markdown(f""" - Total Comms by State and Party (Top 5):"""),
                         dash_table.DataTable(
                             table2.to_dict("records"),
                             [{"name": i, "id": i} for i in table2.columns],
