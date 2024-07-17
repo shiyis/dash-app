@@ -53,7 +53,7 @@ authors["name"] = authors["name"].str.replace("\n", "")
 
 layout = html.Div(
     [
-        html.H5("Measuring Political Stance and Subjectivity with VAE methods 🔢"),
+        html.H5("Measuring Political Stance and Subjectivity with VAE methods"),
         html.Hr(),
         html.P(
             [
