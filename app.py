@@ -18,7 +18,7 @@ menubar = dbc.NavbarSimple(
     children=[
         # dbc.NavItem(dbc.NavLink("Election EDA", href="/", id="election-eda")),
         dbc.NavItem(dbc.NavLink("Measuring Ideal Points", href="page2", id="measuring-ideal-points")),
-        dbc.NavItem(dbc.NavLink("Supplementary Blog", href="https://shiyis.github.io/politics-doc", id="supplementary-blog", external_link=True)),
+        dbc.NavItem(dbc.NavLink("Supplementary Blog", href="https://shiyis.github.io/politics-docs", id="supplementary-blog", external_link=True)),
         dbc.NavItem(dbc.NavLink("GitHub Repo", href="https://github.com/shiyis/politics", external_link=True)),
 
     ],
