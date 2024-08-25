@@ -191,7 +191,7 @@ checkbox_options = [
 
 layout = html.Div(
     [
-        html.H5("Exploratory Data Analysis of Federal Election Candidacy"),
+        html.H5("Exploratory Data Analysis of General Election Candidacy"),
         html.Hr(),
         html.P(
             """In socio-politics, quantified approaches and modeling techniques are applied in supporting and facilitating political analyses. Individuals, parties, committees and other political entities come together and try to push forward campaigns in hope to receive appropriate patronization and support for their political agenda. """
