@@ -22,7 +22,7 @@ menubar = dbc.NavbarSimple(
         dbc.NavItem(dbc.NavLink("GitHub Repo", href="https://github.com/shiyis/politics", external_link=True)),
 
     ],
-    brand="POLITICS: A Political Opinions, Language, And Ideology Text Interpretation And Classification Solution",
+    brand="POLITICS: A Political Opinions, Language, and Ideology Text Interpretation and Classification Solution",
     brand_href="/",
     color="light",
     dark=True,
