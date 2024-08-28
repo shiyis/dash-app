@@ -58,7 +58,7 @@ layout = html.Div(
         html.P(
             [
                 dcc.Markdown(
-                    """To continue with our project objective of measuring and investigating how a politician's internal motivation aligns with their external actions (fundraising, disbursements, and various expenditures with respect to their political acitivities and agenda; we have disclosed the most basic information in the previous section, or [Exploratory Data Analysis of Federal Election Candidacy](https://my-dash-app-ilf47zak6q-uc.a.run.app), this section will present a statistical topic modeling over the authors/politicians' tweets."""
+                    """To continue with our project objective of measuring and investigating how a politician's internal motivation aligns with their external actions (fundraising, disbursements, and various expenditures with respect to their political acitivities and agenda; we have disclosed the most basic information in the previous section, or [Exploratory Data Analysis of General Election Candidacy](https://my-dash-app-ilf47zak6q-uc.a.run.app), this section will present a statistical topic modeling over the authors/politicians' tweets."""
                 ),
                 html.A(
                     "TBIP or Text-based Ideal Point Model",
