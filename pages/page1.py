@@ -7,6 +7,9 @@ import dash_leaflet as dl
 from dash_extensions.javascript import arrow_function
 from dash_extensions.javascript import assign
 from dash import dash_table
+import dash_leaflet as dl
+import dash_extensions.javascript as dj
+
 
 dash.register_page(
     __name__, path="/", title="Exploratory Data Analysis", location="sidebar"
@@ -28,8 +31,63 @@ PAGE_STYLE = {
     # "font-family": "system-ui",
 }
 
+# make all tooltip to the front custom script
 
-# util functoins to create chloropleth
+js = """
+function updateTooltipZIndex() {
+    document.querySelectorAll('.leaflet-popup-content-wrapper').forEach(function(popup) {
+        popup.style.zIndex = 1000;
+        popup.style.position = 'absolute';
+        popup.style.transform = 'translate(30%, 200%)';
+    });
+    document.querySelectorAll('.leaflet-popup-tip').forEach(function(tooltip) {
+        tooltip.style.zIndex = 1000;
+        tooltip.style.position = 'absolute';
+        tooltip.style.transform = 'translate(30%, 200%)';
+    });
+}
+
+// Call the function initially to ensure tooltips are set on page load
+document.addEventListener('DOMContentLoaded', updateTooltipZIndex);
+
+// Observe changes to the DOM and apply zIndex and other styles when tooltips are updated
+var observer = new MutationObserver(function(mutationsList, observer) {
+    for(var mutation of mutationsList) {
+        if (mutation.type === 'childList') {
+            updateTooltipZIndex();
+        }
+    }
+});
+
+// Start observing the document for changes
+observer.observe(document, { childList: true, subtree: true });
+"""
+
+
+# # util functoins to create chloropleth
+# def get_info(feature=None):
+#     header = [
+#         html.H4(
+#             "PAC Money Spent and Raised by States\n",
+#             style={
+#                 "color": "purple",
+#                 "font-family": "system-ui",
+#                 "font-weight": "bold",
+#                 "font-size": "12px"
+#             },
+#         )
+#     ]
+#     if not feature:
+#         return header + [
+#             html.B("Hover over a state", style={"font-family": "system-ui", "font-size":"12px"})
+#         ]
+#     return [
+#         html.B(feature["properties"]["name"]),
+#         html.Br(),
+#         "Total Received: ${:.3f} \n\nTotal Spent: ${:.3f}".format(
+#             feature["properties"]["total_r"], feature["properties"]["total_s"]
+#         ),
+#     ]
 def get_info(feature=None):
     header = [
         html.H4(
@@ -38,20 +96,44 @@ def get_info(feature=None):
                 "color": "purple",
                 "font-family": "system-ui",
                 "font-weight": "bold",
+                "font-size": "12px"
             },
         )
     ]
     if not feature:
         return header + [
-            html.B("Hover over a state", style={"font-family": "system-ui"})
+            html.B("Hover over a state", style={"font-family": "system-ui", "font-size":"12px"})
         ]
     return [
         html.B(feature["properties"]["name"]),
         html.Br(),
-        "Total Received: ${:.3f} \n\nTotal Spent: ${:.3f}".format(
-            feature["properties"]["total_r"], feature["properties"]["total_s"]
-        ),
+        html.Div([
+            "Total Received: ",
+            html.Span(
+                "${:.3f}".format(feature["properties"]["total_r"]),
+                style={
+                    "font-size": "14px",
+                    "font-weight": "bold",
+                    "display": "inline-block",
+                    "width": "100%"
+                }
+            )
+        ]),
+        html.Br(),
+        html.Div([
+            "Total Spent: ",
+            html.Span(
+                "${:.3f}".format(feature["properties"]["total_s"]),
+                style={
+                    "font-size": "14px",
+                    "font-weight": "bold",
+                    "display": "inline-block",
+                    "width": "100%"
+                }
+            )
+        ]),
     ]
+
 
 
 def create_choropleth(id="geojson1", info_id="info1"):
@@ -119,7 +201,7 @@ def create_choropleth(id="geojson1", info_id="info1"):
             "position": "absolute",
             "top": "300px",
             "left": "780px",
-            "width": "100px",
+            "width": "129px",
         },
     )
     return geojson, colorbar, info
@@ -248,6 +330,14 @@ layout = html.Div(
                 ),
             ]
         ),
+        html.Br(),
+        dbc.Row(
+            [
+                dbc.Col(dbc.Row(dbc.Col(children=[map1])), id="map1-col"),
+                dbc.Col(dbc.Row(dbc.Col(children=[map2])), id="map2-col"),
+            ]
+        ),
+        html.Script(src="", children=js),
         dbc.Row(
             [
                 dbc.Col(
@@ -390,14 +480,6 @@ layout = html.Div(
             id="mapmessage",
             style={"color": "#FFFFFF", "fontSize": "20px", "marginTop": "-25px"},
         ),
-        html.Br(),
-        dbc.Row(
-            [
-                dbc.Col(dbc.Row(dbc.Col(children=[map1])), id="map1-col"),
-                dbc.Col(dbc.Row(dbc.Col(children=[map2])), id="map2-col"),
-            ]
-        ),
-        html.Br(),
         html.Br(),
         html.H5("What's On The Map?"),
         html.Hr(),
@@ -617,6 +699,7 @@ def update_output(slider, state, cands, parties, stats):
             radius = 5
             opacity = 0.2
 
+
         if r > slider and r < slider + 2500000:
             cm = dl.CircleMarker(
                 center=[lat, lng],
@@ -627,24 +710,41 @@ def update_output(slider, state, cands, parties, stats):
                 fillOpacity=opacity,
                 radius=radius,
                 children=[
-                    dl.Popup(
-                        children=html.Div(
-                            children=[
-                                f"Committee Name: \n {name} \n Election cycle: 2022 \n Total Raised (YTD2022): {r} \n Total Spent (YTD2022): {s}",
-                            ],
-                            style={
-                                "width": "250px",
-                                "backgroundColor": "#fff",
-                                "borderRadius": "5px",
-                                "padding": "10px",
-                                "boxShadow": "0 2px 5px rgba(0, 0, 0, 0.3)",
-                                "color": "#333",
-                                "whiteSpace": "pre-wrap",
-                            },
-                        ),
-                    )
-                ],
-            )
+                        dl.Tooltip(
+                            children=html.Div(
+                                children=[
+                                    html.Div([
+                                        "Committee Name: ",
+                                        html.B(f"{name}")
+                                    ]),
+                                    html.Div([
+                                        "Election cycle: ",
+                                        html.B("2022")
+                                    ]),
+                                    html.Div([
+                                        "Total Raised (YTD2022): ",
+                                        html.B(f"{r}")
+                                    ]),
+                                    html.Div([
+                                        "Total Spent (YTD2022): ",
+                                        html.B(f"{s}")
+                                    ]),
+                                ],
+                                style={
+                                    "width": "250px",
+                                    "backgroundColor": "#fff",
+                                    "borderRadius": "5px",
+                                    "padding": "10px",
+                                    "boxShadow": "0 2px 5px rgba(0, 0, 0, 0.3)",
+                                    "color": "#333",
+                                    "whiteSpace": "pre-wrap",
+                                    "font-size": "14px",
+                                },
+                            ),
+                        )
+                    ],
+
+                )
 
             if pty != "REP" and pty != "DEM":
                 n_3rd += 1
@@ -961,11 +1061,26 @@ def update_output(slider, state, cands, parties, stats):
                 latlng = [row["lat"].iloc[0], row["lon"].iloc[0]]
                 m = dl.Marker(
                     position=latlng,
-                    children=[
+                children=[
                         dl.Tooltip(
                             children=html.Div(
                                 children=[
-                                    f'Committee Name: \n {row["Affiliated Committee Name"].iloc[0]} \n Election cycle: 2022 \n Total Raised (YTD2022): {row["Total receipts"].iloc[0]} \n Total Spent (YTD2022): {row["Total disbursements"].iloc[0]}'
+                                    html.Div([
+                                        html.B("Committee Name: "),
+                                        f'{row["Affiliated Committee Name"].iloc[0]}',
+                                    ]),
+                                    html.Div([
+                                        html.B("Election cycle: "),
+                                        "2022",
+                                    ]),
+                                    html.Div([
+                                        html.B("Total Raised (YTD2022): "),
+                                        f'{row["Total receipts"].iloc[0]}',
+                                    ]),
+                                    html.Div([
+                                        html.B("Total Spent (YTD2022): "),
+                                        f'{row["Total disbursements"].iloc[0]}',
+                                    ])
                                 ],
                                 style={
                                     "width": "250px",
@@ -977,10 +1092,9 @@ def update_output(slider, state, cands, parties, stats):
                                     "whiteSpace": "pre-wrap",
                                 },
                             ),
-                            # direction="top",
-                            # zIndexOffset="2000",
                         )
                     ],
+
                 )
                 pins.append(m)
             second_map.append(dl.Pane(name="Individual-pin", children=pins))
@@ -993,11 +1107,42 @@ def update_output(slider, state, cands, parties, stats):
                 latlng = [row["lat"].iloc[0], row["lon"].iloc[0]]
                 m = dl.Marker(
                     position=latlng,
-                    children=[
-                        dl.Popup(
-                            f'Committee Name: \n {row["Affiliated Committee Name"].iloc[0]} \n Election cycle: 2022 \n Total Raised (YTD2022): {row["Total receipts"].iloc[0]} \n Total Spent (YTD2022): {row["Total disbursements"].iloc[0]}'
+                children=[
+                    dl.Tooltip(
+                        children=html.Div(
+                            children=[
+                                html.Div([
+                                    "Committee Name: ",
+                                    html.B(f'{row["Affiliated Committee Name"].iloc[0]}'),
+                                ]),
+                                html.Div([
+                                    "Election cycle: ",
+                                    html.B("2022"),
+                                ]),
+                                html.Div([
+                                    "Total Raised (YTD2022): ",
+                                    html.B(f'{row["Total receipts"].iloc[0]}'),
+                                ]),
+                                html.Div([
+                                    "Total Spent (YTD2022): ",
+                                    html.B(f'{row["Total disbursements"].iloc[0]}'),
+                                ])
+                            ],
+                            style={
+                                "width": "250px",
+                                "backgroundColor": "#fff",
+                                "borderRadius": "5px",
+                                "padding": "10px",
+                                "boxShadow": "0 2px 5px rgba(0, 0, 0, 0.3)",
+                                "color": "#333",
+                                "whiteSpace": "pre-wrap",
+                                "font-size": "14px"
+                                },
+                            ),
                         )
                     ],
+
+
                 )
                 pins.append(m)
             second_map.append(dl.Pane(name="Individual-pin", children=pins))

@@ -8,12 +8,23 @@ body {
   }
 
 
+.leaflet-tooltip {
+  position: absolute;
+  transform: translate(-50%, -100%);
+  z-index: 1000;
+
+  /* Optional: Add other styling like background, padding, etc. */
+}
+
+
 
 .leaflet-container.leaflet-touch-drag.leaflet-touch-zoom {
     -ms-touch-action: none;
     touch-action: none;
     zoom: 75%;
 }
+
+
 
 li {
   font-size: 15px;
