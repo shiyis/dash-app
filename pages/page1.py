@@ -31,63 +31,6 @@ PAGE_STYLE = {
     # "font-family": "system-ui",
 }
 
-# make all tooltip to the front custom script
-
-js = """
-function updateTooltipZIndex() {
-    document.querySelectorAll('.leaflet-popup-content-wrapper').forEach(function(popup) {
-        popup.style.zIndex = 1000;
-        popup.style.position = 'absolute';
-        popup.style.transform = 'translate(30%, 200%)';
-    });
-    document.querySelectorAll('.leaflet-popup-tip').forEach(function(tooltip) {
-        tooltip.style.zIndex = 1000;
-        tooltip.style.position = 'absolute';
-        tooltip.style.transform = 'translate(30%, 200%)';
-    });
-}
-
-// Call the function initially to ensure tooltips are set on page load
-document.addEventListener('DOMContentLoaded', updateTooltipZIndex);
-
-// Observe changes to the DOM and apply zIndex and other styles when tooltips are updated
-var observer = new MutationObserver(function(mutationsList, observer) {
-    for(var mutation of mutationsList) {
-        if (mutation.type === 'childList') {
-            updateTooltipZIndex();
-        }
-    }
-});
-
-// Start observing the document for changes
-observer.observe(document, { childList: true, subtree: true });
-"""
-
-
-# # util functoins to create chloropleth
-# def get_info(feature=None):
-#     header = [
-#         html.H4(
-#             "PAC Money Spent and Raised by States\n",
-#             style={
-#                 "color": "purple",
-#                 "font-family": "system-ui",
-#                 "font-weight": "bold",
-#                 "font-size": "12px"
-#             },
-#         )
-#     ]
-#     if not feature:
-#         return header + [
-#             html.B("Hover over a state", style={"font-family": "system-ui", "font-size":"12px"})
-#         ]
-#     return [
-#         html.B(feature["properties"]["name"]),
-#         html.Br(),
-#         "Total Received: ${:.3f} \n\nTotal Spent: ${:.3f}".format(
-#             feature["properties"]["total_r"], feature["properties"]["total_s"]
-#         ),
-#     ]
 def get_info(feature=None):
     header = [
         html.H4(
@@ -337,7 +280,6 @@ layout = html.Div(
                 dbc.Col(dbc.Row(dbc.Col(children=[map2])), id="map2-col"),
             ]
         ),
-        html.Script(src="", children=js),
         dbc.Row(
             [
                 dbc.Col(
