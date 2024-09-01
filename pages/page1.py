@@ -12,7 +12,7 @@ import dash_extensions.javascript as dj
 
 
 dash.register_page(
-    __name__, path="/", title="Project POLITICS | Exploratory Data Analysis", location="sidebar"
+    __name__, path="/", title="POLITICS | Exploratory Data Analysis", location="sidebar"
 )
 pd.set_option("float_format", "{:.2f}".format)
 

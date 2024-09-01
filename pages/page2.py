@@ -27,7 +27,7 @@ plt.switch_backend("Agg")
 states = pd.read_csv("./data/states.csv")
 candidates = pd.read_csv("./data/2022/processed_weball.csv")
 
-dash.register_page(__name__, title="Project POLITICS | Measuring Subjectivity", location="sidebar")
+dash.register_page(__name__, title="POLITICS | Measuring Subjectivity", location="sidebar")
 
 
 PAGE_STYLE = {
