@@ -27,7 +27,9 @@ plt.switch_backend("Agg")
 states = pd.read_csv("./data/states.csv")
 candidates = pd.read_csv("./data/2022/processed_weball.csv")
 
-dash.register_page(__name__, title="POLITICS | Measuring Subjectivity", location="sidebar")
+dash.register_page(
+    __name__, title="POLITICS | Measuring Subjectivity", location="sidebar"
+)
 
 
 PAGE_STYLE = {
@@ -72,7 +74,7 @@ layout = html.Div(
                 """Below are the resulting ideal points,\n""",
                 dbc.Row(
                     [
-                        dbc.Col(dbc.Row(children=[],id="bar-graph-plotly")),
+                        dbc.Col(dbc.Row(children=[], id="bar-graph-plotly")),
                         dbc.Col(
                             children=[
                                 dag.AgGrid(
@@ -90,7 +92,8 @@ layout = html.Div(
                     className="mt-4",
                     style={"text-align": "center"},
                 ),
-        ]),
+            ]
+        ),
         html.Br(),
     ],
     className="page2",
