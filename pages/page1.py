@@ -338,12 +338,13 @@ layout = html.Div(
                                             inline=True,
                                             labelStyle={
                                                 "display": "inline-block",
-                                                "width": "17%",
+                                                "width": "20%",
                                                 "font-size": "13px",
-                                                "text-align": "right",
+                                                "text-align": "left",
                                                 "color": "#000",
-                                                "margin": "1.5rem 0rem 0rem 1.1rem",
                                                 "text-align": "right",
+                                                "backgroundColor": "rgb(207, 216, 220)",
+
                                             },
                                         ),
                                         html.Table(
@@ -376,8 +377,9 @@ layout = html.Div(
                                                             ),
                                                             style={
                                                                 "vertical-align": "middle",
-                                                                "width": "13%",
+                                                                "width": "10.5%",
                                                                 "padding": "5px",
+
                                                             },
                                                         ),
                                                         html.Tbody(
@@ -385,7 +387,7 @@ layout = html.Div(
                                                                 html.Tr(
                                                                     id="table-row-1",
                                                                     style={
-                                                                        "border": "1px solid grey"
+                                                                        "border": "1px dotted grey"
                                                                     },
                                                                 )
                                                             ]
@@ -395,7 +397,7 @@ layout = html.Div(
                                                                 html.Tr(
                                                                     id="table-row-2",
                                                                     style={
-                                                                        "border": "1px solid grey"
+                                                                        "border": "1px dotted grey"
                                                                     },
                                                                 )
                                                             ]
@@ -405,7 +407,7 @@ layout = html.Div(
                                                                 html.Tr(
                                                                     id="table-row-3",
                                                                     style={
-                                                                        "border": "1px solid grey"
+                                                                        "border": "1px dotted grey"
                                                                     },
                                                                 )
                                                             ]
@@ -418,7 +420,10 @@ layout = html.Div(
                                                 "width": "100%",
                                             },
                                         ),
-                                    ]
+                                    ],
+                                    style= {
+                                        "border":"1px solid grey"
+                                    }
                                 ),
                             ],
                             id="dynamic-1",
@@ -427,6 +432,8 @@ layout = html.Div(
                                 "font-size": "13px",
                                 "off-set": 4,
                                 "color": "#000",
+                                "padding-top": "10px",
+
                             },
                         ),
                     ),
