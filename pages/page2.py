@@ -62,7 +62,7 @@ layout = html.Div(
                 dcc.Markdown(
                     """In [this](https://my-dash-app-ilf47zak6q-uc.a.run.app/) section, we have presented the relevant context in order to understand what is going to happen in this section; a politician's external activity and information."""
                 ),
-                """To continue with our project objective of measuring and investigating how a politician's external actions aligns with their internal motivation (how their fundraising activities reflect their political agenda, here we will demonstrate the results of the author's political stance - or what's called - an 'ideal point'.""",
+                """To continue with our project objective of measuring and investigating how a politician's external actions align with their internal motivation (how their fundraising activities reflect their political agenda, here we will demonstrate the results of the author's political stance - or what's called - an 'ideal point'.""",
                 html.P(""""""),
                 dcc.Markdown(
                     # """This is achieved through an unsupervised probabilistic topic modeling technique that evaluates texts to quantify the author's political stances. The model does not require any text labeled with an ideology, nor does it use political parties. Instead, it assesses the `latent political viewpoints` of text writers and how `per-topic word choice` varies according to the author's political stance `("ideological topics")` given a corpus of political text and the author of each document.
