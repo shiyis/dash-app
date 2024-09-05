@@ -230,7 +230,7 @@ layout = html.Div(
         ),
         dcc.Markdown(
             """All info is retrievable through the Federal Election Commission's directory. Please check out this [link](https://shiyis.github.io/politics-docs/) for full documentation.
-            Also, please checkout this [link]() for some qualitative analyses answering some questions with respect to the visualizations created below.""",
+            Also, please check out this [link]() for some qualitative analyses answering some questions with respect to the visualizations created below.""",
         ),
         dbc.Row(
             [
