@@ -226,16 +226,11 @@ layout = html.Div(
         html.H5("Exploratory Data Analysis of General Election Candidacy"),
         html.Hr(),
         html.P(
-            """In socio-politics, quantified approaches and modeling techniques are applied in supporting and facilitating political analyses. Individuals, parties, committees and other political entities come together and try to push forward campaigns in hope to receive appropriate patronization and support for their political agenda. """
-        ),
-        html.P(
-            """The Political Action Committees (PACs or Super PACs) amass funding resources that could benefit the elections. These type of fundings could be from other individuals, or political entities. For the sole of purpose of understanding what the processes of fundraising activities like these really are, this part of the project explores the 2021-2022 PACs financial data."""
-        ),
-        html.P(
-            """This part of the project will first present the receipts, disbursements, and other expenditures in terms of propagating political actions in visualization format grounded in states; for example, how many different political action committees there are by US states. This part of the project will also break down all the candidates of 2022 their basic information as mentioned above including their basic demographics, political party affiliation, election cycle, and incumbency."""
+            """This part of the project will first present the receipts, disbursements, and other expenditures of a politician in visualization format grounded in states; for example, how many different political action committees there are by US states. This part of the project will also break down all the candidates of 2022 their basic information including their basic demographics, political party affiliation, election cycle, and incumbency."""
         ),
         dcc.Markdown(
-            """All info is retrievable through the Federal Election Commission's directory. Please check out this [link](https://shiyis.github.io/politics-docs/) for full documentation. """,
+            """All info is retrievable through the Federal Election Commission's directory. Please check out this [link](https://shiyis.github.io/politics-docs/) for full documentation.
+            Also, please checkout this [link]() for some qualitative analyses answering some questions with respect to the visualizations created below.""",
         ),
         dbc.Row(
             [
@@ -344,7 +339,6 @@ layout = html.Div(
                                                 "color": "#000",
                                                 "text-align": "right",
                                                 "backgroundColor": "rgb(207, 216, 220)",
-
                                             },
                                         ),
                                         html.Table(
@@ -373,13 +367,11 @@ layout = html.Div(
                                                                     "DEM",
                                                                     "3RD",
                                                                 ],
-
                                                             ),
                                                             style={
                                                                 "vertical-align": "middle",
                                                                 "width": "10.5%",
                                                                 "padding": "5px",
-
                                                             },
                                                         ),
                                                         html.Tbody(
@@ -421,9 +413,7 @@ layout = html.Div(
                                             },
                                         ),
                                     ],
-                                    style= {
-                                        "border":"1px solid grey"
-                                    }
+                                    style={"border": "1px solid grey"},
                                 ),
                             ],
                             id="dynamic-1",
@@ -433,7 +423,6 @@ layout = html.Div(
                                 "off-set": 4,
                                 "color": "#000",
                                 "padding-top": "10px",
-
                             },
                         ),
                     ),

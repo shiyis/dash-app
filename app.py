@@ -43,7 +43,7 @@ menubar = dbc.NavbarSimple(
             )
         ),
     ],
-    brand="POLITICS: A Political Opinions, Language, and Ideology Text Interpretation and Classification Solution",
+    brand="Project POLITICS Demo Page",
     brand_href="/",
     color="light",
     dark=True,

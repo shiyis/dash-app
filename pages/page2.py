@@ -60,18 +60,14 @@ layout = html.Div(
         html.P(
             [
                 dcc.Markdown(
-                    """To continue with our project objective of measuring and investigating how a politician's internal motivation aligns with their external actions (fundraising, disbursements, and various expenditures with respect to their political acitivities and agenda; we have disclosed the most basic information in the previous section, or [Exploratory Data Analysis of General Election Candidacy](https://my-dash-app-ilf47zak6q-uc.a.run.app), this section will present a statistical topic modeling over the authors/politicians' tweets."""
+                    """In [this](https://my-dash-app-ilf47zak6q-uc.a.run.app/) section, we have presented the relevant context in order to understand what is going to happen in this section; a politician's external activity and information."""
                 ),
-                html.A(
-                    "TBIP or Text-based Ideal Point Model",
-                    href="https://www.aclweb.org/anthology/2020.acl-main.475/",
-                ),
-                """ is an unsupervised probabilistic topic model (Keyon V., Suresh N., David B. et al.) that evaluates texts to quantify the political stances of their authors. The model does not require any text labeled with an ideology, nor does it use political parties or votes.""",
+                """To continue with our project objective of measuring and investigating how a politician's external actions aligns with their internal motivation (how their fundraising activities reflect their political agenda, here we will demonstrate the results of the author's political stance - or what's called - an 'ideal point'.""",
                 html.P(""""""),
                 dcc.Markdown(
-                    """Instead, it assesses the `latent political viewpoints` of text writers and how `per-topic word choice` varies according to the author's political stance `("ideological topics")` given a corpus of political text and the author of each document."""
+                    # """This is achieved through an unsupervised probabilistic topic modeling technique that evaluates texts to quantify the author's political stances. The model does not require any text labeled with an ideology, nor does it use political parties. Instead, it assesses the `latent political viewpoints` of text writers and how `per-topic word choice` varies according to the author's political stance `("ideological topics")` given a corpus of political text and the author of each document.
+                    """For more details of the modeling process, please check out this [link](). Below are the resulting ideal points,\n"""
                 ),
-                """Below are the resulting ideal points,\n""",
                 dbc.Row(
                     [
                         dbc.Col(dbc.Row(children=[], id="bar-graph-plotly")),
@@ -92,6 +88,26 @@ layout = html.Div(
                     className="mt-4",
                     style={"text-align": "center"},
                 ),
+            ],
+        ),
+        html.Br(),
+        html.H5("Walkthrough of How Textual Data Gets Turned into Ideal Points"),
+        html.Hr(),
+        html.P(
+            [
+                dcc.Markdown(
+                    """So much has been introduced in terms of the resulting demo; this section will go through some basic workflow in visual format to introduce the specific steps in the modeling process."""
+                ),
+                # html.A(
+                #     "TBIP or Text-based Ideal Point Model",
+                #     href="https://www.aclweb.org/anthology/2020.acl-main.475/",
+                # ),
+                # """ is an unsupervised probabilistic topic model (Keyon V., Suresh N., David B. et al.) that evaluates texts to quantify the political stances of their authors. The model does not require any text labeled with an ideology, nor does it use political parties or votes.""",
+                # html.P(""""""),
+                # dcc.Markdown(
+                #     """Instead, it assesses the `latent political viewpoints` of text writers and how `per-topic word choice` varies according to the author's political stance `("ideological topics")` given a corpus of political text and the author of each document."""
+                # ),
+                # """Below are the resulting ideal points,\n""",
             ]
         ),
         html.Br(),

@@ -4,12 +4,12 @@
 
 h1, h2, h3, h4, h5, p, a {
     font-size: 18px;
-    font-family: "Heebo-Regular", system-ui;
+    font-family: "Open Sans", system-ui;
 }
 
 h5 {
-    font-weight: 700;
-    font-family: "Heebo-Medium", system-ui;
+    font-weight: 600;
+    font-family: "Open Sans", system-ui;
 }
 
 
