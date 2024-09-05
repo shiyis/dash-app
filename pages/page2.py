@@ -91,26 +91,26 @@ layout = html.Div(
             ],
         ),
         html.Br(),
-        html.H5("Walkthrough of How Textual Data Gets Turned into Ideal Points"),
-        html.Hr(),
-        html.P(
-            [
-                dcc.Markdown(
-                    """So much has been introduced in terms of the resulting demo; this section will go through some basic workflow in visual format to introduce the specific steps in the modeling process."""
-                ),
-                # html.A(
-                #     "TBIP or Text-based Ideal Point Model",
-                #     href="https://www.aclweb.org/anthology/2020.acl-main.475/",
-                # ),
-                # """ is an unsupervised probabilistic topic model (Keyon V., Suresh N., David B. et al.) that evaluates texts to quantify the political stances of their authors. The model does not require any text labeled with an ideology, nor does it use political parties or votes.""",
-                # html.P(""""""),
-                # dcc.Markdown(
-                #     """Instead, it assesses the `latent political viewpoints` of text writers and how `per-topic word choice` varies according to the author's political stance `("ideological topics")` given a corpus of political text and the author of each document."""
-                # ),
-                # """Below are the resulting ideal points,\n""",
-            ]
-        ),
-        html.Br(),
+        # html.H5("Walkthrough of How Textual Data Gets Turned into Ideal Points"),
+        # html.Hr(),
+        # html.P(
+        #     [
+        #         dcc.Markdown(
+        #             """So much has been introduced in terms of the resulting demo; this section will go through some basic workflow in visual format to introduce the specific steps in the modeling process."""
+        #         ),
+        #         # html.A(
+        #         #     "TBIP or Text-based Ideal Point Model",
+        #         #     href="https://www.aclweb.org/anthology/2020.acl-main.475/",
+        #         # ),
+        #         # """ is an unsupervised probabilistic topic model (Keyon V., Suresh N., David B. et al.) that evaluates texts to quantify the political stances of their authors. The model does not require any text labeled with an ideology, nor does it use political parties or votes.""",
+        #         # html.P(""""""),
+        #         # dcc.Markdown(
+        #         #     """Instead, it assesses the `latent political viewpoints` of text writers and how `per-topic word choice` varies according to the author's political stance `("ideological topics")` given a corpus of political text and the author of each document."""
+        #         # ),
+        #         # """Below are the resulting ideal points,\n""",
+        #     ]
+        # ),
+        # html.Br(),
     ],
     className="page2",
     style=PAGE_STYLE,

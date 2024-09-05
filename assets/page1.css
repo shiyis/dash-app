@@ -28,6 +28,9 @@ a {
   color: #777;
 }
 
+.rc-slider-step {
+  background: grey;
+}
 
 #checkboxes {
 
@@ -35,4 +38,19 @@ a {
 }
 code {
   color: #00a699
+}
+
+.rc-slider-handle-click-focused:focus{
+  border-color: black;
+}
+
+.rc-slider-handle {
+  border: solid 2px black
+}
+
+.rc-slider-dot-active {
+  border-color: grey
+}
+.rc-slider-mark-text-active {
+  color: black
 }
