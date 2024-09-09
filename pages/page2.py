@@ -60,7 +60,7 @@ layout = html.Div(
         html.P(
             [
                 dcc.Markdown(
-                    """In [this](https://my-dash-app-ilf47zak6q-uc.a.run.app/) section, we have presented the relevant context in order to understand what is going to happen in this section; a politician's external activity and information."""
+                    """In the [previous section](https://my-dash-app-ilf47zak6q-uc.a.run.app/), we have presented the relevant context in order to understand what is going to happen in this section; a politician's external activity and information."""
                 ),
                 """To continue with our project objective of measuring and investigating how a politician's external actions align with their internal motivation (how their fundraising activities reflect their political agenda, here we will demonstrate the results of the author's political stance - or what's called - an 'ideal point'.""",
                 html.P(""""""),
