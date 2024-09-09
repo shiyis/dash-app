@@ -180,7 +180,7 @@ map2 = dl.Map(
 )
 
 table1 = (
-    candidates[["Party affiliation", "Total receipts"]]
+    candidates[["Party affiliation", "Total Receipts"]]
     .groupby("Party affiliation")
     .agg("sum")
     .sort_values("Total receipts")[::-1][:5]
@@ -197,13 +197,13 @@ table2 = (
     .rename(
         columns={
             "Candidate state": "State",
-            "Affiliated Committee Name": "# Affiliated Comms",
+            "Affiliated Committee Name": "# Affiliated Cmt.",
         }
     )
     .round(2)
 )
 table3 = (
-    candidates[["Candidate state", "Party affiliation", "Total receipts"]]
+    candidates[["Candidate state", "Party affiliation", "Total Receipts"]]
     .groupby(["Candidate state", "Party affiliation"])
     .agg("sum")
     .sort_values("Total receipts")[::-1][:5]
