@@ -89,16 +89,18 @@ def get_info(feature=None):
 def create_choropleth(id="geojson1", info_id="info1"):
     classes = [0, 5000000, 10000000, 50000000, 100000000, 200000000, 300000000]
     colorscale = [
-        "#ffffed",
-        "#fcecc4",
-        "#ffd69f",
-        "#ffbb84",
-        "#ff9b78",
-        "#ff757b",
-        "#ff468e",
-        "#ff00ac",
+        "#e6f9f3",  # Very light greenish-purple (almost white with green tint)
+        "#cce0db",  # Soft greenish lavender
+        "#b3c2c2",  # Light greenish grayish purple
+        "#998cbf",  # Light purple with green undertone
+        "#8066a3",  # Medium purple with a hint of green
+        "#665380",  # Darker purple-green mix
+        "#4d3366"   # Deep greenish purple
     ]
-    style = dict(weight=1, opacity=1, color="white", dashArray="", fillOpacity=0.7)
+
+
+
+    style = dict(weight=1, opacity=1, color="white", dashArray="", fillOpacity=0.3)
 
     # Create colorbar.
     ctg = ["{}+".format(cls, classes[i + 1]) for i, cls in enumerate(classes[:-1])] + [
