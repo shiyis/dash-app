@@ -1016,32 +1016,32 @@ def update_output(slider, state, cands, parties, stats):
                     children=[
                         dl.Tooltip(
                             children=html.Div(
-                                children=[
-                                    html.Div(
-                                        [
-                                            html.B("Committee Name: "),
-                                            f'{row["Affiliated Committee Name"].iloc[0]}',
-                                        ]
-                                    ),
-                                    html.Div(
-                                        [
-                                            html.B("Election cycle: "),
-                                            "2022",
-                                        ]
-                                    ),
-                                    html.Div(
-                                        [
-                                            html.B("Total Raised (YTD2022): "),
-                                            f'{row["Total receipts"].iloc[0]}',
-                                        ]
-                                    ),
-                                    html.Div(
-                                        [
-                                            html.B("Total Spent (YTD2022): "),
-                                            f'{row["Total disbursements"].iloc[0]}',
-                                        ]
-                                    ),
-                                ],
+                                        children=[
+                                            html.Div(
+                                                [
+                                                    "Committee Name: ",
+                                                    html.B(f'{row["Affiliated Committee Name"].iloc[0]}'),
+                                                ]
+                                            ),
+                                            html.Div(
+                                                [
+                                                    "Election cycle: ",
+                                                    html.B("2022"),
+                                                ]
+                                            ),
+                                            html.Div(
+                                                [
+                                                    "Total Raised (YTD2022): ",
+                                                    html.B(f'{row["Total receipts"].iloc[0]}'),
+                                                ]
+                                            ),
+                                            html.Div(
+                                                [
+                                                    "Total Spent (YTD2022): ",
+                                                    html.B(f'{row["Total disbursements"].iloc[0]}'),
+                                                ]
+                                            ),
+                                        ],
                                 style={
                                     "width": "250px",
                                     "backgroundColor": "#fff",
