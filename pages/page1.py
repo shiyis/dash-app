@@ -85,27 +85,33 @@ def get_info(feature=None):
         ),
     ]
 
-
 def create_choropleth(id="geojson1", info_id="info1"):
     classes = [0, 5000000, 10000000, 50000000, 100000000, 200000000, 300000000]
+
+    # New purple color scale
+    # Green color scale
     colorscale = [
-        "#e6f9f3",  # Very light greenish-purple (almost white with green tint)
-        "#cce0db",  # Soft greenish lavender
-        "#b3c2c2",  # Light greenish grayish purple
-        "#998cbf",  # Light purple with green undertone
-        "#8066a3",  # Medium purple with a hint of green
-        "#665380",  # Darker purple-green mix
-        "#4d3366"   # Deep greenish purple
+        "#ffffff",  # White
+        "#fffff0",  # Ivory
+        "#ffffe0",  # Pastel yellow
+        "#ffd699",  # Light orange
+        "#ffb366",  # Medium orange
+        "#ff9966",  # Orange
+        "#ff6666",  # Coral
+        "#d16f5c",  # Muted terracotta (softer than brown, darker than coral)
+        "#c97b63"   # Dusty rose (warm, muted reddish tone after coral)
     ]
 
 
 
-    style = dict(weight=1, opacity=1, color="white", dashArray="", fillOpacity=0.3)
+    style = dict(weight=1, opacity=1, color="white", dashArray="", fillOpacity=0.4)
 
-    # Create colorbar.
-    ctg = ["{}+".format(cls, classes[i + 1]) for i, cls in enumerate(classes[:-1])] + [
-        "{}+".format(classes[-1])
-    ]
+    # Create colorbar with the new purple color scale.
+    ctg = [
+        "{}M+".format(int(cls / 1e6)) if cls != 0 else "0"
+        for cls in classes[:-1]
+    ] + ["{}M+".format(int(classes[-1] / 1e6))]
+
     colorbar = dlx.categorical_colorbar(
         categories=ctg,
         colorscale=colorscale,
@@ -115,29 +121,29 @@ def create_choropleth(id="geojson1", info_id="info1"):
         style={"opacity": "0.7"},
     )
 
-    # Geojson rendering logic, must be JavaScript as it is executed in clientside.
+    # Geojson rendering logic
     style_handle = assign(
         """function(feature, context){
-        const {classes, colorscale, style, colorProp} = context.hideout;  // get props from hideout
-        const value = feature.properties[colorProp];  // get value the determines the color
+        const {classes, colorscale, style, colorProp} = context.hideout;
+        const value = feature.properties[colorProp];
         for (let i = 0; i < classes.length; ++i) {
             if (value > classes[i]) {
-                style.fillColor = colorscale[i];  // set the fill color according to the class
+                style.fillColor = colorscale[i];
             }
         }
         return style;
-    }"""
+        }"""
     )
 
     # Create geojson.
     geojson = dl.GeoJSON(
-        url="/assets/us-states.json",  # url to geojson file
-        style=style_handle,  # how to style each polygon
-        zoomToBounds=False,  # when true, zooms to bounds when data changes (e.g. on load)
-        zoomToBoundsOnClick=False,  # when true, zooms to bounds of feature (e.g. polygon) on click
+        url="/assets/us-states.json",
+        style=style_handle,
+        zoomToBounds=False,
+        zoomToBoundsOnClick=False,
         hoverStyle=arrow_function(
             dict(weight=3, color="purple", opacity=0.5, dashArray="")
-        ),  # style applied on hover
+        ),
         hideout=dict(
             colorscale=colorscale, classes=classes, style=style, colorProp="total_r"
         ),
@@ -163,16 +169,21 @@ def create_choropleth(id="geojson1", info_id="info1"):
 choropleth1 = create_choropleth()
 choropleth2 = create_choropleth(id="geojson2", info_id="info2")
 
+style_url = "https://api.mapbox.com/styles/v1/shiyis/cm1dvrpkt000201nt42nkgugq/tiles/{z}/{x}/{y}?access_token=pk.eyJ1Ijoic2hpeWlzIiwiYSI6ImNtMWMxdXN0YTB0djUybG9tN2Rqbmlyd3gifQ.b0XJVI-QJJvEeJWzO1Gdgw"
+attribution = "&copy; <a href='https://www.mapbox.com/'>Mapbox</a>"
+
 map1 = dl.Map(
-    children=[dl.TileLayer()],
-    style={"height": "450px", "margin-top": "0rem"},
+    children=[dl.TileLayer(url=style_url,
+                     attribution=attribution)],
+    style={"height": "450px", "margin-top": "0rem", "background-color": "#fff"},
     center=[39, -98],
     zoom=4,
     id="candidates-stats-marker",
 )
 map2 = dl.Map(
-    children=[dl.TileLayer()],
-    style={"height": "450px", "margin-top": "0rem"},
+    children=[dl.TileLayer(url=style_url,
+                     attribution=attribution)],
+    style={"height": "450px", "margin-top": "0rem", "background-color":"#fff"},
     center=[
         states[states["state"] == "DC"]["latitude"].iloc[0],
         states[states["state"] == "DC"]["longitude"].iloc[0],
@@ -391,7 +402,8 @@ layout = html.Div(
                                                                 html.Tr(
                                                                     id="table-row-1",
                                                                     style={
-                                                                        "border": "1px dotted grey"
+                                                                        "border-left": "1px solid #ddd",
+                                                                        "border-top": "1px solid #ddd"
                                                                     },
                                                                 )
                                                             ]
@@ -401,7 +413,8 @@ layout = html.Div(
                                                                 html.Tr(
                                                                     id="table-row-2",
                                                                     style={
-                                                                        "border": "1px dotted grey"
+                                                                        "border-left": "1px solid #ddd",
+                                                                        "border-top": "1px solid #ddd"
                                                                     },
                                                                 )
                                                             ]
@@ -411,7 +424,8 @@ layout = html.Div(
                                                                 html.Tr(
                                                                     id="table-row-3",
                                                                     style={
-                                                                        "border": "1px dotted grey"
+                                                                        "border-left": "1px solid #ddd",
+                                                                        "border-top": "1px solid #ddd"
                                                                     },
                                                                 )
                                                             ]
@@ -425,7 +439,7 @@ layout = html.Div(
                                             },
                                         ),
                                     ],
-                                    style={"border": "1px solid grey"},
+                                    style={"border": "1px solid #ddd"},
                                 ),
                             ],
                             id="dynamic-1",
@@ -481,7 +495,7 @@ layout = html.Div(
                             is_focused=True,
                             style_cell={
                                 "textAlign": "left",
-                                "border": "1px solid gray",
+                                "border": "1px solid #ddd",
                                 "fontSize": 15,
                             },
                             style_header={
@@ -502,7 +516,7 @@ layout = html.Div(
                             is_focused=True,
                             style_cell={
                                 "textAlign": "left",
-                                "border": "1px solid gray",
+                                "border": "1px solid #ddd",
                                 "fontSize": 15,
                             },
                             style_header={
@@ -525,7 +539,7 @@ layout = html.Div(
                             is_focused=True,
                             style_cell={
                                 "textAlign": "left",
-                                "border": "1px solid gray",
+                                "border": "1px solid #ddd",
                                 "fontSize": 15,
                             },
                             style_header={
@@ -609,12 +623,12 @@ def update_output(slider, state, cands, parties, stats):
         "# PACs": 4,
     }
     latLon = [tuple(i[1:]) for i in latLon.itertuples()]
-    colors = ["blue", "red", "grey"]
+    colors = ["blue", "red", "#ddd"]
     s_latlon = [
         states[states["state"] == "DC"]["latitude"].iloc[0],
         states[states["state"] == "DC"]["longitude"].iloc[0],
     ]
-    groups = {"DEM": ("blue", []), "REP": ("red", []), "OTH": ("grey", [])}
+    groups = {"DEM": ("blue", []), "REP": ("red", []), "OTH": ("#ddd", [])}
 
     n_rep = 0
     n_dem = 0
@@ -669,10 +683,10 @@ def update_output(slider, state, cands, parties, stats):
             cm = dl.CircleMarker(
                 center=[lat, lng],
                 color=colors[int(code) - 1],
-                opacity=opacity,
+                opacity=0.8,
                 weight=1,
                 fillColor=colors[int(code) - 1],
-                fillOpacity=opacity,
+                fillOpacity=opacity + 0.25,
                 radius=radius,
                 children=[
                     dl.Tooltip(
@@ -934,8 +948,10 @@ def update_output(slider, state, cands, parties, stats):
                     tmp[i][col[j]] = rows[i][col[j]]
         row1, row2, row3 = tmp
 
+
     data = [
-        dl.TileLayer(),
+        dl.TileLayer(url=style_url,
+             attribution=attribution),
         dl.LayersControl(
             [
                 dl.Pane(
