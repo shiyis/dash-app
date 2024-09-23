@@ -86,25 +86,25 @@ def get_info(feature=None):
     ]
 
 def create_choropleth(id="geojson1", info_id="info1"):
-    classes = [0, 5000000, 10000000, 50000000, 100000000, 200000000, 300000000]
+    classes = [0, 5000000, 10000000, 50000000, 100000000, 200000000]
 
     # New purple color scale
     # Green color scale
     colorscale = [
-        "#ffffff",  # White
-        "#e6f0ff",  # Very light blue
-        "#cce0ff",  # Light pastel blue
-        "#99c2ff",  # Soft blue
-        "#6699ff",  # Medium blue
-        "#3366ff",  # Bright blue
-        "#0033cc",  # Deep blue
-        "#001a66",  # Dark navy blue
-        "#000033"   # Navy (darkest blue)
+        "#fff",
+        "#e0f7ff",  # Very light blueberry
+        "#b3e5fc",  # Light blueberry
+        "#4fc3f7",  # Medium blueberry
+        "#0288d1",  # Deep blueberry
+        "#01579b",  # Dark blueberry
+        "#003f7f"   # Very dark blueberry
     ]
 
 
 
-    style = dict(weight=1, opacity=1, color="white", dashArray="", fillOpacity=0.45)
+
+
+    style = dict(weight=1, opacity=1, color="white", dashArray="", fillOpacity=0.6)
 
     # Create colorbar with the new purple color scale.
     ctg = [
@@ -118,7 +118,7 @@ def create_choropleth(id="geojson1", info_id="info1"):
         width=520,
         height=10,
         position="bottomleft",
-        style={"opacity": "0.7"},
+        style={"fill-opacity": "0.4"},
     )
 
     # Geojson rendering logic
@@ -142,7 +142,7 @@ def create_choropleth(id="geojson1", info_id="info1"):
         zoomToBounds=False,
         zoomToBoundsOnClick=False,
         hoverStyle=arrow_function(
-            dict(weight=3, color="purple", opacity=0.5, dashArray="")
+            dict(weight=3, color="purple", opacity=0.5, fillOpacity=1, dashArray="")
         ),
         hideout=dict(
             colorscale=colorscale, classes=classes, style=style, colorProp="total_r"
