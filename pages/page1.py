@@ -92,19 +92,19 @@ def create_choropleth(id="geojson1", info_id="info1"):
     # Green color scale
     colorscale = [
         "#ffffff",  # White
-        "#fffff0",  # Ivory
-        "#ffffe0",  # Pastel yellow
-        "#ffd699",  # Light orange
-        "#ffb366",  # Medium orange
-        "#ff9966",  # Orange
-        "#ff6666",  # Coral
-        "#d16f5c",  # Muted terracotta (softer than brown, darker than coral)
-        "#c97b63"   # Dusty rose (warm, muted reddish tone after coral)
+        "#e6f0ff",  # Very light blue
+        "#cce0ff",  # Light pastel blue
+        "#99c2ff",  # Soft blue
+        "#6699ff",  # Medium blue
+        "#3366ff",  # Bright blue
+        "#0033cc",  # Deep blue
+        "#001a66",  # Dark navy blue
+        "#000033"   # Navy (darkest blue)
     ]
 
 
 
-    style = dict(weight=1, opacity=1, color="white", dashArray="", fillOpacity=0.4)
+    style = dict(weight=1, opacity=1, color="white", dashArray="", fillOpacity=0.45)
 
     # Create colorbar with the new purple color scale.
     ctg = [
