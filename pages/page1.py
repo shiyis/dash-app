@@ -37,7 +37,7 @@ def get_info(feature=None):
         html.H4(
             "PAC Money Spent and Raised by States\n",
             style={
-                "color": "purple",
+                "color": "#01579b",
                 "font-family": "system-ui",
                 "font-weight": "bold",
                 "font-size": "12px",
@@ -647,87 +647,87 @@ def update_output(slider, state, cands, parties, stats):
     for code, pty, name, r, s, lat, lng in latLon:
 
         # number of PACs divided by party
-
-        if 28000000 < r <= 30000000:
-            radius = 53
-            opacity = 0.8
-        elif 24000000 < r <= 28000000:
-            radius = 50
-            opacity = 0.5
-        elif 21000000 < r <= 24000000:
-            radius = 45
-            opacity = 0.5
-        elif 18000000 < r <= 21000000:
-            radius = 40
-            opacity = 0.4
-        elif 15000000 < r <= 18000000:
-            radius = 35
-            opacity = 0.3
-        elif 12000000 < r <= 15000000:
-            radius = 30
-            opacity = 0.3
-        elif 9000000 < r <= 12000000:
-            radius = 20
-            opacity = 0.3
-        elif 6000000 < r <= 9000000:
-            radius = 15
-            opacity = 0.3
-        elif 3000000 < r <= 6000000:
-            radius = 10
-            opacity = 0.3
-        else:
-            radius = 5
-            opacity = 0.2
-
-        if r > slider and r < slider + 2500000:
-            cm = dl.CircleMarker(
-                center=[lat, lng],
-                color=colors[int(code) - 1],
-                opacity=0.8,
-                weight=1,
-                fillColor=colors[int(code) - 1],
-                fillOpacity=opacity + 0.25,
-                radius=radius,
-                children=[
-                    dl.Tooltip(
-                        children=html.Div(
-                            children=[
-                                html.Div(["Committee Name: ", html.B(f"{name}")]),
-                                html.Div(["Election cycle: ", html.B("2022")]),
-                                html.Div(["Total Raised (YTD2022): ", html.B(f"{r}")]),
-                                html.Div(["Total Spent (YTD2022): ", html.B(f"{s}")]),
-                            ],
-                            style={
-                                "width": "250px",
-                                "backgroundColor": "#fff",
-                                "borderRadius": "5px",
-                                "padding": "10px",
-                                "boxShadow": "0 2px 5px rgba(0, 0, 0, 0.3)",
-                                "color": "#333",
-                                "whiteSpace": "pre-wrap",
-                                "font-size": "14px",
-                            },
-                        ),
-                    )
-                ],
-            )
-
-            if pty != "REP" and pty != "DEM":
-                n_3rd += 1
-                raised_3rd += r
-                spent_3rd += s
-                groups["OTH"][1].append(cm)
+        if str(name) != 'nan':
+            if 28000000 < r <= 30000000:
+                radius = 53
+                opacity = 0.8
+            elif 24000000 < r <= 28000000:
+                radius = 50
+                opacity = 0.5
+            elif 21000000 < r <= 24000000:
+                radius = 45
+                opacity = 0.5
+            elif 18000000 < r <= 21000000:
+                radius = 40
+                opacity = 0.4
+            elif 15000000 < r <= 18000000:
+                radius = 35
+                opacity = 0.3
+            elif 12000000 < r <= 15000000:
+                radius = 30
+                opacity = 0.3
+            elif 9000000 < r <= 12000000:
+                radius = 20
+                opacity = 0.3
+            elif 6000000 < r <= 9000000:
+                radius = 15
+                opacity = 0.3
+            elif 3000000 < r <= 6000000:
+                radius = 10
+                opacity = 0.3
             else:
-                if pty == "REP":
-                    n_rep += 1
-                    raised_rep += r
-                    spent_rep += s
+                radius = 5
+                opacity = 0.2
+
+            if r > slider and r < slider + 2500000:
+                cm = dl.CircleMarker(
+                    center=[lat, lng],
+                    color=colors[int(code) - 1],
+                    opacity=0.8,
+                    weight=1,
+                    fillColor=colors[int(code) - 1],
+                    fillOpacity=opacity + 0.25,
+                    radius=radius,
+                    children=[
+                        dl.Tooltip(
+                            children=html.Div(
+                                children=[
+                                    html.Div(["Committee Name: ", html.B(f"{name}")]),
+                                    html.Div(["Election cycle: ", html.B("2022")]),
+                                    html.Div(["Total Raised (YTD2022): ", html.B(f"{r}")]),
+                                    html.Div(["Total Spent (YTD2022): ", html.B(f"{s}")]),
+                                ],
+                                style={
+                                    "width": "250px",
+                                    "backgroundColor": "#fff",
+                                    "borderRadius": "5px",
+                                    "padding": "10px",
+                                    "boxShadow": "0 2px 5px rgba(0, 0, 0, 0.3)",
+                                    "color": "#333",
+                                    "whiteSpace": "pre-wrap",
+                                    "font-size": "14px",
+                                },
+                            ),
+                        )
+                    ],
+                )
+
+                if pty != "REP" and pty != "DEM":
+                    n_3rd += 1
+                    raised_3rd += r
+                    spent_3rd += s
+                    groups["OTH"][1].append(cm)
                 else:
-                    n_dem += 1
-                    raised_dem += r
-                    spent_dem += s
-                groups[pty][1].append(cm)
-            cms.append(cm)
+                    if pty == "REP":
+                        n_rep += 1
+                        raised_rep += r
+                        spent_rep += s
+                    else:
+                        n_dem += 1
+                        raised_dem += r
+                        spent_dem += s
+                    groups[pty][1].append(cm)
+                cms.append(cm)
 
     avg_r_rep = round(raised_rep / n_rep, 1) if n_rep != 0 else 0
     avg_r_dem = round(raised_dem / n_dem, 1) if n_dem != 0 else 0
