@@ -58,7 +58,7 @@ def get_info(feature=None):
             [
                 "Total Received: ",
                 html.Span(
-                    "${:.3f}".format(feature["properties"]["total_r"]),
+                    str("${:.3f}".format(feature["properties"]["total_r"]) + "\n({}M+)".format(int(feature["properties"]["total_r"] / 1e6)) if feature["properties"]["total_r"] != 0 else "0"),
                     style={
                         "font-size": "14px",
                         "font-weight": "bold",
@@ -73,7 +73,7 @@ def get_info(feature=None):
             [
                 "Total Spent: ",
                 html.Span(
-                    "${:.3f}".format(feature["properties"]["total_s"]),
+                    str("${:.3f}".format(feature["properties"]["total_s"]) + "\n({}M+)".format(int(feature["properties"]["total_r"] / 1e6)) if feature["properties"]["total_r"] != 0 else "0"),
                     style={
                         "font-size": "14px",
                         "font-weight": "bold",
@@ -694,8 +694,8 @@ def update_output(slider, state, cands, parties, stats):
                                 children=[
                                     html.Div(["Committee Name: ", html.B(f"{name}")]),
                                     html.Div(["Election cycle: ", html.B("2022")]),
-                                    html.Div(["Total Raised (YTD2022): ", html.B(f"{r}")]),
-                                    html.Div(["Total Spent (YTD2022): ", html.B(f"{s}")]),
+                                    html.Div(["Total Raised (YTD2022): ", html.B(f"${r}")]),
+                                    html.Div(["Total Spent (YTD2022): ", html.B(f"${s}")]),
                                 ],
                                 style={
                                     "width": "250px",
@@ -1048,13 +1048,13 @@ def update_output(slider, state, cands, parties, stats):
                                             html.Div(
                                                 [
                                                     "Total Raised (YTD2022): ",
-                                                    html.B(f'{row["Total receipts"].iloc[0]}'),
+                                                    html.B(f'${row["Total receipts"].iloc[0]}'),
                                                 ]
                                             ),
                                             html.Div(
                                                 [
                                                     "Total Spent (YTD2022): ",
-                                                    html.B(f'{row["Total disbursements"].iloc[0]}'),
+                                                    html.B(f'${row["Total disbursements"].iloc[0]}'),
                                                 ]
                                             ),
                                         ],
@@ -1103,14 +1103,14 @@ def update_output(slider, state, cands, parties, stats):
                                     html.Div(
                                         [
                                             "Total Raised (YTD2022): ",
-                                            html.B(f'{row["Total receipts"].iloc[0]}'),
+                                            html.B(f'${row["Total receipts"].iloc[0]}'),
                                         ]
                                     ),
                                     html.Div(
                                         [
                                             "Total Spent (YTD2022): ",
                                             html.B(
-                                                f'{row["Total disbursements"].iloc[0]}'
+                                                f'${row["Total disbursements"].iloc[0]}'
                                             ),
                                         ]
                                     ),
