@@ -35,7 +35,7 @@ PAGE_STYLE = {
 def get_info(feature=None):
     header = [
         html.H4(
-            "PAC Money Spent and Raised by States\n",
+            "PAC Funds Spent and Raised by States\n",
             style={
                 "color": "#01579b",
                 "font-family": "system-ui",
@@ -108,9 +108,9 @@ def create_choropleth(id="geojson1", info_id="info1"):
 
     # Create colorbar with the new purple color scale.
     ctg = [
-        "{}M+".format(int(cls / 1e6)) if cls != 0 else "0"
+        "${}M+".format(int(cls / 1e6)) if cls != 0 else "0"
         for cls in classes[:-1]
-    ] + ["{}M+".format(int(classes[-1] / 1e6))]
+    ] + ["${}M+".format(int(classes[-1] / 1e6))]
 
     colorbar = dlx.categorical_colorbar(
         categories=ctg,
@@ -192,6 +192,15 @@ map2 = dl.Map(
     id="candidates-individual-marker",
 )
 
+def format_currency(value):
+    if value >= 1_000_000_000:
+        return f"${value / 1_000_000_000:.2f}B"
+    elif value >= 1_000_000:
+        return f"${value / 1_000_000:.2f}M"
+    else:
+        return f"${value:,.2f}"
+
+
 table1 = (
     candidates[["Party affiliation", "Total receipts"]]
     .groupby("Party affiliation")
@@ -205,7 +214,11 @@ table1 = (
         }
     )
     .round(2)
+
 )
+
+table1["Total Receipts"] = table1["Total Receipts"].apply(format_currency)
+
 table2 = (
     candidates[["Candidate state", "Party affiliation", "Affiliated Committee Name"]]
     .groupby(["Candidate state", "Party affiliation"])
@@ -235,12 +248,14 @@ table3 = (
     .round(2)
 )
 
+table3["Total Receipts"] = table3["Total Receipts"].apply(format_currency)
+
 checkbox_options = [
     {"label": " Avg Raised", "value": "Avg Raised"},
     {"label": " Avg Spent", "value": "Avg Spent"},
     {"label": " Total Raised", "value": "Total Raised"},
     {"label": " Total Spent", "value": "Total Spent"},
-    {"label": " # PACs", "value": "# PACs"},
+    {"label": " N_PACs", "value": "# PACs"},
 ]
 
 
@@ -314,7 +329,7 @@ layout = html.Div(
                                 children=[
                                     html.Label(
                                         [
-                                            "PAC Money Raised and Spent between 2021-2022"
+                                            "PAC Funds Raised and Spent between 2021-2022"
                                         ],
                                         style={
                                             "font-size": "13px",
@@ -470,9 +485,9 @@ layout = html.Div(
             """
               1. There are three layers to the map that divide up the committees by party affiliation (on the top right corner of the map the results could be filtered through checking or unchecking each box).
 
-              2. The backdrop layer displays the sum amount of money raised for each state and the data could be displayed by hovering over each state boundary.
+              2. The backdrop layer displays the sum amount of Funds raised for each state and the data could be displayed by hovering over each state boundary.
 
-              3. The slider manipulates the committees to display by how much money they have raised and the amount is indicated by the size of the colored dot (the more the bigger).
+              3. The slider manipulates the committees to display by how much Funds they have raised and the amount is indicated by the size of the colored dot (the more the bigger).
 
               4. The color of the dots/circles indicates the party affiliation of each committee.
 
@@ -743,7 +758,7 @@ def update_output(slider, state, cands, parties, stats):
             id="rep-0",
             style={
                 "vertical-align": "middle",
-                "width": "13.5%",
+                "width": "15%",
             },
         ),
         html.Td(
@@ -751,7 +766,7 @@ def update_output(slider, state, cands, parties, stats):
             id="rep-1",
             style={
                 "vertical-align": "middle",
-                "width": "11.5%",
+                "width": "13%",
             },
         ),
         html.Td(
@@ -759,7 +774,7 @@ def update_output(slider, state, cands, parties, stats):
             id="rep-2",
             style={
                 "vertical-align": "middle",
-                "width": "13%",
+                "width": "15%",
             },
         ),
         html.Td(
@@ -794,7 +809,7 @@ def update_output(slider, state, cands, parties, stats):
             id="rep-1",
             style={
                 "vertical-align": "middle",
-                "width": "11.5%",
+                "width": "13%",
             },
         ),
         html.Td(
@@ -802,7 +817,7 @@ def update_output(slider, state, cands, parties, stats):
             id="rep-2",
             style={
                 "vertical-align": "middle",
-                "width": "13%",
+                "width": "15%",
             },
         ),
         html.Td(
@@ -836,7 +851,7 @@ def update_output(slider, state, cands, parties, stats):
             id="dem-1",
             style={
                 "vertical-align": "middle",
-                "width": "11.5%",
+                "width": "13%",
             },
         ),
         html.Td(
@@ -844,7 +859,7 @@ def update_output(slider, state, cands, parties, stats):
             id="dem-2",
             style={
                 "vertical-align": "middle",
-                "width": "13%",
+                "width": "15%",
             },
         ),
         html.Td(
@@ -878,7 +893,7 @@ def update_output(slider, state, cands, parties, stats):
             id="3rd-1",
             style={
                 "vertical-align": "middle",
-                "width": "11.5%",
+                "width": "13%",
             },
         ),
         html.Td(
@@ -886,7 +901,7 @@ def update_output(slider, state, cands, parties, stats):
             id="3rd-2",
             style={
                 "vertical-align": "middle",
-                "width": "13%",
+                "width": "15%",
             },
         ),
         html.Td(
@@ -916,20 +931,30 @@ def update_output(slider, state, cands, parties, stats):
     row3 = [i for i in template]
 
     for i in range(5):
-        v1 = round(rep[i], 1)
+        if i != 4:
+            v1 = format_currency(round(rep[i], 1))
+            v2 = format_currency(round(dem[i], 1))
+            v3 = format_currency(round(trd[i], 1))
+        else:
+            v1 = f"#{round(rep[i], 1)}"
+            v2 = f"#{round(dem[i], 1)}"
+            v3 = f"#{round(trd[i], 1)}"
         style = row1[i].style
-        td = html.Td(children=v1, id=f"rep-{i}", style=style)
+        td = html.Td(children=v1 , id=f"rep-{i}", style=style)
         row1[i] = td
 
-        v2 = round(dem[i], 1)
         style = row2[i].style
         td = html.Td(children=v2, id=f"dem-{i}", style=style)
         row2[i] = td
 
-        v3 = round(trd[i], 1)
         style = row3[i].style
         td = html.Td(children=v3, id=f"3rd-{i}", style=style)
         row3[i] = td
+
+
+    row1.append(rep[-1])
+    row2.append(dem[-1])
+    row3.append(trd[-1])
 
     tmp = [template1, template2, template3]
     rows = [row1, row2, row3]
