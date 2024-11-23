@@ -485,9 +485,9 @@ layout = html.Div(
             """
               1. There are three layers to the map that divide up the committees by party affiliation (on the top right corner of the map the results could be filtered through checking or unchecking each box).
 
-              2. The backdrop layer displays the sum amount of Funds raised for each state and the data could be displayed by hovering over each state boundary.
+              2. The backdrop layer displays the sum amount of funds raised for each state and the data could be displayed by hovering over each state boundary.
 
-              3. The slider manipulates the committees to display by how much Funds they have raised and the amount is indicated by the size of the colored dot (the more the bigger).
+              3. The slider manipulates the committees to display by how much funds they have raised and the amount is indicated by the size of the colored dot (the more the bigger).
 
               4. The color of the dots/circles indicates the party affiliation of each committee.
 
