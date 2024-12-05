@@ -26,9 +26,6 @@ PAGE_STYLE = {
     "position": "relative",
     "margin": "2.5rem 5rem 0rem 5rem",
     "color": "#000",
-    # "text-shadow": "#000 0 0",
-    # "whiteSpace": "pre-wrap",
-    # "font-family": "system-ui",
 }
 
 
@@ -344,7 +341,7 @@ layout = html.Div(
                                             7000,
                                             27500000,
                                             2500000,
-                                            value=2500000,
+                                            value=0,
                                             id="pac-exp-filter",
                                         ),
                                         style={"margin": "0.5rem -1.3rem 0rem -1.3rem"},
@@ -936,9 +933,9 @@ def update_output(slider, state, cands, parties, stats):
             v2 = format_currency(round(dem[i], 1))
             v3 = format_currency(round(trd[i], 1))
         else:
-            v1 = f"#{round(rep[i], 1)}"
-            v2 = f"#{round(dem[i], 1)}"
-            v3 = f"#{round(trd[i], 1)}"
+            v1 = f" {round(rep[i], 1)}"
+            v2 = f" {round(dem[i], 1)}"
+            v3 = f"  {round(trd[i], 1)}"
         style = row1[i].style
         td = html.Td(children=v1 , id=f"rep-{i}", style=style)
         row1[i] = td
