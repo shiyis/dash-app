@@ -564,8 +564,8 @@ layout = html.Div(
                 ),
             ]
         ),
-        html.Br(),
-        html.Br(),
+
+
     ],
     className="page1",
     id="page1-content",

@@ -91,6 +91,10 @@ layout = html.Div(
             ],
         ),
         html.Br(),
+        html.H5("Connections Between PAC Candidates And Issues"),
+        html.Hr(),
+
+
     ],
     className="page2",
     style=PAGE_STYLE,
