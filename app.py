@@ -30,7 +30,7 @@ menubar = dbc.NavbarSimple(
         dbc.NavItem(
             dbc.NavLink(
                 "Supplementary Blog",
-                href="https://shiyisteez.github.io/politics-docs",
+                href="https://shiyis.github.io/politics-docs",
                 id="supplementary-blog",
                 external_link=True,
             )
