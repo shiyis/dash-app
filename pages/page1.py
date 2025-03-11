@@ -155,7 +155,7 @@ def create_choropleth(id="geojson1", info_id="info1"):
         style={
             "position": "absolute",
             "top": "300px",
-            "left": "780px",
+            "left": "650px",
             "width": "129px",
         },
     )
